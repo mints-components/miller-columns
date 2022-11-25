@@ -10,8 +10,10 @@
   "description": "",
   "license": "MIT",
   "packageManager": "yarn@3.3.0",
-  "type": "module",
-  "files": ["dist", "types"],
+  "files": [
+    "dist",
+    "types"
+  ],
   "types": "types",
   "main": "./dist/miller-columns-select.umd.cjs",
   "module": "./dist/miller-columns-select.js",
