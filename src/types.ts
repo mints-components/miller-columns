@@ -18,3 +18,9 @@ export enum ItemStatus {
   selected = 'selected',
   noselected = 'noselected',
 }
+
+export type ColumnType<T> = {
+  parentId: ID | null;
+  items: ItemType<T>[];
+  activeId: ID | null;
+};
