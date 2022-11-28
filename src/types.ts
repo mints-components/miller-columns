@@ -24,3 +24,5 @@ export type ColumnType<T> = {
   items: ItemType<T>[];
   activeId: ID | null;
 };
+
+export type ItemMapType<T> = Record<ID, ItemType<T>>;
