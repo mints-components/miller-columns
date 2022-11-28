@@ -1,5 +1,3 @@
-import { useCallback } from 'react';
-
 import type { ItemType, ColumnType } from './types';
 import { useMillerColumns, UseMillerColumnsProps } from './hooks';
 import { Column, Item } from './components';

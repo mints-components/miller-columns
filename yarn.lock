@@ -4162,9 +4162,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"miller-columns-select@workspace:.":
+"miller-columns-select@workspace:packages/miller-columns-select":
   version: 0.0.0-use.local
-  resolution: "miller-columns-select@workspace:."
+  resolution: "miller-columns-select@workspace:packages/miller-columns-select"
   dependencies:
     "@types/node": ^18.11.9
     "@types/react": ^18.0.24
@@ -4172,11 +4172,6 @@ __metadata:
     "@types/styled-components": ^5.1.26
     "@vitejs/plugin-react": ^2.2.0
     classnames: ^2.3.2
-    eslint: ^8.27.0
-    eslint-config-mints: ^2.1.0
-    eslint-config-prettier: ^8.5.0
-    eslint-plugin-prettier: ^4.2.1
-    prettier: ^2.7.1
     react: ^18.2.0
     react-dom: ^18.2.0
     react-infinite-scroll-component: ^6.1.0
@@ -4911,6 +4906,18 @@ __metadata:
   checksum: 6a2bf167b3587d4df709b37d149ad0300692cc5deb510f89ac7bdc77c8738c9546ae3de9322b0968e1ed2b0e984571f5f55aae28fa7de4cfcb1bc5402a4e2be6
   languageName: node
   linkType: hard
+
+"root-workspace-0b6124@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "root-workspace-0b6124@workspace:."
+  dependencies:
+    eslint: ^8.27.0
+    eslint-config-mints: ^2.1.0
+    eslint-config-prettier: ^8.5.0
+    eslint-plugin-prettier: ^4.2.1
+    prettier: ^2.7.1
+  languageName: unknown
+  linkType: soft
 
 "run-parallel@npm:^1.1.9":
   version: 1.2.0
