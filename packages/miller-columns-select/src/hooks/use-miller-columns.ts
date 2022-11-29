@@ -10,14 +10,12 @@ export interface UseMillerColumnsProps<T> {
   items: ItemType<T>[];
   selectedIds?: ID[];
   onSelectItemIds?: (selectedIds: ID[]) => void;
-  onSelectItems?: (selectedItems: ItemType<T>[]) => void;
-  onExpandItem?: (it: ItemType<T>) => void;
+  onExpandItem?: (item: ItemType<T>) => void;
 }
 
 export const useMillerColumns = <T>({
   items,
   onSelectItemIds,
-  onSelectItems,
   onExpandItem,
   ...props
 }: UseMillerColumnsProps<T>) => {
