@@ -80,12 +80,16 @@ export const useMillerColumns = <T>({
         }
         return ItemStatus.noselected;
       },
-      getItemCheckStatus(item: ItemType<T>, canExpand: boolean) {
+      getItemCheckStatus(
+        item: ItemType<T>,
+        canExpand: boolean,
+        allChildLoaded: boolean,
+      ) {
         const childSelectedItems =
           item.items?.filter((it) => selectedIds.includes(it.id)) ?? [];
 
         switch (true) {
-          case canExpand:
+          case canExpand && !allChildLoaded:
             return CheckboxStatus.disabled;
           case selectedIds.includes(item.id):
             return CheckboxStatus.checked;

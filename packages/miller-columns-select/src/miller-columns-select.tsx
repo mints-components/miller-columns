@@ -1,3 +1,5 @@
+import { useCallback } from 'react';
+
 import type { ItemType, ColumnType } from './types';
 import { useMillerColumns, UseMillerColumnsProps } from './hooks';
 import { Column, Item } from './components';
@@ -37,6 +39,24 @@ export const MillerColumnsSelect = <T,>({
     onSelectItem,
   } = useMillerColumns<T>(props);
 
+  const checkAllChildLoaded = useCallback(
+    (item: ItemType<T>): boolean => {
+      const canExpand = getCanExpand?.(item) ?? false;
+      const hasMore = getHasMore?.({
+        parentId: item.id,
+        items: item.items ?? [],
+        activeId: null,
+      });
+
+      if (canExpand && hasMore) {
+        return false;
+      }
+
+      return (item.items ?? [])?.every((it) => checkAllChildLoaded(it));
+    },
+    [getCanExpand, getHasMore],
+  );
+
   const header = renderHeader?.(columns) ?? null;
   const footer = renderFooter?.(columns) ?? null;
 
@@ -56,7 +76,12 @@ export const MillerColumnsSelect = <T,>({
               renderItem={(item) => {
                 const canExpand = getCanExpand?.(item) ?? false;
                 const status = getItemStatus(item, column);
-                const checkStatus = getItemCheckStatus(item, canExpand);
+                const allChildLoaded = checkAllChildLoaded(item);
+                const checkStatus = getItemCheckStatus(
+                  item,
+                  canExpand,
+                  allChildLoaded,
+                );
                 return (
                   <Item
                     key={item.id}
