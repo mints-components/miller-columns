@@ -60,7 +60,7 @@ export const Label = styled.label`
     }
 
     &.checkbox-disabled {
-      background-color: #f5f5f5;
+      background-color: #f1f1f1;
       border-color: #d9d9d9;
       cursor: not-allowed;
 
