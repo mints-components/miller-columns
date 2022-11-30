@@ -43,7 +43,7 @@ export const Column = <T,>({
 
   return (
     <S.Container id={targetId} count={count} height={height}>
-      {title && <div className="title">{title}</div>}
+      {title}
       <InfiniteScroll
         dataLength={items.length}
         hasMore={hasMore}

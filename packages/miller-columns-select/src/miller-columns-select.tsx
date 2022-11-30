@@ -63,7 +63,7 @@ export const MillerColumnsSelect = <T,>({
 
   return (
     <S.Container>
-      {header && <div className="header">{header}</div>}
+      {header}
       <div className="main">
         {columns.map((column) => {
           if (!column.items.length) {
@@ -107,7 +107,7 @@ export const MillerColumnsSelect = <T,>({
           );
         })}
       </div>
-      {footer && <div className="footer">{footer}</div>}
+      {footer}
     </S.Container>
   );
 };
