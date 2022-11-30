@@ -65,6 +65,10 @@ export const MillerColumnsSelect = <T,>({
       {header && <div className="header">{header}</div>}
       <div className="main">
         {columns.map((column) => {
+          if (!column.items.length) {
+            return null;
+          }
+
           const hasMore = getHasMore?.(column) ?? false;
           return (
             <Column
