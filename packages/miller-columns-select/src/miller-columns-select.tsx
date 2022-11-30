@@ -44,6 +44,7 @@ export const MillerColumnsSelect = <T,>({
       const canExpand = getCanExpand?.(item) ?? false;
       const hasMore = getHasMore?.({
         parentId: item.id,
+        parentTitle: item.title,
         items: item.items ?? [],
         activeId: null,
       });

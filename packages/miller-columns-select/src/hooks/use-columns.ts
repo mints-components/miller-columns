@@ -15,6 +15,7 @@ export const useColumns = <T>({ activeId, itemMap }: Props<T>) => {
 
     const rootLeaf = {
       parentId: null,
+      parentTitle: 'root',
       activeId: null,
       items: rootItems,
     };
@@ -28,6 +29,7 @@ export const useColumns = <T>({ activeId, itemMap }: Props<T>) => {
     const columns: ColumnType<T>[] = [
       {
         parentId: activeItem.id,
+        parentTitle: activeItem.title,
         items: activeItem.items ?? [],
         activeId: null,
       },
@@ -37,7 +39,8 @@ export const useColumns = <T>({ activeId, itemMap }: Props<T>) => {
       const parent = itemMap[item.parentId ?? ''];
 
       columns.unshift({
-        parentId: item.parentId,
+        parentId: parent ? parent.id : null,
+        parentTitle: parent ? parent.title : 'root',
         items: parent ? parent.items ?? [] : rootItems,
         activeId: item.id ?? null,
       });

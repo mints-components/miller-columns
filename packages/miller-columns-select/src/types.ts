@@ -21,6 +21,7 @@ export enum ItemStatus {
 
 export type ColumnType<T> = {
   parentId: ID | null;
+  parentTitle: string;
   items: ItemType<T>[];
   activeId: ID | null;
 };
