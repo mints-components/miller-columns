@@ -8,6 +8,7 @@ width: ${100 / count}%;
   ${({ height }) => (height ? `height: ${height}px;` : '')}
 
   border: 1px solid #dbe4fd;
+  box-sizing: border-box;
   overflow-y: auto;
 
   & + & {
