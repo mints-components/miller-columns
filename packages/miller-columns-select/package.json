@@ -24,9 +24,9 @@
     }
   },
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
+    "clean": "rm -rf dist && rm -rf types",
+    "build": "yarn clean && tsc && vite build",
+    "publish": "yarn npm publish"
   },
   "dependencies": {
     "classnames": "^2.3.2",

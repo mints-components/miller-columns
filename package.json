@@ -5,7 +5,8 @@
   ],
   "scripts": {
     "lint": "eslint . --fix",
-    "prettier": "prettier . --write"
+    "prettier": "prettier . --write",
+    "build": "yarn workspace miller-columns-select build"
   },
   "packageManager": "yarn@3.2.1",
   "devDependencies": {
