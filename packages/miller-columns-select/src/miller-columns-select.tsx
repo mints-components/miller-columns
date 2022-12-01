@@ -9,26 +9,26 @@ interface Props<T> extends UseMillerColumnsProps<T> {
   columnCount?: number;
   columnHeight?: number;
   getCanExpand?: (item: ItemType<T>) => boolean;
-  getHasMore?: (column: ColumnType<T>) => boolean;
   renderTitle?: (column: ColumnType<T>) => React.ReactNode;
-  renderLoading?: (column: ColumnType<T>) => React.ReactNode;
   renderEnd?: (column: ColumnType<T>) => React.ReactNode;
-  onScrollColumn?: (column: ColumnType<T>) => void;
   renderHeader?: (columns: ColumnType<T>[]) => React.ReactNode;
   renderFooter?: (columns: ColumnType<T>[]) => React.ReactNode;
+  getHasMore?: (column: ColumnType<T>) => boolean;
+  renderLoading?: (column: ColumnType<T>) => React.ReactNode;
+  onScrollColumn?: (column: ColumnType<T>) => void;
 }
 
 export const MillerColumnsSelect = <T,>({
   columnCount,
   columnHeight,
   getCanExpand,
-  getHasMore,
   renderTitle,
-  renderLoading,
   renderEnd,
-  onScrollColumn,
   renderHeader,
   renderFooter,
+  getHasMore,
+  renderLoading,
+  onScrollColumn,
   ...props
 }: Props<T>) => {
   const {
