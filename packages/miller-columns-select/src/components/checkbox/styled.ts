@@ -21,7 +21,7 @@ export const Label = styled.label`
       content: ' ';
       position: absolute;
       top: 50%;
-      left: 18%;
+      left: 16%;
       display: table;
       width: 4px;
       height: 8px;
