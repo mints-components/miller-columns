@@ -37,7 +37,6 @@ export const Item = <T,>({
   return (
     <S.Wrapper
       selected={status === ItemStatus.selected}
-      canExpand={canExpand}
       onClick={handleRowClick}
     >
       <Checkbox status={checkStatus} onClick={handleCheckboxClick}>

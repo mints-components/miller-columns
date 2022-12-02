@@ -1,20 +1,14 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.div<{ selected: boolean; canExpand: boolean }>`
+export const Wrapper = styled.div<{ selected: boolean }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 4px 12px;
-
-  ${({ canExpand }) =>
-    canExpand
-      ? `
-    cursor: pointer;
-    &:hover {
-      background-color: #f5f5f7;
-    }
-    `
-      : ''}
+  cursor: pointer;
+  &:hover {
+    background-color: #f5f5f7;
+  }
 
   ${({ selected }) => (selected ? 'background-color: #f5f5f7;' : '')}
 
