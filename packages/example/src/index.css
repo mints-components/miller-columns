@@ -1,0 +1,53 @@
+body {
+  margin: 0;
+}
+
+.block {
+  padding: 16px 24px;
+}
+
+.block > .title {
+  margin-bottom: 16px;
+}
+
+.component {
+  display: flex;
+  align-items: flex-start;
+}
+
+.component > .props {
+  flex: 0 0 200px;
+}
+
+.component > .props > h3 {
+  margin: 0 0 10px 0;
+}
+
+.component > .props > .item {
+  margin-bottom: 10px;
+}
+
+.component > .content {
+  flex: auto;
+}
+
+.column-header,
+.column-footer {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+}
+
+.column-header {
+  margin-bottom: 10px;
+}
+
+.column-footer {
+  margin-top: 10px;
+}
+
+.column-header li,
+.column-footer li {
+  margin-right: 30px;
+}
