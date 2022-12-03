@@ -6,7 +6,9 @@
   "scripts": {
     "lint": "eslint . --fix",
     "prettier": "prettier . --write",
-    "build": "yarn workspace miller-columns-select build"
+    "build": "yarn workspace miller-columns-select build",
+    "publish": "yarn workspace miller-columns-select publish",
+    "start": "yarn workspace miller-columns-select-example dev"
   },
   "packageManager": "yarn@3.2.1",
   "devDependencies": {
