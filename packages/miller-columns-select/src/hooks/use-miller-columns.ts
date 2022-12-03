@@ -8,6 +8,7 @@ import { useColumns } from './use-columns';
 
 export interface UseMillerColumnsProps<T> {
   items: ItemType<T>[];
+  disabledIds?: ID[];
   selectedIds?: ID[];
   onSelectItemIds?: (selectedIds: ID[]) => void;
   onExpandItem?: (item: ItemType<T>) => void;
@@ -15,6 +16,7 @@ export interface UseMillerColumnsProps<T> {
 
 export const useMillerColumns = <T>({
   items,
+  disabledIds,
   onSelectItemIds,
   onExpandItem,
   ...props
@@ -87,7 +89,7 @@ export const useMillerColumns = <T>({
           item.items?.filter((it) => selectedIds.includes(it.id)) ?? [];
 
         switch (true) {
-          case canExpand && !allChildLoaded:
+          case (canExpand && !allChildLoaded) || disabledIds?.includes(item.id):
             return CheckboxStatus.disabled;
           case selectedIds.includes(item.id):
             return CheckboxStatus.checked;
@@ -130,6 +132,7 @@ export const useMillerColumns = <T>({
     }),
     [
       columns,
+      disabledIds,
       selectedIds,
       collectChildIds,
       collectAddParentIds,
