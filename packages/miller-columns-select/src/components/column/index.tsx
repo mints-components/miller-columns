@@ -38,7 +38,7 @@ export const Column = <T,>({
   );
 
   const title = renderTitle?.(column) ?? null;
-  const loading = renderLoading?.(column) ?? <span>Loading...</span>;
+  const loader = renderLoading?.(column) ?? 'Loading...';
   const end = renderEnd?.(column) ?? null;
 
   return (
@@ -48,7 +48,7 @@ export const Column = <T,>({
         dataLength={items.length}
         hasMore={hasMore}
         next={handleNext}
-        loader={loading}
+        loader={<S.Loader>{loader}</S.Loader>}
         endMessage={end}
         scrollableTarget={targetId}
       >

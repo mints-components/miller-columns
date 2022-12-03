@@ -15,3 +15,5 @@ width: ${100 / count}%;
     border-left: none;
   }
 `;
+
+export const Loader = styled.div``;
