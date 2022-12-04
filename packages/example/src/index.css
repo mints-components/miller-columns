@@ -2,33 +2,24 @@ body {
   margin: 0;
 }
 
-.block {
-  padding: 16px 24px;
+h3 {
+  margin: 0;
+  padding: 0;
 }
 
-.block > .title {
-  margin-bottom: 16px;
+.block {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 6px 24px;
+}
+
+.block > .item {
+  width: 300px;
 }
 
 .component {
-  display: flex;
-  align-items: flex-start;
-}
-
-.component > .props {
-  flex: 0 0 200px;
-}
-
-.component > .props > h3 {
-  margin: 0 0 10px 0;
-}
-
-.component > .props > .item {
-  margin-bottom: 10px;
-}
-
-.component > .content {
-  flex: auto;
+  padding: 6px 24px;
 }
 
 .column-header,
