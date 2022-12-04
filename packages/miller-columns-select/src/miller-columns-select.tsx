@@ -5,7 +5,8 @@ import { useMillerColumns, UseMillerColumnsProps } from './hooks';
 import { Column, Item } from './components';
 import * as S from './styled';
 
-interface Props<T> extends UseMillerColumnsProps<T> {
+export interface MillerColumnsSelectProps<T> extends UseMillerColumnsProps<T> {
+  style?: React.CSSProperties;
   columnCount?: number;
   columnHeight?: number;
   getCanExpand?: (item: ItemType<T>) => boolean;
@@ -19,6 +20,7 @@ interface Props<T> extends UseMillerColumnsProps<T> {
 }
 
 export const MillerColumnsSelect = <T,>({
+  style,
   columnCount,
   columnHeight,
   getCanExpand,
@@ -30,7 +32,7 @@ export const MillerColumnsSelect = <T,>({
   renderLoading,
   onScrollColumn,
   ...props
-}: Props<T>) => {
+}: MillerColumnsSelectProps<T>) => {
   const {
     columns,
     getItemStatus,
@@ -62,7 +64,7 @@ export const MillerColumnsSelect = <T,>({
   const footer = renderFooter?.(columns) ?? null;
 
   return (
-    <S.Container>
+    <S.Container style={style}>
       {header}
       <div className="main">
         {columns.map((column) => {
