@@ -68,11 +68,12 @@ export const MillerColumnsSelect = <T,>({
       {header}
       <div className="main">
         {columns.map((column) => {
-          if (!column.items.length) {
+          const hasMore = getHasMore?.(column) ?? false;
+
+          if (!hasMore && !column.items.length) {
             return null;
           }
 
-          const hasMore = getHasMore?.(column) ?? false;
           return (
             <Column
               key={column.parentId}
