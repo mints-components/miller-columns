@@ -97,7 +97,7 @@ export const Example = () => {
 
 ## Start Example(Development)
 
-```bash
+```
 $ yarn
 $ yarn start
 ```
