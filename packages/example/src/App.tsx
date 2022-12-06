@@ -1,10 +1,18 @@
 import { useState } from 'react';
-import { Switch, ButtonGroup, Button, Intent } from '@blueprintjs/core';
+import {
+  Switch,
+  ButtonGroup,
+  Button,
+  RadioGroup,
+  Radio,
+  Intent,
+} from '@blueprintjs/core';
 import type { ItemType, ColumnType } from 'miller-columns-select';
 
 import type { ExtraItemType } from './types';
 import { TypeEnum } from './types';
 import { BasicMillerColumnsSelect } from './basic-component';
+import { AsyncMillerColumnsSelect } from './async-component';
 
 const ColumnCount = [1, 2, 3, 4, 5];
 const ColumnHeight = [undefined, 200, 400, 600];
@@ -24,6 +32,7 @@ function App() {
   const [showRenderHeader, setShowRenderHeader] = useState(false);
   const [showRenderFooter, setShowRenderFooter] = useState(false);
   const [showRenderLoading, setShowRenderLoading] = useState(false);
+  const [mode, setModa] = useState('basic');
 
   const renderTitle = (column: ColumnType<ExtraItemType>) => {
     if (!showRenderTitle) {
@@ -115,6 +124,7 @@ function App() {
           <ButtonGroup>
             {ColumnHeight.map((height, i) => (
               <Button
+                disabled={mode === 'async'}
                 key={i}
                 text={height ?? 'unset'}
                 intent={columnHeight === height ? Intent.PRIMARY : Intent.NONE}
@@ -201,24 +211,58 @@ function App() {
         <span>Select Ids: </span>
         <span>{JSON.stringify(selectedIds)}</span>
       </div>
-      <div className="component">
-        <h3>Basic Miller-Columns-Select</h3>
-        <BasicMillerColumnsSelect
-          style={{ marginTop: 12 }}
-          columnCount={columnCount}
-          columnHeight={columnHeight}
-          getCanExpand={(item) => item.type === TypeEnum.folder}
-          renderTitle={renderTitle}
-          renderEnd={renderEnd}
-          renderHeader={renderHeader}
-          renderFooter={renderFooter}
-          renderLoading={renderLoading}
-          selectedIds={selectedIds}
-          disabledIds={disabledIds}
-          onSelectItemIds={(ids) => setSelectedIds(ids)}
-          onExpandItem={handleExpandItem}
-        />
+      <div className="block">
+        <h3>Change Mode</h3>
       </div>
+      <div className="block">
+        <RadioGroup
+          inline
+          onChange={(e) => setModa((e.target as HTMLInputElement).value)}
+          selectedValue={mode}
+        >
+          <Radio label="Baisc Component" value="basic" />
+          <Radio label="Async Component" value="async" />
+        </RadioGroup>
+      </div>
+      {mode === 'basic' && (
+        <div className="component">
+          <h3>Basic Miller-Columns-Select</h3>
+          <BasicMillerColumnsSelect
+            style={{ marginTop: 12 }}
+            columnCount={columnCount}
+            columnHeight={columnHeight}
+            getCanExpand={(item) => item.type === TypeEnum.folder}
+            renderTitle={renderTitle}
+            renderEnd={renderEnd}
+            renderHeader={renderHeader}
+            renderFooter={renderFooter}
+            renderLoading={renderLoading}
+            selectedIds={selectedIds}
+            disabledIds={disabledIds}
+            onSelectItemIds={(ids) => setSelectedIds(ids)}
+            onExpandItem={handleExpandItem}
+          />
+        </div>
+      )}
+      {mode === 'async' && (
+        <div className="component">
+          <h3>Async Miller-Columns-Select</h3>
+          <AsyncMillerColumnsSelect
+            style={{ marginTop: 12 }}
+            columnCount={columnCount}
+            columnHeight={120}
+            getCanExpand={(item) => item.type === TypeEnum.folder}
+            renderTitle={renderTitle}
+            renderEnd={renderEnd}
+            renderHeader={renderHeader}
+            renderFooter={renderFooter}
+            renderLoading={renderLoading}
+            selectedIds={selectedIds}
+            disabledIds={disabledIds}
+            onSelectItemIds={(ids) => setSelectedIds(ids)}
+          />
+        </div>
+      )}
     </div>
   );
 }
