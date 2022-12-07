@@ -119,12 +119,6 @@ export const useMillerColumns = <T>({
                 ...collectRemoveParentIds(item),
               ].includes(id),
           );
-
-          console.log([
-            item.id,
-            ...collectChildIds(item),
-            ...collectRemoveParentIds(item),
-          ]);
         }
 
         onSelectItemIds ? onSelectItemIds(newIds) : setSelectedIds(newIds);
