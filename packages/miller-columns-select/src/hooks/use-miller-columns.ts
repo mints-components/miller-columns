@@ -107,18 +107,24 @@ export const useMillerColumns = <T>({
         let newIds: ID[] = [];
         const isRemoveExistedItem = !!selectedIds.includes(item.id);
         if (!isRemoveExistedItem) {
-          newIds.push(...[...selectedIds, item.id]);
-          newIds.push(...collectChildIds(item));
-          newIds.push(...collectAddParentIds(item));
+          const addIds = [
+            item.id,
+            ...collectChildIds(item),
+            ...collectAddParentIds(item),
+          ];
+
+          newIds = [
+            ...selectedIds,
+            ...addIds.filter((id) => !selectedIds.includes(id)),
+          ];
         } else {
-          newIds = selectedIds.filter(
-            (id) =>
-              ![
-                item.id,
-                ...collectChildIds(item),
-                ...collectRemoveParentIds(item),
-              ].includes(id),
-          );
+          const removeIds = [
+            item.id,
+            ...collectChildIds(item),
+            ...collectRemoveParentIds(item),
+          ];
+
+          newIds = selectedIds.filter((id) => !removeIds.includes(id));
         }
 
         onSelectItemIds ? onSelectItemIds(newIds) : setSelectedIds(newIds);
