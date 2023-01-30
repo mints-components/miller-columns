@@ -31,6 +31,18 @@ export const useMillerColumns = <T>({
     setSelectedIds(props.selectedIds ?? []);
   }, [props.selectedIds]);
 
+  useEffect(() => {
+    const removeIds = [
+      ...(disabledIds ?? []),
+      ...(disabledIds ?? [])
+        .map((id) => collectRemoveParentIds(itemMap[id]))
+        .flat(),
+    ];
+
+    const newIds = selectedIds.filter((id) => !removeIds.includes(id));
+    onSelectItemIds ? onSelectItemIds(newIds) : setSelectedIds(newIds);
+  }, [disabledIds]);
+
   const collectChildIds = useCallback((item: ItemType<T>) => {
     const result: ID[] = [];
     item.items?.forEach((child) => {
@@ -126,6 +138,9 @@ export const useMillerColumns = <T>({
 
           newIds = selectedIds.filter((id) => !removeIds.includes(id));
         }
+
+        // Filter disabled options
+        newIds = newIds.filter((id) => !disabledIds?.includes(id));
 
         onSelectItemIds ? onSelectItemIds(newIds) : setSelectedIds(newIds);
       },
