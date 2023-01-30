@@ -35,7 +35,11 @@ export const useMillerColumns = <T>({
     const removeIds = [
       ...(disabledIds ?? []),
       ...(disabledIds ?? [])
-        .map((id) => collectRemoveParentIds(itemMap[id]))
+        .map((id) => {
+          const item = items.find((it) => it.id === id);
+          return item ? collectRemoveParentIds(item) : false;
+        })
+        .filter(Boolean)
         .flat(),
     ];
 
