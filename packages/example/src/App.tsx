@@ -16,7 +16,13 @@ import { AsyncMillerColumnsSelect } from './async-component';
 
 const ColumnCount = [1, 2, 3, 4, 5];
 const ColumnHeight = [undefined, 200, 400, 600];
-const DisabledIds = [[], ['3'], ['2', '5'], ['3', '4', '6']];
+const DisabledIds = [
+  [],
+  ['3'],
+  ['2', '5'],
+  ['3', '4', '6'],
+  ['2-1', '2-2', '2-3', '2-4'],
+];
 
 function App() {
   const [selectedIds, setSelectedIds] = useState<
