@@ -16,19 +16,9 @@ import { AsyncMillerColumnsSelect } from './async-component';
 
 const ColumnCount = [1, 2, 3, 4, 5];
 const ColumnHeight = [undefined, 200, 400, 600];
-const DisabledIds = [
-  [],
-  ['3'],
-  ['2', '5'],
-  ['3', '4', '6'],
-  ['2-1', '2-2', '2-3', '2-4'],
-];
 
 function App() {
   const [selectedIds, setSelectedIds] = useState<
-    ItemType<ExtraItemType>['id'][]
-  >([]);
-  const [disabledIds, setDisabledIds] = useState<
     ItemType<ExtraItemType>['id'][]
   >([]);
   const [columnCount, setColumnCount] = useState(3);
@@ -139,23 +129,6 @@ function App() {
             ))}
           </ButtonGroup>
         </div>
-        <div className="item">
-          <div style={{ marginBottom: 4 }}>Disabled Ids</div>
-          <ButtonGroup>
-            {DisabledIds.map((ids, i) => (
-              <Button
-                key={i}
-                text={!ids.length ? 'unset' : ids.join(',')}
-                intent={
-                  disabledIds.length === ids.length
-                    ? Intent.PRIMARY
-                    : Intent.NONE
-                }
-                onClick={() => setDisabledIds(ids)}
-              />
-            ))}
-          </ButtonGroup>
-        </div>
       </div>
       <div className="block">
         <div className="item">
@@ -244,7 +217,6 @@ function App() {
             renderFooter={renderFooter}
             renderLoading={renderLoading}
             selectedIds={selectedIds}
-            disabledIds={disabledIds}
             onSelectItemIds={(ids) => setSelectedIds(ids)}
             onExpandItem={handleExpandItem}
           />
@@ -264,7 +236,6 @@ function App() {
             renderFooter={renderFooter}
             renderLoading={renderLoading}
             selectedIds={selectedIds}
-            disabledIds={disabledIds}
             onSelectItemIds={(ids) => setSelectedIds(ids)}
           />
         </div>

@@ -8,7 +8,6 @@ import { useColumns } from './use-columns';
 
 export interface UseMillerColumnsProps<T> {
   items: ItemType<T>[];
-  disabledIds?: ID[];
   selectedIds?: ID[];
   onSelectItemIds?: (selectedIds: ID[]) => void;
   onExpandItem?: (item: ItemType<T>) => void;
@@ -16,7 +15,6 @@ export interface UseMillerColumnsProps<T> {
 
 export const useMillerColumns = <T>({
   items,
-  disabledIds,
   onSelectItemIds,
   onExpandItem,
   ...props
@@ -30,22 +28,6 @@ export const useMillerColumns = <T>({
   useEffect(() => {
     setSelectedIds(props.selectedIds ?? []);
   }, [props.selectedIds]);
-
-  useEffect(() => {
-    const removeIds = [
-      ...(disabledIds ?? []),
-      ...(disabledIds ?? [])
-        .map((id) => {
-          const item = items.find((it) => it.id === id);
-          return item ? collectRemoveParentIds(item) : false;
-        })
-        .filter(Boolean)
-        .flat(),
-    ];
-
-    const newIds = selectedIds.filter((id) => !removeIds.includes(id));
-    onSelectItemIds ? onSelectItemIds(newIds) : setSelectedIds(newIds);
-  }, [disabledIds]);
 
   const collectChildIds = useCallback((item: ItemType<T>) => {
     const result: ID[] = [];
@@ -101,15 +83,13 @@ export const useMillerColumns = <T>({
         canExpand: boolean,
         allChildLoaded: boolean,
       ) {
-        const childSelectedItems =
-          item.items?.filter((it) => selectedIds.includes(it.id)) ?? [];
-
+        const childItem = item.items?.find((it) => selectedIds.includes(it.id));
         switch (true) {
-          case (canExpand && !allChildLoaded) || disabledIds?.includes(item.id):
+          case canExpand && !allChildLoaded:
             return CheckboxStatus.disabled;
           case selectedIds.includes(item.id):
             return CheckboxStatus.checked;
-          case !!childSelectedItems.length:
+          case !!childItem:
             return CheckboxStatus.indeterminate;
           default:
             return CheckboxStatus.nochecked;
@@ -143,15 +123,11 @@ export const useMillerColumns = <T>({
           newIds = selectedIds.filter((id) => !removeIds.includes(id));
         }
 
-        // Filter disabled options
-        newIds = newIds.filter((id) => !disabledIds?.includes(id));
-
         onSelectItemIds ? onSelectItemIds(newIds) : setSelectedIds(newIds);
       },
     }),
     [
       columns,
-      disabledIds,
       selectedIds,
       collectChildIds,
       collectAddParentIds,
