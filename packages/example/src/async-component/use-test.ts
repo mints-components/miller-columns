@@ -54,11 +54,13 @@ export const useTest = () => {
           setTimeout(() => r(mockSecond), 2000),
         );
         setItems([...items, ...(res as ItemType<ExtraItemType>[])]);
+      } else {
+        setLoadedIds([...loadedIds, item.id]);
       }
 
       setExpandedIds([...expandedIds, item.id]);
     },
-    [items, expandedIds],
+    [items, expandedIds, loadedIds],
   );
 
   // Scroll to load data and set it after loading
