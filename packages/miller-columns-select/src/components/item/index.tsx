@@ -9,7 +9,7 @@ interface Props<T> {
   canExpand: boolean;
   status: ItemStatus;
   checkStatus: CheckboxStatus;
-  onSelect: (it: ItemType<T>) => void;
+  onSelect: (it: ItemType<T>, canExpand: boolean) => void;
   onExpand: (it: ItemType<T>) => void;
 }
 

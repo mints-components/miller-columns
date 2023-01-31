@@ -11,7 +11,7 @@ export type ItemType<T> = {
   parentId: ID | null;
   id: ID;
   title: string;
-  items?: ItemType<T>[];
+  items: ItemType<T>[];
 } & T;
 
 export enum ItemStatus {

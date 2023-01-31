@@ -31,43 +31,17 @@ export const useMillerColumns = <T>({
 
   const collectChildIds = useCallback((item: ItemType<T>) => {
     const result: ID[] = [];
-    item.items?.forEach((child) => {
-      result.push(child.id);
-      result.push(...collectChildIds(child));
-    });
+
+    if (item.items.length) {
+      item.items.forEach((child) => {
+        result.push(...collectChildIds(child));
+      });
+    } else {
+      result.push(item.id);
+    }
+
     return result;
   }, []);
-
-  const collectAddParentIds = useCallback(
-    (item: ItemType<T>) => {
-      const result: ID[] = [];
-      const parentItem = itemMap[item.parentId ?? ''];
-      if (parentItem) {
-        const allChildSelected = parentItem.items?.every((it) =>
-          [...selectedIds, item.id].includes(it.id),
-        );
-        if (allChildSelected) {
-          result.push(parentItem.id);
-          result.push(...collectAddParentIds(parentItem));
-        }
-      }
-      return result;
-    },
-    [itemMap, selectedIds],
-  );
-
-  const collectRemoveParentIds = useCallback(
-    (item: ItemType<T>) => {
-      const result: ID[] = [];
-      const parentItem = itemMap[item.parentId ?? ''];
-      if (parentItem) {
-        result.push(parentItem.id);
-        result.push(...collectRemoveParentIds(parentItem));
-      }
-      return result;
-    },
-    [itemMap],
-  );
 
   return useMemo(
     () => ({
@@ -83,13 +57,15 @@ export const useMillerColumns = <T>({
         canExpand: boolean,
         allChildLoaded: boolean,
       ) {
-        const childItem = item.items?.find((it) => selectedIds.includes(it.id));
+        const childIds = collectChildIds(item);
+
         switch (true) {
           case canExpand && !allChildLoaded:
             return CheckboxStatus.disabled;
-          case selectedIds.includes(item.id):
+          case selectedIds.includes(item.id) ||
+            childIds.every((id) => selectedIds.includes(id)):
             return CheckboxStatus.checked;
-          case !!childItem:
+          case !!childIds.find((id) => selectedIds.includes(id)):
             return CheckboxStatus.indeterminate;
           default:
             return CheckboxStatus.nochecked;
@@ -99,42 +75,34 @@ export const useMillerColumns = <T>({
         setActiveId(item.id);
         onExpandItem?.(item);
       },
-      onSelectItem: (item: ItemType<T>) => {
+      onSelectItem: (item: ItemType<T>, canExpand: boolean) => {
         let newIds: ID[] = [];
-        const isRemoveExistedItem = !!selectedIds.includes(item.id);
-        if (!isRemoveExistedItem) {
-          const addIds = [
-            item.id,
-            ...collectChildIds(item),
-            ...collectAddParentIds(item),
-          ];
 
-          newIds = [
-            ...selectedIds,
-            ...addIds.filter((id) => !selectedIds.includes(id)),
-          ];
-        } else {
-          const removeIds = [
-            item.id,
-            ...collectChildIds(item),
-            ...collectRemoveParentIds(item),
-          ];
+        const childIds = collectChildIds(item);
 
-          newIds = selectedIds.filter((id) => !removeIds.includes(id));
+        switch (true) {
+          case !canExpand && !selectedIds.includes(item.id):
+            newIds.push(...[item.id, ...selectedIds]);
+            break;
+          case !canExpand && selectedIds.includes(item.id):
+            newIds.push(...selectedIds.filter((id) => id !== item.id));
+            break;
+          case canExpand && !childIds.every((id) => selectedIds.includes(id)):
+            newIds.push(
+              ...[
+                ...selectedIds,
+                ...childIds.filter((id) => !selectedIds.includes(id)),
+              ],
+            );
+            break;
+          case canExpand && childIds.every((id) => selectedIds.includes(id)):
+            newIds.push(...selectedIds.filter((id) => !childIds.includes(id)));
+            break;
         }
 
         onSelectItemIds ? onSelectItemIds(newIds) : setSelectedIds(newIds);
       },
     }),
-    [
-      columns,
-      selectedIds,
-      collectChildIds,
-      collectAddParentIds,
-      collectRemoveParentIds,
-      onSelectItemIds,
-      setSelectedIds,
-      onExpandItem,
-    ],
+    [columns, selectedIds, collectChildIds, onSelectItemIds, onExpandItem],
   );
 };

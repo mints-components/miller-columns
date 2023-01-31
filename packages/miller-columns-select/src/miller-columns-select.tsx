@@ -47,7 +47,7 @@ export const MillerColumnsSelect = <T,>({
       const hasMore = getHasMore?.({
         parentId: item.id,
         parentTitle: item.title,
-        items: item.items ?? [],
+        items: item.items,
         activeId: null,
       });
 
@@ -55,7 +55,7 @@ export const MillerColumnsSelect = <T,>({
         return false;
       }
 
-      return (item.items ?? [])?.every((it) => checkAllChildLoaded(it));
+      return item.items.every((it) => checkAllChildLoaded(it));
     },
     [getCanExpand, getHasMore],
   );
