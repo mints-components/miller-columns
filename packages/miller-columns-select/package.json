@@ -26,6 +26,7 @@
   "scripts": {
     "clean": "rm -rf dist && rm -rf types",
     "build": "yarn clean && tsc && vite build",
+    "prepublish": "yarn build",
     "publish": "yarn npm publish"
   },
   "dependencies": {
