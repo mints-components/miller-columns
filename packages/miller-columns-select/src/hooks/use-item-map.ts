@@ -9,13 +9,6 @@ interface Props<T> {
 export const useItemMap = <T>({ items }: Props<T>) => {
   const [itemMap, setItemMap] = useState<ItemMapType<T>>({});
 
-  const checkItemsDuplicate = useCallback(() => {
-    const duplicate = new Set(items.map((it) => it.id)).size !== items.length;
-    if (duplicate) {
-      throw new Error('miller-columns-select: Duplicate ID in items');
-    }
-  }, [items]);
-
   const collectChildItems = useCallback(
     (items: ItemType<T>[], item: ItemType<T>): ItemType<T>[] => {
       return items
@@ -41,9 +34,8 @@ export const useItemMap = <T>({ items }: Props<T>) => {
   }, [items, collectChildItems]);
 
   useEffect(() => {
-    checkItemsDuplicate();
     setItemMap(itemsToMap());
-  }, [checkItemsDuplicate, itemsToMap]);
+  }, [itemsToMap]);
 
   return useMemo(() => itemMap, [itemMap]);
 };
