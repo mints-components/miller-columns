@@ -33,6 +33,12 @@ export const mockData = [
   },
   {
     parentId: null,
+    id: '1',
+    title: '1-file',
+    type: TypeEnum.file,
+  },
+  {
+    parentId: null,
     id: '2',
     title: '2',
     type: TypeEnum.folder,
