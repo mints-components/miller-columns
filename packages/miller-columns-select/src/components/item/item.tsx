@@ -1,34 +1,36 @@
-import { ItemType, ItemStatus, CheckboxStatus } from '../../types';
+import type { ItemType } from '../../types';
 
+import type { CheckboxStatus } from '../checkbox/types';
 import { Checkbox } from '../checkbox';
 
+import { ItemStatus } from './types';
 import * as S from './styled';
 
 interface Props<T> {
   item: ItemType<T>;
-  canExpand: boolean;
   status: ItemStatus;
   checkStatus: CheckboxStatus;
-  onSelect: (it: ItemType<T>, canExpand: boolean) => void;
+  onSelect: (it: ItemType<T>) => void;
   onExpand: (it: ItemType<T>) => void;
 }
 
 export const Item = <T,>({
   item,
-  canExpand,
   status,
   checkStatus,
   onSelect,
   onExpand,
 }: Props<T>) => {
   const handleRowClick = () => {
-    if (canExpand) {
-      onExpand(item);
+    if (!item.canExpand) {
+      return;
     }
+
+    onExpand(item);
   };
 
   const handleCheckboxClick = () => {
-    onSelect(item, canExpand);
+    onSelect(item);
   };
 
   return (
@@ -39,7 +41,7 @@ export const Item = <T,>({
       <Checkbox status={checkStatus} onClick={handleCheckboxClick}>
         {item.title}
       </Checkbox>
-      {canExpand && <span className="indicator" />}
+      {item.canExpand && <span className="indicator" />}
     </S.Wrapper>
   );
 };

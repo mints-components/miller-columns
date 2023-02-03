@@ -4,13 +4,9 @@ export type ItemType<T> = {
   parentId: ID | null;
   id: ID;
   title: string;
-  items: ItemType<T>[];
+  items?: ItemType<T>[];
+  canExpand?: boolean;
 } & T;
-
-export enum ItemStatus {
-  selected = 'selected',
-  noselected = 'noselected',
-}
 
 export type ColumnType<T> = {
   parentId: ID | null;
