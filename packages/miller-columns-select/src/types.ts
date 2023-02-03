@@ -1,10 +1,3 @@
-export enum CheckboxStatus {
-  nochecked = 'nochecked',
-  checked = 'checked',
-  indeterminate = 'indeterminate',
-  disabled = 'disabled',
-}
-
 export type ID = string | number;
 
 export type ItemType<T> = {

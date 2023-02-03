@@ -1,7 +1,6 @@
 import classNames from 'classnames';
 
-import { CheckboxStatus } from '../../types';
-
+import { CheckboxStatus } from './types';
 import * as S from './styled';
 
 interface Props {
