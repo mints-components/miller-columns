@@ -27,8 +27,7 @@ export const Item = <T,>({
     }
   };
 
-  const handleCheckboxClick = (e: React.MouseEvent<HTMLLabelElement>) => {
-    e.stopPropagation();
+  const handleCheckboxClick = () => {
     onSelect(item, canExpand);
   };
 
