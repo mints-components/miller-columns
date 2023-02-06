@@ -17,17 +17,16 @@
  */
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import type { ID, ItemType, ColumnType } from 'miller-columns-select';
+import type { McsID, McsItem } from 'miller-columns-select';
 
 import type { ExtraItemType } from '../types';
 
 import { mockFirst, mockSecond, mockThird } from './mock';
 
 export const useTest = () => {
-  const [items, setItems] = useState<ItemType<ExtraItemType>[]>([]);
-  // Record whether the item has been expanded and whether the column has been loaded
-  const [expandedIds, setExpandedIds] = useState<ID[]>([]);
-  const [loadedIds, setLoadedIds] = useState<ID[]>([]);
+  const [items, setItems] = useState<McsItem<ExtraItemType>[]>([]);
+  // Record whether the column has been loaded
+  const [loadedIds, setLoadedIds] = useState<McsID[]>([]);
 
   // Get the initial items data
   // And know whether the first column has completed all data loaded
@@ -36,42 +35,34 @@ export const useTest = () => {
       const res = await new Promise((r) =>
         setTimeout(() => r(mockFirst), 2000),
       );
-      setItems(res as ItemType<ExtraItemType>[]);
-      setLoadedIds(['root']);
+      setItems(res as McsItem<ExtraItemType>[]);
+      setLoadedIds(['root', '1', '1-1', '1-1-1']);
     })();
   }, []);
 
   // Load more data when expanding
   // And judge whether the item is expanded
-  const onExpandItem = useCallback(
-    async (item: ItemType<ExtraItemType>) => {
-      if (expandedIds.includes(item.id)) {
-        return;
-      }
-
-      if (item.id === '2') {
+  const onExpand = useCallback(
+    async (id: McsID) => {
+      if (id === '2') {
         const res = await new Promise((r) =>
           setTimeout(() => r(mockSecond), 2000),
         );
-        setItems([...items, ...(res as ItemType<ExtraItemType>[])]);
-      } else {
-        setLoadedIds([...loadedIds, item.id]);
+        setItems([...items, ...(res as McsItem<ExtraItemType>[])]);
       }
-
-      setExpandedIds([...expandedIds, item.id]);
     },
-    [items, expandedIds, loadedIds],
+    [items],
   );
 
   // Scroll to load data and set it after loading
-  const onScrollColumn = useCallback(
-    async (column: ColumnType<ExtraItemType>) => {
-      if (column.parentId === '2') {
+  const onScroll = useCallback(
+    async (id: McsID | null) => {
+      if (id === '2') {
         const res = await new Promise((r) =>
           setTimeout(() => r(mockThird), 2000),
         );
-        setItems([...items, ...(res as ItemType<ExtraItemType>[])]);
-        setLoadedIds([...loadedIds, column.parentId ?? 'root']);
+        setItems([...items, ...(res as McsItem<ExtraItemType>[])]);
+        setLoadedIds([...loadedIds, id]);
       }
     },
     [items, loadedIds],
@@ -81,15 +72,12 @@ export const useTest = () => {
     () => ({
       items,
       // Determine whether the column is loaded
-      getHasMore(column: ColumnType<ExtraItemType>) {
-        if (loadedIds.includes(column.parentId ?? 'root')) {
-          return false;
-        }
-        return true;
+      getHasMore(id: McsID | null) {
+        return !loadedIds.includes(id ?? 'root');
       },
-      onExpandItem,
-      onScrollColumn,
+      onExpand,
+      onScroll,
     }),
-    [items, loadedIds, onExpandItem, onScrollColumn],
+    [items, loadedIds, onExpand, onScroll],
   );
 };

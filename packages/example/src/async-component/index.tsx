@@ -3,24 +3,26 @@ import MillerColumnsSelect, {
 } from 'miller-columns-select';
 
 import type { ExtraItemType } from '../types';
+import { TypeEnum } from '../types';
 
 import { useTest } from './use-test';
 
 export const AsyncMillerColumnsSelect = (
   props: Omit<
     MillerColumnsSelectProps<ExtraItemType>,
-    'items' | 'onExpandItem'
+    'items' | 'getCanExpand' | 'getHasMore' | 'onExpand' | 'onScroll'
   >,
 ) => {
-  const { items, getHasMore, onExpandItem, onScrollColumn } = useTest();
+  const { items, getHasMore, onExpand, onScroll } = useTest();
 
   return (
     <MillerColumnsSelect
       {...props}
-      getHasMore={getHasMore}
       items={items}
-      onExpandItem={onExpandItem}
-      onScrollColumn={onScrollColumn}
+      getCanExpand={(item) => item.type === TypeEnum.folder}
+      getHasMore={getHasMore}
+      onExpand={onExpand}
+      onScroll={onScroll}
     />
   );
 };

@@ -7,10 +7,9 @@ import {
   Radio,
   Intent,
 } from '@blueprintjs/core';
-import type { ItemType, ColumnType } from 'miller-columns-select';
+import type { McsItem, McsColumn } from 'miller-columns-select';
 
 import type { ExtraItemType } from './types';
-import { TypeEnum } from './types';
 import { BasicMillerColumnsSelect } from './basic-component';
 import { AsyncMillerColumnsSelect } from './async-component';
 
@@ -19,7 +18,7 @@ const ColumnHeight = [undefined, 200, 400, 600];
 
 function App() {
   const [selectedIds, setSelectedIds] = useState<
-    ItemType<ExtraItemType>['id'][]
+    McsItem<ExtraItemType>['id'][]
   >([]);
   const [columnCount, setColumnCount] = useState(3);
   const [columnHeight, setColumnHeight] = useState<number | undefined>(400);
@@ -30,7 +29,7 @@ function App() {
   const [showRenderLoading, setShowRenderLoading] = useState(false);
   const [mode, setModa] = useState('basic');
 
-  const renderTitle = (column: ColumnType<ExtraItemType>) => {
+  const renderTitle = (column: McsColumn) => {
     if (!showRenderTitle) {
       return null;
     }
@@ -42,7 +41,7 @@ function App() {
     );
   };
 
-  const renderEnd = (column: ColumnType<ExtraItemType>) => {
+  const renderEnd = (column: McsColumn) => {
     if (!showRenderEnd) {
       return null;
     }
@@ -52,7 +51,7 @@ function App() {
     );
   };
 
-  const renderHeader = (columns: ColumnType<ExtraItemType>[]) => {
+  const renderHeader = (columns: McsColumn[]) => {
     if (!showRenderHeader) {
       return null;
     }
@@ -68,7 +67,7 @@ function App() {
     );
   };
 
-  const renderFooter = (columns: ColumnType<ExtraItemType>[]) => {
+  const renderFooter = (columns: McsColumn[]) => {
     if (!showRenderFooter) {
       return null;
     }
@@ -90,10 +89,6 @@ function App() {
     }
 
     return <span>Custom Loading...</span>;
-  };
-
-  const handleExpandItem = (item: ItemType<ExtraItemType>) => {
-    console.log(item);
   };
 
   return (
@@ -210,7 +205,6 @@ function App() {
             style={{ marginTop: 12 }}
             columnCount={columnCount}
             columnHeight={columnHeight}
-            getCanExpand={(item) => item.type === TypeEnum.folder}
             renderTitle={renderTitle}
             renderEnd={renderEnd}
             renderHeader={renderHeader}
@@ -218,7 +212,6 @@ function App() {
             renderLoading={renderLoading}
             selectedIds={selectedIds}
             onSelectItemIds={(ids) => setSelectedIds(ids)}
-            onExpandItem={handleExpandItem}
           />
         </div>
       )}
@@ -229,7 +222,6 @@ function App() {
             style={{ marginTop: 12 }}
             columnCount={columnCount}
             columnHeight={120}
-            getCanExpand={(item) => item.type === TypeEnum.folder}
             renderTitle={renderTitle}
             renderEnd={renderEnd}
             renderHeader={renderHeader}
