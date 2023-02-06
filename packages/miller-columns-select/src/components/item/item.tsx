@@ -1,7 +1,6 @@
-import type { ItemType } from '../../types';
+import type { ItemType } from '../../hooks';
 
-import type { CheckboxStatus } from '../checkbox/types';
-import { Checkbox } from '../checkbox';
+import { Checkbox, CheckboxStatus } from '../checkbox';
 
 import { ItemStatus } from './types';
 import * as S from './styled';
@@ -10,8 +9,8 @@ interface Props<T> {
   item: ItemType<T>;
   status: ItemStatus;
   checkStatus: CheckboxStatus;
-  onSelect: (it: ItemType<T>) => void;
   onExpand: (it: ItemType<T>) => void;
+  onSelect: (it: ItemType<T>) => void;
 }
 
 export const Item = <T,>({

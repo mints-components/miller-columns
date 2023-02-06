@@ -1,26 +1,24 @@
 import { useMemo } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-import type { ItemType, ColumnType } from '../../types';
+import type { ID, ItemType, ColumnType } from '../../hooks';
 
 import * as S from './styled';
 
 interface Props<T> {
   count: number;
   column: ColumnType<T>;
-  hasMore: boolean;
   height?: number;
   renderItem: (item: ItemType<T>) => React.ReactNode;
   renderTitle?: (column: ColumnType<T>) => React.ReactNode;
   renderLoading?: (column: ColumnType<T>) => React.ReactNode;
   renderEnd?: (column: ColumnType<T>) => React.ReactNode;
-  onScroll?: (column: ColumnType<T>) => void;
+  onScroll?: (id: ID | null) => void;
 }
 
 export const Column = <T,>({
   count,
   column,
-  hasMore,
   height,
   renderItem,
   renderTitle,
@@ -28,9 +26,9 @@ export const Column = <T,>({
   renderEnd,
   onScroll,
 }: Props<T>) => {
-  const { parentId, items } = column;
+  const { parentId, items, hasMore } = column;
 
-  const handleNext = () => onScroll?.(column);
+  const handleNext = () => onScroll?.(column.parentId);
 
   const targetId = useMemo(
     () => `miller-columns-column-${parentId ?? 'root'}`,

@@ -1,64 +1,67 @@
-import { useCallback } from 'react';
-
-import type { ItemType, ColumnType } from './types';
-import { useMillerColumns, UseMillerColumnsProps } from './hooks';
+import type {
+  MillerColumnsSelectID,
+  MillerColumnsSelectItemType,
+  MillerColumnsSelectColumnType,
+} from './types';
+import { useItems, useColumns, useItem } from './hooks';
 import { Column, Item } from './components';
 import * as S from './styled';
 
-export interface MillerColumnsSelectProps<T> extends UseMillerColumnsProps<T> {
+export interface MillerColumnsSelectProps<T> {
+  items: MillerColumnsSelectItemType<T>[];
+  getCanExpand: (item: MillerColumnsSelectItemType<T>) => boolean;
+  getHasMore?: (id: MillerColumnsSelectID | null) => boolean;
+  onExpand?: (id: MillerColumnsSelectID) => void;
+  onScroll?: (id: MillerColumnsSelectID | null) => void;
   style?: React.CSSProperties;
   columnCount?: number;
   columnHeight?: number;
-  getCanExpand?: (item: ItemType<T>) => boolean;
-  renderTitle?: (column: ColumnType<T>) => React.ReactNode;
-  renderEnd?: (column: ColumnType<T>) => React.ReactNode;
-  renderHeader?: (columns: ColumnType<T>[]) => React.ReactNode;
-  renderFooter?: (columns: ColumnType<T>[]) => React.ReactNode;
-  getHasMore?: (column: ColumnType<T>) => boolean;
-  renderLoading?: (column: ColumnType<T>) => React.ReactNode;
-  onScrollColumn?: (column: ColumnType<T>) => void;
+  renderHeader?: (columns: MillerColumnsSelectColumnType[]) => React.ReactNode;
+  renderFooter?: (columns: MillerColumnsSelectColumnType[]) => React.ReactNode;
+  renderTitle?: (column: MillerColumnsSelectColumnType) => React.ReactNode;
+  renderEnd?: (column: MillerColumnsSelectColumnType) => React.ReactNode;
+  renderLoading?: (column: MillerColumnsSelectColumnType) => React.ReactNode;
+  selectedIds?: MillerColumnsSelectID[];
+  onSelectItemIds?: (selectedIds: MillerColumnsSelectID[]) => void;
 }
 
 export const MillerColumnsSelect = <T,>({
+  items,
+  getCanExpand,
+  getHasMore = () => false,
+  onExpand,
+  onScroll,
   style,
   columnCount,
   columnHeight,
-  getCanExpand,
-  renderTitle,
-  renderEnd,
   renderHeader,
   renderFooter,
-  getHasMore,
+  renderTitle,
+  renderEnd,
   renderLoading,
-  onScrollColumn,
-  ...props
+  selectedIds,
+  onSelectItemIds,
 }: MillerColumnsSelectProps<T>) => {
-  const {
-    columns,
-    getItemStatus,
-    getItemCheckStatus,
-    onExpandItem,
-    onSelectItem,
-  } = useMillerColumns<T>(props);
+  console.log(items);
 
-  const checkAllChildLoaded = useCallback(
-    (item: ItemType<T>): boolean => {
-      const canExpand = getCanExpand?.(item) ?? false;
-      const hasMore = getHasMore?.({
-        parentId: item.id,
-        parentTitle: item.title,
-        items: item.items,
-        activeId: null,
-      });
+  const transformItems = useItems<T>({
+    items,
+    getCanExpand,
+    getHasMore,
+  });
 
-      if (canExpand && hasMore) {
-        return false;
-      }
+  // console.log(transformItems);
 
-      return item.items.every((it) => checkAllChildLoaded(it));
-    },
-    [getCanExpand, getHasMore],
-  );
+  const { columns, onExpandItem } = useColumns<T>({
+    items: transformItems,
+    getHasMore,
+    onExpand,
+  });
+
+  const { getItemStatus, getItemCheckStatus, onSelectItem } = useItem<T>({
+    selectedIds,
+    onSelectItemIds,
+  });
 
   const header = renderHeader?.(columns) ?? null;
   const footer = renderFooter?.(columns) ?? null;
@@ -67,48 +70,28 @@ export const MillerColumnsSelect = <T,>({
     <S.Container style={style}>
       {header}
       <div className="main">
-        {columns.map((column) => {
-          const hasMore = getHasMore?.(column) ?? false;
-
-          if (!hasMore && !column.items.length) {
-            return null;
-          }
-
-          return (
-            <Column
-              key={column.parentId}
-              count={columnCount ?? 3}
-              column={column}
-              hasMore={hasMore}
-              height={columnHeight}
-              renderItem={(item) => {
-                const canExpand = getCanExpand?.(item) ?? false;
-                const status = getItemStatus(item, column);
-                const allChildLoaded = checkAllChildLoaded(item);
-                const checkStatus = getItemCheckStatus(
-                  item,
-                  canExpand,
-                  allChildLoaded,
-                );
-                return (
-                  <Item
-                    key={item.id}
-                    item={item}
-                    canExpand={canExpand}
-                    status={status}
-                    checkStatus={checkStatus}
-                    onSelect={onSelectItem}
-                    onExpand={onExpandItem}
-                  />
-                );
-              }}
-              renderTitle={renderTitle}
-              renderLoading={renderLoading}
-              renderEnd={renderEnd}
-              onScroll={onScrollColumn}
-            />
-          );
-        })}
+        {columns.map((column) => (
+          <Column<T>
+            key={column.parentId}
+            count={columnCount ?? 3}
+            column={column}
+            height={columnHeight}
+            renderItem={(item) => (
+              <Item
+                key={`${item.id}${item.canExpand ? '-expand' : ''}`}
+                item={item}
+                status={getItemStatus(item, column)}
+                checkStatus={getItemCheckStatus(item)}
+                onExpand={onExpandItem}
+                onSelect={onSelectItem}
+              />
+            )}
+            renderTitle={renderTitle}
+            renderEnd={renderEnd}
+            renderLoading={renderLoading}
+            onScroll={onScroll}
+          />
+        ))}
       </div>
       {footer}
     </S.Container>

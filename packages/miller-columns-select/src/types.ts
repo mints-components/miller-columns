@@ -1,18 +1,12 @@
-export type ID = string | number;
+export type MillerColumnsSelectID = string | number;
 
-export type ItemType<T> = {
-  parentId: ID | null;
-  id: ID;
+export type MillerColumnsSelectItemType<T> = {
+  parentId: MillerColumnsSelectID | null;
+  id: MillerColumnsSelectID;
   title: string;
-  items?: ItemType<T>[];
-  canExpand?: boolean;
 } & T;
 
-export type ColumnType<T> = {
-  parentId: ID | null;
-  parentTitle: string;
-  items: ItemType<T>[];
-  activeId: ID | null;
+export type MillerColumnsSelectColumnType = {
+  parentId: MillerColumnsSelectID | null;
+  parentTitle: string | null;
 };
-
-export type ItemMapType<T> = Record<ID, ItemType<T>>;
