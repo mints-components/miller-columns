@@ -29,6 +29,9 @@ export const Item = <T,>({
   };
 
   const handleCheckboxClick = () => {
+    if (checkStatus === CheckboxStatus.disabled) {
+      return;
+    }
     onSelect(item);
   };
 
