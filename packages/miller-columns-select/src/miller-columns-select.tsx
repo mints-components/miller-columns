@@ -38,15 +38,11 @@ export const MillerColumnsSelect = <T,>({
   selectedIds,
   onSelectItemIds,
 }: MillerColumnsSelectProps<T>) => {
-  console.log(items);
-
   const transformItems = useItems<T>({
     items,
     getCanExpand,
     getHasMore,
   });
-
-  // console.log(transformItems);
 
   const { columns, onExpandItem } = useColumns<T>({
     items: transformItems,
