@@ -1,12 +1,12 @@
-export type MillerColumnsSelectID = string | number;
+export type McsID = string | number;
 
-export type MillerColumnsSelectItemType<T> = {
-  parentId: MillerColumnsSelectID | null;
-  id: MillerColumnsSelectID;
+export type McsItem<T> = {
+  parentId: McsID | null;
+  id: McsID;
   title: string;
 } & T;
 
-export type MillerColumnsSelectColumnType = {
-  parentId: MillerColumnsSelectID | null;
+export type McsColumn = {
+  parentId: McsID | null;
   parentTitle: string | null;
 };

@@ -1,28 +1,24 @@
-import type {
-  MillerColumnsSelectID,
-  MillerColumnsSelectItemType,
-  MillerColumnsSelectColumnType,
-} from './types';
+import type { McsID, McsItem, McsColumn } from './types';
 import { useItems, useColumns, useItem } from './hooks';
 import { Column, Item } from './components';
 import * as S from './styled';
 
 export interface MillerColumnsSelectProps<T> {
-  items: MillerColumnsSelectItemType<T>[];
-  getCanExpand: (item: MillerColumnsSelectItemType<T>) => boolean;
-  getHasMore?: (id: MillerColumnsSelectID | null) => boolean;
-  onExpand?: (id: MillerColumnsSelectID) => void;
-  onScroll?: (id: MillerColumnsSelectID | null) => void;
+  items: McsItem<T>[];
+  getCanExpand: (item: McsItem<T>) => boolean;
+  getHasMore?: (id: McsID | null) => boolean;
+  onExpand?: (id: McsID) => void;
+  onScroll?: (id: McsID | null) => void;
   style?: React.CSSProperties;
   columnCount?: number;
   columnHeight?: number;
-  renderHeader?: (columns: MillerColumnsSelectColumnType[]) => React.ReactNode;
-  renderFooter?: (columns: MillerColumnsSelectColumnType[]) => React.ReactNode;
-  renderTitle?: (column: MillerColumnsSelectColumnType) => React.ReactNode;
-  renderEnd?: (column: MillerColumnsSelectColumnType) => React.ReactNode;
-  renderLoading?: (column: MillerColumnsSelectColumnType) => React.ReactNode;
-  selectedIds?: MillerColumnsSelectID[];
-  onSelectItemIds?: (selectedIds: MillerColumnsSelectID[]) => void;
+  renderHeader?: (columns: McsColumn[]) => React.ReactNode;
+  renderFooter?: (columns: McsColumn[]) => React.ReactNode;
+  renderTitle?: (column: McsColumn) => React.ReactNode;
+  renderEnd?: (column: McsColumn) => React.ReactNode;
+  renderLoading?: (column: McsColumn) => React.ReactNode;
+  selectedIds?: McsID[];
+  onSelectItemIds?: (selectedIds: McsID[]) => void;
 }
 
 export const MillerColumnsSelect = <T,>({

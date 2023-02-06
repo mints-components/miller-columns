@@ -1,12 +1,12 @@
 import { useCallback, useMemo } from 'react';
 
-import { MillerColumnsSelectItemType } from '../types';
+import { McsItem } from '../types';
 
 import type { ID, ItemType } from './types';
 
 interface Props<T> {
-  items: MillerColumnsSelectItemType<T>[];
-  getCanExpand: (item: MillerColumnsSelectItemType<T>) => boolean;
+  items: McsItem<T>[];
+  getCanExpand: (item: McsItem<T>) => boolean;
   getHasMore?: (id: ID) => boolean;
 }
 
