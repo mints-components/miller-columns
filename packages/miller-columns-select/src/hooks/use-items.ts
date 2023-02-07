@@ -6,7 +6,7 @@ import type { ID, ItemType } from './types';
 
 interface Props<T> {
   items: McsItem<T>[];
-  getCanExpand: (item: McsItem<T>) => boolean;
+  getCanExpand?: (item: McsItem<T>) => boolean;
   getHasMore?: (id: ID) => boolean;
 }
 
@@ -16,7 +16,7 @@ export const useItems = <T>({ items, getCanExpand, getHasMore }: Props<T>) => {
       return items
         .filter((it) => (item ? it.parentId === item.id : true))
         .map((it) => {
-          const canExpand = getCanExpand(it);
+          const canExpand = getCanExpand?.(it) ?? false;
           const childLoaded = canExpand ? !getHasMore?.(it.id) : true;
           const childItems = canExpand
             ? transformItems({

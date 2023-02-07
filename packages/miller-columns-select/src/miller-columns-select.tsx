@@ -5,7 +5,7 @@ import * as S from './styled';
 
 export interface MillerColumnsSelectProps<T> {
   items: McsItem<T>[];
-  getCanExpand: (item: McsItem<T>) => boolean;
+  getCanExpand?: (item: McsItem<T>) => boolean;
   getHasMore?: (id: McsID | null) => boolean;
   onExpand?: (id: McsID) => void;
   onScroll?: (id: McsID | null) => void;

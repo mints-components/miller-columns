@@ -80,7 +80,7 @@ export const Example = () => {
 | Prop            | Type                                            | Default           | Description                              |
 | --------------- | ----------------------------------------------- | ----------------- | ---------------------------------------- | ------------------------------------------ |
 | items\*         | `ItemType<T>`                                   |                   | item used to display in columns          |
-| getCanExpand\*  | `(id: ID) => boolean`                           |                   | distinguish whether item can be expanded |
+| getCanExpand    | `(id: ID) => boolean`                           |                   | distinguish whether item can be expanded |
 | getHasMore      | `(id: ID                                        | null) => boolean` | () => false                              | determine whether the column has more data |
 | onExpandItem    | `(item: ItemType<T>) => void`                   |                   | when item expand will call               |
 | onScrollColumn  | `(column: ColumnType<T>) => void`               |                   | when column scroll will call             |
