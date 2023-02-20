@@ -21,11 +21,10 @@ export const Item = <T,>({
   onExpand,
 }: Props<T>) => {
   const handleRowClick = () => {
-    if (!item.canExpand) {
-      return;
+    if (item.canExpand) {
+      onExpand(item);
     }
-
-    onExpand(item);
+    handleCheckboxClick();
   };
 
   const handleCheckboxClick = () => {
