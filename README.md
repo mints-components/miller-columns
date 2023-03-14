@@ -78,10 +78,10 @@ export const Example = () => {
 ## Props
 
 | Prop            | Type                                            | Default           | Description                              |
-| --------------- | ----------------------------------------------- | ----------------- | ---------------------------------------- | ------------------------------------------ |
+| --------------- | ----------------------------------------------- | ----------------- | ---------------------------------------- |
 | items\*         | `ItemType<T>`                                   |                   | item used to display in columns          |
 | getCanExpand    | `(id: ID) => boolean`                           |                   | distinguish whether item can be expanded |
-| getHasMore      | `(id: ID                                        | null) => boolean` | () => false                              | determine whether the column has more data |
+| getHasMore      | `(id: ID\|null) => boolean`                     |() => false        |determine whether the column has more data|
 | onExpandItem    | `(item: ItemType<T>) => void`                   |                   | when item expand will call               |
 | onScrollColumn  | `(column: ColumnType<T>) => void`               |                   | when column scroll will call             |
 | columnCount     | number                                          | 3                 | columns to display in a container        |
