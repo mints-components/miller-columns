@@ -104,8 +104,9 @@ export const useItem = <T>({
         onSelectItemIds ? onSelectItemIds(newIds) : setSelectedIds(newIds);
       },
       onSelectItemAll: () => {
+        const itemIds = items.filter((it) => !it.canExpand).map((it) => it.id);
         let newIds: ID[] = [];
-        if (!selectedIds.length) {
+        if (selectedIds.length !== itemIds.length) {
           newIds = items.filter((it) => !it.canExpand).map((it) => it.id);
         }
 
