@@ -52,7 +52,7 @@ export const Column = <T,>({
         endMessage={end}
         scrollableTarget={targetId}
       >
-        {!parentId && renderItemAll()}
+        {!parentId && items.length ? renderItemAll() : null}
         {items.map((it) => renderItem(it))}
       </InfiniteScroll>
     </S.Container>
