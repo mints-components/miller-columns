@@ -10,6 +10,7 @@ interface Props<T> {
   column: ColumnType<T>;
   height?: number;
   renderItem: (item: ItemType<T>) => React.ReactNode;
+  renderItemAll: () => React.ReactNode;
   renderTitle?: (column: ColumnType<T>) => React.ReactNode;
   renderLoading?: (column: ColumnType<T>) => React.ReactNode;
   renderEnd?: (column: ColumnType<T>) => React.ReactNode;
@@ -21,6 +22,7 @@ export const Column = <T,>({
   column,
   height,
   renderItem,
+  renderItemAll,
   renderTitle,
   renderLoading,
   renderEnd,
@@ -50,6 +52,7 @@ export const Column = <T,>({
         endMessage={end}
         scrollableTarget={targetId}
       >
+        {!parentId && renderItemAll()}
         {items.map((it) => renderItem(it))}
       </InfiniteScroll>
     </S.Container>

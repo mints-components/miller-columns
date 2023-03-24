@@ -4,17 +4,19 @@ import { ItemStatus, CheckboxStatus } from '../components';
 
 import type { ID, ItemType, ColumnType } from './types';
 
-interface Props {
+interface Props<T> {
+  items: ItemType<T>[];
   getHasMore?: (columnId: ID | null) => boolean;
   selectedIds?: ID[];
   onSelectItemIds?: (selectedIds: ID[]) => void;
 }
 
 export const useItem = <T>({
+  items,
   getHasMore,
   onSelectItemIds,
   ...props
-}: Props) => {
+}: Props<T>) => {
   const [selectedIds, setSelectedIds] = useState<ID[]>([]);
 
   useEffect(() => {
@@ -61,6 +63,17 @@ export const useItem = <T>({
             return CheckboxStatus.nochecked;
         }
       },
+      getItemAllCheckStatus() {
+        const itemIds = items.filter((it) => !it.canExpand).map((it) => it.id);
+        switch (true) {
+          case selectedIds.length >= itemIds.length:
+            return CheckboxStatus.checked;
+          case !!selectedIds.length:
+            return CheckboxStatus.indeterminate;
+          default:
+            return CheckboxStatus.nochecked;
+        }
+      },
       onSelectItem: (item: ItemType<T>) => {
         let newIds: ID[] = [];
 
@@ -90,7 +103,15 @@ export const useItem = <T>({
 
         onSelectItemIds ? onSelectItemIds(newIds) : setSelectedIds(newIds);
       },
+      onSelectItemAll: () => {
+        let newIds: ID[] = [];
+        if (!selectedIds.length) {
+          newIds = items.filter((it) => !it.canExpand).map((it) => it.id);
+        }
+
+        onSelectItemIds ? onSelectItemIds(newIds) : setSelectedIds(newIds);
+      },
     }),
-    [selectedIds, collectChildIds, onSelectItemIds],
+    [items, selectedIds, collectChildIds, onSelectItemIds],
   );
 };

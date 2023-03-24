@@ -1,6 +1,6 @@
 import type { McsID, McsItem, McsColumn } from './types';
 import { useItems, useColumns, useItem } from './hooks';
-import { Column, Item } from './components';
+import { Column, Item, ItemAll } from './components';
 import * as S from './styled';
 
 export interface MillerColumnsSelectProps<T> {
@@ -50,7 +50,14 @@ export const MillerColumnsSelect = <T,>({
     onExpand,
   });
 
-  const { getItemStatus, getItemCheckStatus, onSelectItem } = useItem<T>({
+  const {
+    getItemStatus,
+    getItemCheckStatus,
+    getItemAllCheckStatus,
+    onSelectItem,
+    onSelectItemAll,
+  } = useItem<T>({
+    items: transformItems,
     selectedIds,
     onSelectItemIds,
   });
@@ -76,6 +83,12 @@ export const MillerColumnsSelect = <T,>({
                 checkStatus={getItemCheckStatus(item)}
                 onExpand={onExpandItem}
                 onSelect={onSelectItem}
+              />
+            )}
+            renderItemAll={() => (
+              <ItemAll
+                status={getItemAllCheckStatus()}
+                onSelect={onSelectItemAll}
               />
             )}
             renderTitle={renderTitle}
