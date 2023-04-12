@@ -77,22 +77,23 @@ export const Example = () => {
 
 ## Props
 
-| Prop            | Type                                            | Default     | Description                                |
-| --------------- | ----------------------------------------------- | ----------- | ------------------------------------------ |
-| items\*         | `ItemType<T>`                                   |             | item used to display in columns            |
-| getCanExpand    | `(id: ID) => boolean`                           |             | distinguish whether item can be expanded   |
-| getHasMore      | `(id: ID\|null) => boolean`                     | () => false | determine whether the column has more data |
-| onExpandItem    | `(item: ItemType<T>) => void`                   |             | when item expand will call                 |
-| onScrollColumn  | `(column: ColumnType<T>) => void`               |             | when column scroll will call               |
-| columnCount     | number                                          | 3           | columns to display in a container          |
-| columnHeight    | number                                          |             | columns height (control scrolling)         |
-| renderTitle     | `(column: ColumnType<T>) => React.ReactNode`    |             | display column title                       |
-| renderEnd       | `(column: ColumnType<T>) => React.ReactNode`    |             | display column end                         |
-| renderLoading   | `(column: ColumnType<T>) => React.ReactNode`    |             | display column loading                     |
-| renderHeader    | `(columns: ColumnType<T>[]) => React.ReactNode` |             | display container header                   |
-| renderFooter    | `(columns: ColumnType<T>[]) => React.ReactNode` |             | display container footer                   |
-| selectedIds     | `ID[]`                                          | `[]`        | selected ids                               |
-| onSelectItemIds | `(selectedIds: ID[]) => void`                   |             | set selected ids                           |
+| Prop            | Type                                        | Default     | Description                                |
+| --------------- | ------------------------------------------- | ----------- | ------------------------------------------ |
+| items\*         | `McsItem<T>[]`                              |             | item used to display in columns            |
+| getCanExpand    | `(id: McsID) => boolean`                    |             | distinguish whether item can be expanded   |
+| getHasMore      | `(id: McsID\|null) => boolean`              | () => false | determine whether the column has more data |
+| onExpandItem    | `(item: McsItem<T>) => void`                |             | when item expand will call                 |
+| onScrollColumn  | `(column: ColumnType) => void`              |             | when column scroll will call               |
+| columnCount     | number                                      | 3           | columns to display in a container          |
+| columnHeight    | number                                      |             | columns height (control scrolling)         |
+| renderTitle     | `(column: McsColumn) => React.ReactNode`    |             | display column title                       |
+| renderEnd       | `(column: McsColumn) => React.ReactNode`    |             | display column end                         |
+| renderLoading   | `(column: McsColumn) => React.ReactNode`    |             | display column loading                     |
+| renderHeader    | `(columns: McsColumn[]) => React.ReactNode` |             | display container header                   |
+| renderFooter    | `(columns: McsColumn[]) => React.ReactNode` |             | display container footer                   |
+| disabledIds     | `McsID[]`                                   |             | disabled ids                               |
+| selectedIds     | `McsID[]`                                   | `[]`        | selected ids                               |
+| onSelectItemIds | `(selectedIds: McsID[]) => void`            |             | set selected ids                           |
 
 ## Start Example(Development)
 
