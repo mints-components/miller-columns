@@ -60,6 +60,7 @@ export const mockData = [
     id: '2-3',
     title: '2-3',
     type: TypeEnum.file,
+    disabled: true,
   },
   {
     parentId: '2',
@@ -102,6 +103,7 @@ export const mockData = [
     id: '3',
     title: '3',
     type: TypeEnum.file,
+    disabled: true,
   },
   {
     parentId: null,

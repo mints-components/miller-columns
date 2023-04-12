@@ -23,6 +23,12 @@ export const useItem = <T>({
     setSelectedIds(props.selectedIds ?? []);
   }, [props.selectedIds]);
 
+  const canSelectedAllItemIds = useMemo(
+    () =>
+      items.filter((it) => !it.canExpand && !it.disabled).map((it) => it.id),
+    [items],
+  );
+
   const collectChildIds = useCallback((item: ItemType<T>) => {
     const result: ID[] = [];
 
@@ -30,7 +36,7 @@ export const useItem = <T>({
       item.items.forEach((child) => {
         result.push(...collectChildIds(child));
       });
-    } else {
+    } else if (!item.disabled) {
       result.push(item.id);
     }
 
@@ -49,7 +55,7 @@ export const useItem = <T>({
         const childIds = collectChildIds(item);
 
         switch (true) {
-          case !item.childLoaded:
+          case !item.childLoaded || item.disabled:
             return CheckboxStatus.disabled;
           case !item.canExpand && selectedIds.includes(item.id):
             return CheckboxStatus.checked;
@@ -64,9 +70,8 @@ export const useItem = <T>({
         }
       },
       getItemAllCheckStatus() {
-        const itemIds = items.filter((it) => !it.canExpand).map((it) => it.id);
         switch (true) {
-          case selectedIds.length >= itemIds.length:
+          case selectedIds.length >= canSelectedAllItemIds.length:
             return CheckboxStatus.checked;
           case !!selectedIds.length:
             return CheckboxStatus.indeterminate;
@@ -104,15 +109,14 @@ export const useItem = <T>({
         onSelectItemIds ? onSelectItemIds(newIds) : setSelectedIds(newIds);
       },
       onSelectItemAll: () => {
-        const itemIds = items.filter((it) => !it.canExpand).map((it) => it.id);
         let newIds: ID[] = [];
-        if (selectedIds.length !== itemIds.length) {
-          newIds = items.filter((it) => !it.canExpand).map((it) => it.id);
+        if (selectedIds.length !== canSelectedAllItemIds.length) {
+          newIds = canSelectedAllItemIds;
         }
 
         onSelectItemIds ? onSelectItemIds(newIds) : setSelectedIds(newIds);
       },
     }),
-    [items, selectedIds, collectChildIds, onSelectItemIds],
+    [canSelectedAllItemIds, selectedIds, collectChildIds, onSelectItemIds],
   );
 };
