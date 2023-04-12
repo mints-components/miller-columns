@@ -1,6 +1,6 @@
 ## 1.0.0
 
-`2023-01-31`
+`2023-04-12`
 
 - A flat data structure makes usage simple.
 - Support for loading data asynchronously.
