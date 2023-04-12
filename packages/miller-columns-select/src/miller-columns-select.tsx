@@ -17,6 +17,7 @@ export interface MillerColumnsSelectProps<T> {
   renderTitle?: (column: McsColumn) => React.ReactNode;
   renderEnd?: (column: McsColumn) => React.ReactNode;
   renderLoading?: (column: McsColumn) => React.ReactNode;
+  disabledIds?: McsID[];
   selectedIds?: McsID[];
   onSelectItemIds?: (selectedIds: McsID[]) => void;
 }
@@ -35,11 +36,13 @@ export const MillerColumnsSelect = <T,>({
   renderTitle,
   renderEnd,
   renderLoading,
+  disabledIds,
   selectedIds,
   onSelectItemIds,
 }: MillerColumnsSelectProps<T>) => {
   const transformItems = useItems<T>({
     items,
+    disabledIds,
     getCanExpand,
     getHasMore,
   });

@@ -1,16 +1,22 @@
 import { useCallback, useMemo } from 'react';
 
-import { McsItem } from '../types';
+import { McsID, McsItem } from '../types';
 
 import type { ID, ItemType } from './types';
 
 interface Props<T> {
   items: McsItem<T>[];
+  disabledIds?: McsID[];
   getCanExpand?: (item: McsItem<T>) => boolean;
   getHasMore?: (id: ID) => boolean;
 }
 
-export const useItems = <T>({ items, getCanExpand, getHasMore }: Props<T>) => {
+export const useItems = <T>({
+  items,
+  disabledIds,
+  getCanExpand,
+  getHasMore,
+}: Props<T>) => {
   const checkChildLoaded = useCallback(
     (item: McsItem<T>): boolean => {
       const canExpand = getCanExpand?.(item) ?? false;
@@ -46,12 +52,13 @@ export const useItems = <T>({ items, getCanExpand, getHasMore }: Props<T>) => {
           return {
             ...it,
             items: childItems,
+            disabled: it.disabled ?? disabledIds?.includes(it.id) ?? false,
             canExpand,
             childLoaded,
           };
         });
     },
-    [items, getCanExpand, checkChildLoaded],
+    [items, disabledIds, getCanExpand, checkChildLoaded],
   );
 
   return useMemo(() => transformItems(), [transformItems]);
