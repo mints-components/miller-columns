@@ -11,6 +11,7 @@
     "start": "yarn workspace miller-columns-select-example dev",
     "postinstall": "husky install"
   },
+  "repository": "git@github.com:mintsweet/miller-columns-select.git",
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
       "prettier --write",
