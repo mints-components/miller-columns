@@ -12,6 +12,7 @@ export interface MillerColumnsSelectProps<T> {
   style?: React.CSSProperties;
   columnCount?: number;
   columnHeight?: number;
+  showSelectAll?: boolean;
   renderHeader?: (columns: McsColumn[]) => React.ReactNode;
   renderFooter?: (columns: McsColumn[]) => React.ReactNode;
   renderTitle?: (column: McsColumn) => React.ReactNode;
@@ -31,6 +32,7 @@ export const MillerColumnsSelect = <T,>({
   style,
   columnCount,
   columnHeight,
+  showSelectAll,
   renderHeader,
   renderFooter,
   renderTitle,
@@ -78,6 +80,7 @@ export const MillerColumnsSelect = <T,>({
             count={columnCount ?? 3}
             column={column}
             height={columnHeight}
+            showSelectAll={showSelectAll ?? false}
             renderItem={(item) => (
               <Item
                 key={`${item.id}${item.canExpand ? '-expand' : ''}`}

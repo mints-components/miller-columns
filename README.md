@@ -86,6 +86,7 @@ export const Example = () => {
 | onScrollColumn  | `(column: ColumnType) => void`              |             | when column scroll will call               |
 | columnCount     | number                                      | 3           | columns to display in a container          |
 | columnHeight    | number                                      |             | columns height (control scrolling)         |
+| showSelectAll   | boolean                                     | false       | show select all button                     |
 | renderTitle     | `(column: McsColumn) => React.ReactNode`    |             | display column title                       |
 | renderEnd       | `(column: McsColumn) => React.ReactNode`    |             | display column end                         |
 | renderLoading   | `(column: McsColumn) => React.ReactNode`    |             | display column loading                     |
