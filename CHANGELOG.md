@@ -1,3 +1,10 @@
+## 1.1.0
+
+`2023-04-27`
+
+- Support new props `showSelectAll`. [#3](https://github.com/mintsweet/miller-columns-select/issues/3)
+- Fixed the loading state lost. [#4](https://github.com/mintsweet/miller-columns-select/issues/4)
+
 ## 1.0.0
 
 `2023-04-12`
