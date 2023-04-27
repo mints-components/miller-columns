@@ -44,6 +44,7 @@ export const Column = <T,>({
   return (
     <S.Container id={targetId} count={count} height={height}>
       {title}
+      {!parentId && items.length ? renderItemAll() : null}
       <InfiniteScroll
         dataLength={items.length}
         hasMore={hasMore}
@@ -52,7 +53,6 @@ export const Column = <T,>({
         endMessage={end}
         scrollableTarget={targetId}
       >
-        {!parentId && items.length ? renderItemAll() : null}
         {items.map((it) => renderItem(it))}
       </InfiniteScroll>
     </S.Container>
