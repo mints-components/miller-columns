@@ -9,6 +9,7 @@ interface Props<T> {
   count: number;
   column: ColumnType<T>;
   height?: number;
+  showSelectAll: boolean;
   renderItem: (item: ItemType<T>) => React.ReactNode;
   renderItemAll: () => React.ReactNode;
   renderTitle?: (column: ColumnType<T>) => React.ReactNode;
@@ -21,6 +22,7 @@ export const Column = <T,>({
   count,
   column,
   height,
+  showSelectAll,
   renderItem,
   renderItemAll,
   renderTitle,
@@ -44,7 +46,7 @@ export const Column = <T,>({
   return (
     <S.Container id={targetId} count={count} height={height}>
       {title}
-      {!parentId && items.length ? renderItemAll() : null}
+      {!parentId && showSelectAll && items.length ? renderItemAll() : null}
       <InfiniteScroll
         dataLength={items.length}
         hasMore={hasMore}

@@ -22,6 +22,7 @@ function App() {
   >([]);
   const [columnCount, setColumnCount] = useState(3);
   const [columnHeight, setColumnHeight] = useState<number | undefined>(400);
+  const [showSelectAll, setShowSelectAll] = useState(false);
   const [showRenderTitle, setShowRenderTitle] = useState(false);
   const [showRenderEnd, setShowRenderEnd] = useState(false);
   const [showRenderHeader, setShowRenderHeader] = useState(false);
@@ -128,6 +129,15 @@ function App() {
       <div className="block">
         <div className="item">
           <Switch
+            label="renderSelectAll"
+            checked={showSelectAll}
+            onChange={(e) =>
+              setShowSelectAll((e.target as HTMLInputElement).checked)
+            }
+          />
+        </div>
+        <div className="item">
+          <Switch
             label="renderTitle"
             checked={showRenderTitle}
             onChange={(e) =>
@@ -205,6 +215,7 @@ function App() {
             style={{ marginTop: 12 }}
             columnCount={columnCount}
             columnHeight={columnHeight}
+            showSelectAll={showSelectAll}
             renderTitle={renderTitle}
             renderEnd={renderEnd}
             renderHeader={renderHeader}
@@ -222,6 +233,7 @@ function App() {
             style={{ marginTop: 12 }}
             columnCount={columnCount}
             columnHeight={120}
+            showSelectAll={showSelectAll}
             renderTitle={renderTitle}
             renderEnd={renderEnd}
             renderHeader={renderHeader}
