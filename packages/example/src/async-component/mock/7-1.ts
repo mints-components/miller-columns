@@ -16,31 +16,4 @@
  *
  */
 
-import { TypeEnum } from '../../types';
-
-export const mockThird = [
-  {
-    parentId: '2',
-    id: '2-6',
-    title: '2-6',
-    type: TypeEnum.file,
-  },
-  {
-    parentId: '2',
-    id: '2-7',
-    title: '2-7',
-    type: TypeEnum.file,
-  },
-  {
-    parentId: '2',
-    id: '2-8',
-    title: '2-8',
-    type: TypeEnum.file,
-  },
-  {
-    parentId: '2',
-    id: '2-9',
-    title: '2-9',
-    type: TypeEnum.file,
-  },
-];
+export const mock_7_1 = [];

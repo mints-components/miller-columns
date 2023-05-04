@@ -21,7 +21,15 @@ import type { McsID, McsItem } from 'miller-columns-select';
 
 import type { ExtraItemType } from '../types';
 
-import { mockFirst, mockSecond, mockThird } from './mock';
+import {
+  mock_1,
+  mock_1_1,
+  mock_1_1_1,
+  mock_2_1,
+  mock_2_1_1,
+  mock_2_2,
+  mock_7_1,
+} from './mock';
 
 export const useTest = () => {
   const [items, setItems] = useState<McsItem<ExtraItemType>[]>([]);
@@ -32,11 +40,9 @@ export const useTest = () => {
   // And know whether the first column has completed all data loaded
   useEffect(() => {
     (async () => {
-      const res = await new Promise((r) =>
-        setTimeout(() => r(mockFirst), 2000),
-      );
+      const res = await new Promise((r) => setTimeout(() => r(mock_1), 1000));
       setItems(res as McsItem<ExtraItemType>[]);
-      setLoadedIds(['root', '1', '1-1', '1-1-1']);
+      setLoadedIds(['root']);
     })();
   }, []);
 
@@ -44,25 +50,50 @@ export const useTest = () => {
   // And judge whether the item is expanded
   const onExpand = useCallback(
     async (id: McsID) => {
-      if (id === '2') {
+      if (id === '1') {
         const res = await new Promise((r) =>
-          setTimeout(() => r(mockSecond), 2000),
+          setTimeout(() => r(mock_1_1), 1000),
         );
         setItems([...items, ...(res as McsItem<ExtraItemType>[])]);
+        setLoadedIds([...loadedIds, '1']);
+      } else if (id === '1-1') {
+        const res = await new Promise((r) =>
+          setTimeout(() => r(mock_1_1_1), 1000),
+        );
+        setItems([...items, ...(res as McsItem<ExtraItemType>[])]);
+        setLoadedIds([...loadedIds, '1-1']);
+      } else if (id === '2') {
+        const res = await new Promise((r) =>
+          setTimeout(() => r(mock_2_1), 1000),
+        );
+        setItems([...items, ...(res as McsItem<ExtraItemType>[])]);
+      } else if (id === '2-1') {
+        const res = await new Promise((r) =>
+          setTimeout(() => r(mock_2_1_1), 1000),
+        );
+        setItems([...items, ...(res as McsItem<ExtraItemType>[])]);
+        setLoadedIds([...loadedIds, '2-1']);
+      } else if (id === '7') {
+        const res = await new Promise((r) =>
+          setTimeout(() => r(mock_7_1), 1000),
+        );
+        setItems([...items, ...(res as McsItem<ExtraItemType>[])]);
+        setLoadedIds([...loadedIds, '7']);
       }
     },
-    [items],
+    [items, loadedIds],
   );
 
   // Scroll to load data and set it after loading
   const onScroll = useCallback(
     async (id: McsID | null) => {
+      console.log(1);
       if (id === '2') {
         const res = await new Promise((r) =>
-          setTimeout(() => r(mockThird), 2000),
+          setTimeout(() => r(mock_2_2), 1000),
         );
         setItems([...items, ...(res as McsItem<ExtraItemType>[])]);
-        setLoadedIds([...loadedIds, id]);
+        setLoadedIds([...loadedIds, '2']);
       }
     },
     [items, loadedIds],

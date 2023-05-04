@@ -32,7 +32,7 @@ export const useItem = <T>({
   const collectChildIds = useCallback((item: ItemType<T>) => {
     const result: ID[] = [];
 
-    if (item.items && item.items.length) {
+    if (item.canExpand) {
       item.items.forEach((child) => {
         result.push(...collectChildIds(child));
       });
@@ -55,7 +55,9 @@ export const useItem = <T>({
         const childIds = collectChildIds(item);
 
         switch (true) {
-          case !item.childLoaded || item.disabled:
+          case item.disabled ||
+            !item.childLoaded ||
+            (item.canExpand && item.items.length === 0):
             return CheckboxStatus.disabled;
           case !item.canExpand && selectedIds.includes(item.id):
             return CheckboxStatus.checked;

@@ -41,7 +41,8 @@ export const Column = <T,>({
 
   const title = renderTitle?.(column) ?? null;
   const loader = renderLoading?.(column) ?? 'Loading...';
-  const end = renderEnd?.(column) ?? null;
+  const end =
+    items.length === 0 ? renderEnd?.(column) ?? 'No data to select' : null;
 
   return (
     <S.Container id={targetId} count={count} height={height}>
