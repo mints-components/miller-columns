@@ -18,35 +18,11 @@
 
 import { TypeEnum } from '../../types';
 
-export const mockSecond = [
+export const mock_1_1 = [
   {
-    parentId: '2',
-    id: '2-1',
-    title: '2-1',
-    type: TypeEnum.file,
-  },
-  {
-    parentId: '2',
-    id: '2-2',
-    title: '2-2',
-    type: TypeEnum.file,
-  },
-  {
-    parentId: '2',
-    id: '2-3',
-    title: '2-3',
-    type: TypeEnum.file,
-  },
-  {
-    parentId: '2',
-    id: '2-4',
-    title: '2-4',
-    type: TypeEnum.file,
-  },
-  {
-    parentId: '2',
-    id: '2-5',
-    title: '2-5',
-    type: TypeEnum.file,
+    parentId: '1',
+    id: '1-1',
+    title: '1-1',
+    type: TypeEnum.folder,
   },
 ];

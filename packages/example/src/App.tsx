@@ -147,6 +147,7 @@ function App() {
         </div>
         <div className="item">
           <Switch
+            disabled={mode !== 'async'}
             label="renderEnd"
             checked={showRenderEnd}
             onChange={(e) =>
