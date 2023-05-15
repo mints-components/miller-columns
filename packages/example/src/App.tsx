@@ -1,34 +1,23 @@
 import { useState } from 'react';
-import {
-  Switch,
-  ButtonGroup,
-  Button,
-  RadioGroup,
-  Radio,
-  Intent,
-} from '@blueprintjs/core';
+import { Switch, ButtonGroup, Button, Intent } from '@blueprintjs/core';
 import type { McsItem, McsColumn } from 'miller-columns-select';
 
 import type { ExtraItemType } from './types';
-import { BasicMillerColumnsSelect } from './basic-component';
-import { AsyncMillerColumnsSelect } from './async-component';
+import { MockComponent } from './component';
 
 const ColumnCount = [1, 2, 3, 4, 5];
-const ColumnHeight = [undefined, 200, 400, 600];
 
 function App() {
   const [selectedIds, setSelectedIds] = useState<
     McsItem<ExtraItemType>['id'][]
   >([]);
   const [columnCount, setColumnCount] = useState(3);
-  const [columnHeight, setColumnHeight] = useState<number | undefined>(400);
   const [showSelectAll, setShowSelectAll] = useState(false);
   const [showRenderTitle, setShowRenderTitle] = useState(false);
   const [showRenderEnd, setShowRenderEnd] = useState(false);
   const [showRenderHeader, setShowRenderHeader] = useState(false);
   const [showRenderFooter, setShowRenderFooter] = useState(false);
   const [showRenderLoading, setShowRenderLoading] = useState(false);
-  const [mode, setModa] = useState('basic');
 
   const renderTitle = (column: McsColumn) => {
     if (!showRenderTitle) {
@@ -111,20 +100,6 @@ function App() {
             ))}
           </ButtonGroup>
         </div>
-        <div className="item">
-          <div style={{ marginBottom: 4 }}>Column Height</div>
-          <ButtonGroup>
-            {ColumnHeight.map((height, i) => (
-              <Button
-                disabled={mode === 'async'}
-                key={i}
-                text={height ?? 'unset'}
-                intent={columnHeight === height ? Intent.PRIMARY : Intent.NONE}
-                onClick={() => setColumnHeight(height)}
-              />
-            ))}
-          </ButtonGroup>
-        </div>
       </div>
       <div className="block">
         <div className="item">
@@ -147,7 +122,6 @@ function App() {
         </div>
         <div className="item">
           <Switch
-            disabled={mode !== 'async'}
             label="renderEnd"
             checked={showRenderEnd}
             onChange={(e) =>
@@ -196,55 +170,23 @@ function App() {
         <span>Select Ids: </span>
         <span>{JSON.stringify(selectedIds)}</span>
       </div>
-      <div className="block">
-        <h3>Change Mode</h3>
+
+      <div className="component">
+        <h3>Miller-Columns-Select</h3>
+        <MockComponent
+          style={{ marginTop: 12 }}
+          columnCount={columnCount}
+          columnHeight={200}
+          showSelectAll={showSelectAll}
+          renderTitle={renderTitle}
+          renderEnd={renderEnd}
+          renderHeader={renderHeader}
+          renderFooter={renderFooter}
+          renderLoading={renderLoading}
+          selectedIds={selectedIds}
+          onSelectItemIds={(ids) => setSelectedIds(ids)}
+        />
       </div>
-      <div className="block">
-        <RadioGroup
-          inline
-          onChange={(e) => setModa((e.target as HTMLInputElement).value)}
-          selectedValue={mode}
-        >
-          <Radio label="Baisc Component" value="basic" />
-          <Radio label="Async Component" value="async" />
-        </RadioGroup>
-      </div>
-      {mode === 'basic' && (
-        <div className="component">
-          <h3>Basic Miller-Columns-Select</h3>
-          <BasicMillerColumnsSelect
-            style={{ marginTop: 12 }}
-            columnCount={columnCount}
-            columnHeight={columnHeight}
-            showSelectAll={showSelectAll}
-            renderTitle={renderTitle}
-            renderEnd={renderEnd}
-            renderHeader={renderHeader}
-            renderFooter={renderFooter}
-            renderLoading={renderLoading}
-            selectedIds={selectedIds}
-            onSelectItemIds={(ids) => setSelectedIds(ids)}
-          />
-        </div>
-      )}
-      {mode === 'async' && (
-        <div className="component">
-          <h3>Async Miller-Columns-Select</h3>
-          <AsyncMillerColumnsSelect
-            style={{ marginTop: 12 }}
-            columnCount={columnCount}
-            columnHeight={120}
-            showSelectAll={showSelectAll}
-            renderTitle={renderTitle}
-            renderEnd={renderEnd}
-            renderHeader={renderHeader}
-            renderFooter={renderFooter}
-            renderLoading={renderLoading}
-            selectedIds={selectedIds}
-            onSelectItemIds={(ids) => setSelectedIds(ids)}
-          />
-        </div>
-      )}
     </div>
   );
 }
