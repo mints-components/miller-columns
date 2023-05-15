@@ -41,7 +41,7 @@ export const init = [
     parentId: null,
     id: '6',
     title: '6',
-    type: TypeEnum.file,
+    type: TypeEnum.folder,
   },
   {
     parentId: null,

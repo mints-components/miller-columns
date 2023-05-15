@@ -18,6 +18,7 @@ function App() {
   const [showRenderHeader, setShowRenderHeader] = useState(false);
   const [showRenderFooter, setShowRenderFooter] = useState(false);
   const [showRenderLoading, setShowRenderLoading] = useState(false);
+  const [showRenderError, setShowRenderError] = useState(false);
 
   const renderTitle = (column: McsColumn) => {
     if (!showRenderTitle) {
@@ -79,6 +80,14 @@ function App() {
     }
 
     return <span>Custom Loading...</span>;
+  };
+
+  const renderError = () => {
+    if (!showRenderError) {
+      return null;
+    }
+
+    return <span>Custom Retry</span>;
   };
 
   return (
@@ -156,6 +165,15 @@ function App() {
             }
           />
         </div>
+        <div className="item">
+          <Switch
+            label="renderError"
+            checked={showRenderError}
+            onChange={(e) =>
+              setShowRenderError((e.target as HTMLInputElement).checked)
+            }
+          />
+        </div>
       </div>
       <div className="block">
         <Button
@@ -183,6 +201,7 @@ function App() {
           renderHeader={renderHeader}
           renderFooter={renderFooter}
           renderLoading={renderLoading}
+          renderError={renderError}
           selectedIds={selectedIds}
           onSelectItemIds={(ids) => setSelectedIds(ids)}
         />
