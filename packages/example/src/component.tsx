@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import MillerColumnsSelect, {
   McsID,
   McsItem,
@@ -19,6 +19,10 @@ export const MockComponent = (
   // Record whether the column has been loaded
   const [loadedIds, setLoadedIds] = useState<McsID[]>([]);
 
+  // Record error info
+  const [errorId, setErrorId] = useState<McsID>();
+  const [errorType, setErrorType] = useState<'init' | 'expand' | 'scroll'>();
+
   // Get the initial items data
   // And know whether the first column has completed all data loaded
   const getRootItems = async () => {
@@ -35,16 +39,18 @@ export const MockComponent = (
 
   // Load more data when expanding
   // And judge whether the item is expanded
-  const onExpand = useCallback(
-    async (id: McsID) => {
+  const onExpand = async (id: McsID) => {
+    try {
       const { data, hasMore } = await getItems(1, id);
       setItems([...items, ...data]);
       if (!hasMore) {
         setLoadedIds([...loadedIds, id]);
       }
-    },
-    [items, loadedIds],
-  );
+    } catch (err) {
+      setErrorId(id);
+      setErrorType('expand');
+    }
+  };
 
   // Scroll to load data and set it after loading
   const onScroll = async (id: McsID | null) => {
@@ -55,14 +61,23 @@ export const MockComponent = (
     }
   };
 
+  const onRetry = (id: McsID | null) => {
+    setErrorId(undefined);
+    if (errorType === 'expand' && id) {
+      onExpand(id);
+    }
+  };
+
   return (
     <MillerColumnsSelect
       {...props}
       items={items}
       getCanExpand={(item) => item.type === TypeEnum.folder}
       getHasMore={(id) => !loadedIds.includes(id ?? 'root')}
+      getHasError={(id) => errorId === (id ?? 'root')}
       onExpand={onExpand}
       onScroll={onScroll}
+      onRetry={onRetry}
     />
   );
 };

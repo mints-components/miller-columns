@@ -8,14 +8,17 @@ import {
   mock_2,
   mock_2_scroll,
   mock_2_1,
+  mock_6,
   mock_7,
 } from './data';
+
+let retryCount = 0;
 
 export const getItems = (
   pageSize = 1,
   parentId?: McsID | null,
 ): Promise<{ data: []; hasMore: boolean }> =>
-  new Promise((r) =>
+  new Promise((resolve, reject) =>
     setTimeout(() => {
       let result: any;
 
@@ -62,7 +65,17 @@ export const getItems = (
             hasMore: false,
           };
           break;
-        case parentId === '7-1':
+        case parentId === '6' && retryCount === 0:
+          retryCount += 1;
+          reject('mock error');
+          break;
+        case parentId === '6':
+          result = {
+            data: mock_6,
+            hasMore: false,
+          };
+          break;
+        case parentId === '7':
           result = {
             data: mock_7,
             hasMore: false,
@@ -70,6 +83,6 @@ export const getItems = (
           break;
       }
 
-      r(result);
+      resolve(result);
     }, 1000),
   );

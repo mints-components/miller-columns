@@ -5,10 +5,16 @@ import type { ID, ItemType, ColumnType, ColumnMapType } from './types';
 interface Props<T> {
   items: ItemType<T>[];
   getHasMore?: (id: ID | null) => boolean;
+  getHasError?: (id: ID | null) => boolean;
   onExpand?: (id: ID) => void;
 }
 
-export const useColumns = <T>({ items, getHasMore, onExpand }: Props<T>) => {
+export const useColumns = <T>({
+  items,
+  getHasMore,
+  getHasError,
+  onExpand,
+}: Props<T>) => {
   const [activeId, setActiveId] = useState<ID>();
   const [expandedIds, setExpandedIds] = useState<ID[]>([]);
 
@@ -32,6 +38,7 @@ export const useColumns = <T>({ items, getHasMore, onExpand }: Props<T>) => {
       activeId: null,
       items: rootItems,
       hasMore: getHasMore?.(null) ?? false,
+      hasError: getHasError?.(null) ?? false,
     };
 
     if (!activeId) {
@@ -47,6 +54,7 @@ export const useColumns = <T>({ items, getHasMore, onExpand }: Props<T>) => {
         items: activeColumn.items ?? [],
         activeId: null,
         hasMore: getHasMore?.(activeId) ?? false,
+        hasError: getHasError?.(activeId) ?? false,
       },
     ];
 
@@ -59,6 +67,7 @@ export const useColumns = <T>({ items, getHasMore, onExpand }: Props<T>) => {
         items: parent ? parent.items ?? [] : rootItems,
         activeId: item.id ?? null,
         hasMore: getHasMore?.(parent ? parent.id : null) ?? false,
+        hasError: getHasError?.(parent ? parent.id : null) ?? false,
       });
 
       if (parent) {
@@ -69,7 +78,7 @@ export const useColumns = <T>({ items, getHasMore, onExpand }: Props<T>) => {
     collect(activeColumn);
 
     return columns;
-  }, [items, activeId, columnMap, getHasMore]);
+  }, [items, activeId, columnMap, getHasMore, getHasError]);
 
   return useMemo(
     () => ({
