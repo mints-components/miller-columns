@@ -58,7 +58,7 @@ export const useColumns = <T>({ items, getHasMore, onExpand }: Props<T>) => {
         parentTitle: parent ? parent.title : null,
         items: parent ? parent.items ?? [] : rootItems,
         activeId: item.id ?? null,
-        hasMore: getHasMore?.(item.id) ?? false,
+        hasMore: getHasMore?.(parent ? parent.id : null) ?? false,
       });
 
       if (parent) {
