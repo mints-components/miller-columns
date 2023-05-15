@@ -1,3 +1,11 @@
+## 1.2.0
+
+`2023-05-15`
+
+- Support async request failure retry. [#9](https://github.com/mintsweet/miller-columns-select/issues/9)
+- Fixed directories without subsets can be selected. [#7](https://github.com/mintsweet/miller-columns-select/issues/7)
+- Fixed the first column hasMore is incorrect. [#11](https://github.com/mintsweet/miller-columns-select/issues/11)
+
 ## 1.1.0
 
 `2023-04-27`
