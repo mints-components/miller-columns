@@ -17,3 +17,7 @@ width: ${100 / count}%;
 `;
 
 export const Loader = styled.div``;
+
+export const Error = styled.div`
+  cursor: pointer;
+`;

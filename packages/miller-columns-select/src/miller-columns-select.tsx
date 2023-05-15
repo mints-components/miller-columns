@@ -7,8 +7,10 @@ export interface MillerColumnsSelectProps<T> {
   items: McsItem<T>[];
   getCanExpand?: (item: McsItem<T>) => boolean;
   getHasMore?: (id: McsID | null) => boolean;
+  getHasError?: (id: McsID | null) => boolean;
   onExpand?: (id: McsID) => void;
   onScroll?: (id: McsID | null) => void;
+  onRetry?: (id: McsID | null) => void;
   style?: React.CSSProperties;
   columnCount?: number;
   columnHeight?: number;
@@ -18,6 +20,7 @@ export interface MillerColumnsSelectProps<T> {
   renderTitle?: (column: McsColumn) => React.ReactNode;
   renderEnd?: (column: McsColumn) => React.ReactNode;
   renderLoading?: (column: McsColumn) => React.ReactNode;
+  renderError?: (column: McsColumn) => React.ReactNode;
   disabledIds?: McsID[];
   selectedIds?: McsID[];
   onSelectItemIds?: (selectedIds: McsID[]) => void;
@@ -27,8 +30,10 @@ export const MillerColumnsSelect = <T,>({
   items,
   getCanExpand,
   getHasMore = () => false,
+  getHasError = () => false,
   onExpand,
   onScroll,
+  onRetry,
   style,
   columnCount,
   columnHeight,
@@ -38,6 +43,7 @@ export const MillerColumnsSelect = <T,>({
   renderTitle,
   renderEnd,
   renderLoading,
+  renderError,
   disabledIds,
   selectedIds,
   onSelectItemIds,
@@ -52,6 +58,7 @@ export const MillerColumnsSelect = <T,>({
   const { columns, onExpandItem } = useColumns<T>({
     items: transformItems,
     getHasMore,
+    getHasError,
     onExpand,
   });
 
@@ -100,7 +107,9 @@ export const MillerColumnsSelect = <T,>({
             renderTitle={renderTitle}
             renderEnd={renderEnd}
             renderLoading={renderLoading}
+            renderError={renderError}
             onScroll={onScroll}
+            onRetry={onRetry}
           />
         ))}
       </div>
