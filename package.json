@@ -1,17 +1,37 @@
 {
-  "private": true,
-  "workspaces": [
-    "packages/*"
+  "name": "miller-columns-select",
+  "version": "1.2.0",
+  "keywords": [
+    "miller-columns-select",
+    "miller-columns",
+    "react",
+    "component"
   ],
+  "description": "Miller Columns Select for React",
+  "license": "MIT",
+  "packageManager": "yarn@3.3.0",
+  "files": [
+    "dist",
+    "types"
+  ],
+  "types": "types",
+  "main": "./dist/miller-columns-select.umd.js",
+  "module": "./dist/miller-columns-select.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/miller-columns-select.es.js",
+      "require": "./dist/miller-columns-select.umd.js"
+    }
+  },
   "scripts": {
+    "clean": "rm -rf dist && rm -rf types",
+    "build": "yarn clean && tsc && vite build",
     "lint": "eslint . --fix",
     "prettier": "prettier . --write",
-    "build": "yarn workspace miller-columns-select build",
-    "publish": "yarn workspace miller-columns-select publish",
-    "start": "yarn workspace miller-columns-select-example dev",
-    "postinstall": "husky install"
+    "postinstall": "husky install",
+    "prepublish": "yarn build",
+    "publish": "yarn npm publish"
   },
-  "repository": "git@github.com:mintsweet/miller-columns-select.git",
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
       "prettier --write",
@@ -21,14 +41,31 @@
       "prettier --write"
     ]
   },
-  "packageManager": "yarn@3.2.1",
+  "dependencies": {
+    "classnames": "^2.3.2",
+    "react-infinite-scroll-component": "^6.1.0",
+    "styled-components": "^5.3.6"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
   "devDependencies": {
+    "@types/node": "^18.11.9",
+    "@types/react": "^18.0.24",
+    "@types/react-dom": "^18.0.8",
+    "@types/styled-components": "^5.1.26",
+    "@vitejs/plugin-react": "^2.2.0",
     "eslint": "^8.27.0",
     "eslint-config-mints": "^2.1.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
     "husky": "^8.0.0",
     "lint-staged": "^13.1.0",
-    "prettier": "^2.7.1"
+    "prettier": "^2.7.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^4.6.4",
+    "vite": "^3.2.3"
   }
 }
