@@ -9,7 +9,7 @@
   ],
   "description": "Miller Columns Select for React",
   "license": "MIT",
-  "packageManager": "yarn@3.3.0",
+  "packageManager": "yarn@3.6.1",
   "files": [
     "dist",
     "types"
