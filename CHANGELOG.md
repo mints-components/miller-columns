@@ -1,3 +1,9 @@
+## 1.2.2
+
+`2023-08-23`
+
+- Fixed error while switching multiple components. [#14](https://github.com/mintsweet/miller-columns-select/issues/14)
+
 ## 1.2.0
 
 `2023-05-15`
