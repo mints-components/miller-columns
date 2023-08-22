@@ -47,6 +47,10 @@ export const useColumns = <T>({
 
     const activeColumn = columnMap[activeId];
 
+    if (!activeColumn) {
+      return [rootLeaf];
+    }
+
     const columns: ColumnType<T>[] = [
       {
         parentId: activeColumn.id,
