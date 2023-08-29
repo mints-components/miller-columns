@@ -77,27 +77,29 @@ export const Example = () => {
 
 ## Props
 
-| Prop            | Type                                        | Default     | Description                                            |
-| --------------- | ------------------------------------------- | ----------- | ------------------------------------------------------ |
-| items\*         | `McsItem<T>[]`                              |             | item used to display in columns                        |
-| getCanExpand    | `(id: McsID) => boolean`                    |             | distinguish whether item can be expanded               |
-| getHasMore      | `(id: McsID\|null) => boolean`              | () => false | determine whether the column has more data             |
-| getHasError     | `(id: McsID\|null) => boolean`              | () => false | determine whether the column show list or retry button |
-| onExpand        | `(id:McsID) => void`                        |             | when item expand will call                             |
-| onScroll        | `(id: McsID \| null) => void`               |             | when column scroll will call                           |
-| onRetry         | `(id: McsID \| null) => void`               |             | when the retry button is clicked will call             |
-| columnCount     | number                                      | 3           | columns to display in a container                      |
-| columnHeight    | number                                      |             | columns height (control scrolling)                     |
-| showSelectAll   | boolean                                     | false       | show select all button                                 |
-| renderTitle     | `(column: McsColumn) => React.ReactNode`    |             | display column title                                   |
-| renderEnd       | `(column: McsColumn) => React.ReactNode`    |             | display column end                                     |
-| renderLoading   | `(column: McsColumn) => React.ReactNode`    |             | display column loading                                 |
-| renderError     | `(column: McsColumn) => React.ReactNode`    |             | display column retry                                   |
-| renderHeader    | `(columns: McsColumn[]) => React.ReactNode` |             | display container header                               |
-| renderFooter    | `(columns: McsColumn[]) => React.ReactNode` |             | display container footer                               |
-| disabledIds     | `McsID[]`                                   |             | disabled ids                                           |
-| selectedIds     | `McsID[]`                                   | `[]`        | selected ids                                           |
-| onSelectItemIds | `(selectedIds: McsID[]) => void`            |             | set selected ids                                       |
+| Prop                | Type                                        | Default     | Description                                            |
+| ------------------- | ------------------------------------------- | ----------- | ------------------------------------------------------ |
+| items\*             | `McsItem<T>[]`                              |             | item used to display in columns                        |
+| getCanExpand        | `(id: McsID) => boolean`                    |             | distinguish whether item can be expanded               |
+| getHasMore          | `(id: McsID\|null) => boolean`              | () => false | determine whether the column has more data             |
+| getHasError         | `(id: McsID\|null) => boolean`              | () => false | determine whether the column show list or retry button |
+| onExpand            | `(id:McsID) => void`                        |             | when item expand will call                             |
+| onScroll            | `(id: McsID \| null) => void`               |             | when column scroll will call                           |
+| onRetry             | `(id: McsID \| null) => void`               |             | when the retry button is clicked will call             |
+| columnCount         | number                                      | 3           | columns to display in a container                      |
+| columnHeight        | number                                      |             | columns height (control scrolling)                     |
+| showSelectAll       | boolean                                     | false       | show select all button                                 |
+| renderTitle         | `(column: McsColumn) => React.ReactNode`    |             | display column title                                   |
+| renderEnd           | `(column: McsColumn) => React.ReactNode`    |             | display column end                                     |
+| renderLoading       | `(column: McsColumn) => React.ReactNode`    |             | display column loading                                 |
+| renderError         | `(column: McsColumn) => React.ReactNode`    |             | display column retry                                   |
+| renderHeader        | `(columns: McsColumn[]) => React.ReactNode` |             | display container header                               |
+| renderFooter        | `(columns: McsColumn[]) => React.ReactNode` |             | display container footer                               |
+| disabledIds         | `McsID[]`                                   |             | disabled ids                                           |
+| selectedIds         | `McsID[]`                                   | `[]`        | selected ids                                           |
+| onSelectItemIds     | `(selectedIds: McsID[]) => void`            |             | set selected ids                                       |
+| expandedIds         | `McsID[]`                                   |             | expanded ids                                           |
+| onChangeExpandedIds | `(expandedIds: McsID[]) => void`            |             | expanded ids                                           |
 
 ## Start Example(Development)
 

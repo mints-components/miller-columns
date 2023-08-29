@@ -24,6 +24,8 @@ export interface MillerColumnsSelectProps<T> {
   disabledIds?: McsID[];
   selectedIds?: McsID[];
   onSelectItemIds?: (selectedIds: McsID[]) => void;
+  expandedIds?: McsID[];
+  onChangeExpandedIds?: (expandedIds: McsID[]) => void;
 }
 
 export const MillerColumnsSelect = <T,>({
@@ -47,6 +49,8 @@ export const MillerColumnsSelect = <T,>({
   disabledIds,
   selectedIds,
   onSelectItemIds,
+  expandedIds,
+  onChangeExpandedIds,
 }: MillerColumnsSelectProps<T>) => {
   const transformItems = useItems<T>({
     items,
@@ -60,6 +64,8 @@ export const MillerColumnsSelect = <T,>({
     getHasMore,
     getHasError,
     onExpand,
+    expandedIds,
+    onChangeExpandedIds,
   });
 
   const {
