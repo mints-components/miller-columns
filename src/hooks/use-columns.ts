@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 
 import type { ID, ItemType, ColumnType, ColumnMapType } from './types';
 
@@ -7,6 +7,8 @@ interface Props<T> {
   getHasMore?: (id: ID | null) => boolean;
   getHasError?: (id: ID | null) => boolean;
   onExpand?: (id: ID) => void;
+  expandedIds?: ID[];
+  onChangeExpandedIds?: (expandedIds: ID[]) => void;
 }
 
 export const useColumns = <T>({
@@ -14,9 +16,15 @@ export const useColumns = <T>({
   getHasMore,
   getHasError,
   onExpand,
+  onChangeExpandedIds,
+  ...props
 }: Props<T>) => {
   const [activeId, setActiveId] = useState<ID>();
   const [expandedIds, setExpandedIds] = useState<ID[]>([]);
+
+  useEffect(() => {
+    setExpandedIds(props.expandedIds ?? []);
+  }, [props.expandedIds]);
 
   const columnMap = useMemo(
     () =>
@@ -92,10 +100,15 @@ export const useColumns = <T>({
 
         if (!expandedIds.includes(item.id)) {
           onExpand?.(item.id);
-          setExpandedIds([...expandedIds, item.id]);
+
+          const newExpandedIds = [...expandedIds, item.id];
+
+          onChangeExpandedIds
+            ? onChangeExpandedIds(newExpandedIds)
+            : setExpandedIds(newExpandedIds);
         }
       },
     }),
-    [columns, expandedIds, onExpand],
+    [columns, expandedIds, onExpand, onChangeExpandedIds],
   );
 };
