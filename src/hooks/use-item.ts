@@ -57,7 +57,7 @@ export const useItem = <T>({
         switch (true) {
           case item.disabled ||
             !item.childLoaded ||
-            (item.canExpand && item.items.length === 0):
+            (item.canExpand && childIds.length === 0):
             return CheckboxStatus.disabled;
           case !item.canExpand && selectedIds.includes(item.id):
             return CheckboxStatus.checked;
