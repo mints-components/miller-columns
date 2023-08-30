@@ -1,3 +1,10 @@
+## 1.3.0
+
+`2023-08-30`
+
+- Support controlled expandedIds. [#19](https://github.com/mintsweet/miller-columns-select/issues/19)
+- Fixed parent nodes with no children can be selected. [#18](https://github.com/mintsweet/miller-columns-select/issues/18)
+
 ## 1.2.2
 
 `2023-08-23`
