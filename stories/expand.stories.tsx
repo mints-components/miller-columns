@@ -3,10 +3,10 @@ import React from 'react';
 
 import { MillerColumnsSelect } from '../src';
 
-import { items } from './mock/example';
+import { items } from './mock/expand';
 
 const meta: Meta<typeof MillerColumnsSelect> = {
-  title: 'Components/Example',
+  title: 'Components/Expand',
   component: MillerColumnsSelect,
   parameters: {
     layout: 'centered',
@@ -16,10 +16,13 @@ const meta: Meta<typeof MillerColumnsSelect> = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Example: Story = {
+export const Expand: Story = {
   render: () => (
     <div style={{ width: 600 }}>
-      <MillerColumnsSelect items={items} />
+      <MillerColumnsSelect
+        items={items}
+        getCanExpand={(it) => it.type === 'group'}
+      />
     </div>
   ),
 };
