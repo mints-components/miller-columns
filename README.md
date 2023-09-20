@@ -20,12 +20,6 @@ $ yarn add miller-columns-select
 $ npm install --save miller-columns-select
 ```
 
-## Screenshots
-
-![Basic Component](https://raw.githubusercontent.com/mintsweet/miller-columns-select/master/screenshots/basic-component.png)
-
-![Async Component](https://raw.githubusercontent.com/mintsweet/miller-columns-select/master/screenshots/async-component.png)
-
 ## Usage
 
 ```typescript
