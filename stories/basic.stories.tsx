@@ -6,7 +6,7 @@ import { MillerColumnsSelect } from '../src';
 import { items } from './mock/basic';
 
 const meta: Meta<typeof MillerColumnsSelect> = {
-  title: 'Components/Basic',
+  title: 'Example/Basic',
   component: MillerColumnsSelect,
   parameters: {
     layout: 'centered',
