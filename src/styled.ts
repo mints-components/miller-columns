@@ -71,6 +71,32 @@ export const Checkbox = styled.label`
 
   .text {
     margin-left: 8px;
-    font-size: 14px;
+  }
+`;
+
+export const Item = styled.div<{ actived: boolean }>`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    background-color: #f5f5f7;
+  }
+
+  ${({ actived }) => (actived ? 'background-color: #f5f5f7;' : '')}
+
+  & > span.indicator {
+    display: table;
+    margin-left: 8px;
+    width: 5px;
+    height: 5px;
+    border: 1px solid #000;
+    border-top: 0;
+    border-left: 0;
+    transform: rotate(-45deg);
   }
 `;
