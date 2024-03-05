@@ -1,3 +1,9 @@
+## 1.3.1
+
+`2024-03-05`
+
+- Fixed check child loaded function not return. [external issue](https://github.com/apache/incubator-devlake/issues/6211)
+
 ## 1.3.0
 
 `2023-08-30`
