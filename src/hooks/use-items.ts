@@ -28,7 +28,11 @@ export const useItems = <T>({
 
       const childItems = items.filter((it) => it.parentId === item.id);
 
-      return childItems?.every((it) => checkChildLoaded(it));
+      if (!childItems.length) {
+        return false;
+      }
+
+      return childItems.every((it) => checkChildLoaded(it));
     },
     [items, getCanExpand, getHasMore],
   );
