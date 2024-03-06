@@ -22,15 +22,11 @@ export const useItems = <T>({
       const canExpand = getCanExpand?.(item) ?? false;
       const hasMore = getHasMore?.(item.id);
 
-      if (canExpand && hasMore) {
-        return false;
+      if (!canExpand || !hasMore) {
+        return true;
       }
 
       const childItems = items.filter((it) => it.parentId === item.id);
-
-      if (!childItems.length) {
-        return false;
-      }
 
       return childItems.every((it) => checkChildLoaded(it));
     },
