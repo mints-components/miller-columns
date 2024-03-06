@@ -1,8 +1,8 @@
-## 1.3.1
+## 1.3.2
 
-`2024-03-05`
+`2024-03-07`
 
-- Fixed check child loaded function not return. [external issue](https://github.com/apache/incubator-devlake/issues/6211)
+- Fixed check child loaded conditional judgment error. [external issue](https://github.com/apache/incubator-devlake/issues/6211)
 
 ## 1.3.0
 
