@@ -1,10 +1,11 @@
 import { useState, useMemo, useCallback, useEffect } from 'react';
 
-import { ItemStatus, CheckboxStatus } from '../components';
+import { ItemStatus, RadioStatus, CheckboxStatus } from '../components';
 
 import type { ID, ItemType, ColumnType } from './types';
 
 interface Props<T> {
+  mode: 'single' | 'multiple';
   items: ItemType<T>[];
   getHasMore?: (columnId: ID | null) => boolean;
   selectedIds?: ID[];
@@ -12,6 +13,7 @@ interface Props<T> {
 }
 
 export const useItem = <T>({
+  mode,
   items,
   getHasMore,
   onSelectItemIds,
@@ -43,6 +45,45 @@ export const useItem = <T>({
     return result;
   }, []);
 
+  const onSelectSingleItem = useCallback(
+    (item: ItemType<T>) => {
+      onSelectItemIds ? onSelectItemIds([item.id]) : setSelectedIds([item.id]);
+    },
+    [onSelectItemIds, setSelectedIds],
+  );
+
+  const onSelectMultipleItem = useCallback(
+    (item: ItemType<T>) => {
+      let newIds: ID[] = [];
+
+      const childIds = collectChildIds(item);
+
+      switch (true) {
+        case !item.canExpand && !selectedIds.includes(item.id):
+          newIds.push(...[item.id, ...selectedIds]);
+          break;
+        case !item.canExpand && selectedIds.includes(item.id):
+          newIds.push(...selectedIds.filter((id) => id !== item.id));
+          break;
+        case item.canExpand &&
+          !childIds.every((id) => selectedIds.includes(id)):
+          newIds.push(
+            ...[
+              ...selectedIds,
+              ...childIds.filter((id) => !selectedIds.includes(id)),
+            ],
+          );
+          break;
+        case item.canExpand && childIds.every((id) => selectedIds.includes(id)):
+          newIds.push(...selectedIds.filter((id) => !childIds.includes(id)));
+          break;
+      }
+
+      onSelectItemIds ? onSelectItemIds(newIds) : setSelectedIds(newIds);
+    },
+    [onSelectItemIds, selectedIds, collectChildIds, setSelectedIds],
+  );
+
   return useMemo(
     () => ({
       getItemStatus(item: ItemType<T>, column: ColumnType<T>) {
@@ -50,6 +91,16 @@ export const useItem = <T>({
           return ItemStatus.selected;
         }
         return ItemStatus.noselected;
+      },
+      getItemRadioStatus(item: ItemType<T>) {
+        switch (true) {
+          case item.disabled:
+            return RadioStatus.disabled;
+          case selectedIds.includes(item.id):
+            return RadioStatus.checked;
+          default:
+            return RadioStatus.nochecked;
+        }
       },
       getItemCheckStatus(item: ItemType<T>) {
         const childIds = collectChildIds(item);
@@ -82,33 +133,9 @@ export const useItem = <T>({
         }
       },
       onSelectItem: (item: ItemType<T>) => {
-        let newIds: ID[] = [];
-
-        const childIds = collectChildIds(item);
-
-        switch (true) {
-          case !item.canExpand && !selectedIds.includes(item.id):
-            newIds.push(...[item.id, ...selectedIds]);
-            break;
-          case !item.canExpand && selectedIds.includes(item.id):
-            newIds.push(...selectedIds.filter((id) => id !== item.id));
-            break;
-          case item.canExpand &&
-            !childIds.every((id) => selectedIds.includes(id)):
-            newIds.push(
-              ...[
-                ...selectedIds,
-                ...childIds.filter((id) => !selectedIds.includes(id)),
-              ],
-            );
-            break;
-          case item.canExpand &&
-            childIds.every((id) => selectedIds.includes(id)):
-            newIds.push(...selectedIds.filter((id) => !childIds.includes(id)));
-            break;
-        }
-
-        onSelectItemIds ? onSelectItemIds(newIds) : setSelectedIds(newIds);
+        return mode === 'single'
+          ? onSelectSingleItem(item)
+          : onSelectMultipleItem(item);
       },
       onSelectItemAll: () => {
         let newIds: ID[] = [];
@@ -119,6 +146,14 @@ export const useItem = <T>({
         onSelectItemIds ? onSelectItemIds(newIds) : setSelectedIds(newIds);
       },
     }),
-    [canSelectedAllItemIds, selectedIds, collectChildIds, onSelectItemIds],
+    [
+      mode,
+      canSelectedAllItemIds,
+      selectedIds,
+      collectChildIds,
+      onSelectItemIds,
+      onSelectSingleItem,
+      onSelectMultipleItem,
+    ],
   );
 };
