@@ -5,6 +5,7 @@ import * as S from './styled';
 
 export interface MillerColumnsSelectProps<T> {
   items: McsItem<T>[];
+  mode?: 'single' | 'multiple';
   getCanExpand?: (item: McsItem<T>) => boolean;
   getHasMore?: (id: McsID | null) => boolean;
   getHasError?: (id: McsID | null) => boolean;
@@ -30,6 +31,7 @@ export interface MillerColumnsSelectProps<T> {
 
 export const MillerColumnsSelect = <T,>({
   items,
+  mode = 'multiple',
   getCanExpand,
   getHasMore = () => false,
   getHasError = () => false,
@@ -70,11 +72,13 @@ export const MillerColumnsSelect = <T,>({
 
   const {
     getItemStatus,
+    getItemRadioStatus,
     getItemCheckStatus,
     getItemAllCheckStatus,
     onSelectItem,
     onSelectItemAll,
   } = useItem<T>({
+    mode,
     items: transformItems,
     selectedIds,
     onSelectItemIds,
@@ -97,19 +101,23 @@ export const MillerColumnsSelect = <T,>({
             renderItem={(item) => (
               <Item
                 key={`${item.id}${item.canExpand ? '-expand' : ''}`}
+                mode={mode}
                 item={item}
                 status={getItemStatus(item, column)}
+                radioStatus={getItemRadioStatus(item)}
                 checkStatus={getItemCheckStatus(item)}
                 onExpand={onExpandItem}
                 onSelect={onSelectItem}
               />
             )}
-            renderItemAll={() => (
-              <ItemAll
-                status={getItemAllCheckStatus()}
-                onSelect={onSelectItemAll}
-              />
-            )}
+            renderItemAll={() =>
+              mode === 'multiple' ? (
+                <ItemAll
+                  status={getItemAllCheckStatus()}
+                  onSelect={onSelectItemAll}
+                />
+              ) : null
+            }
             renderTitle={renderTitle}
             renderEnd={renderEnd}
             renderLoading={renderLoading}
