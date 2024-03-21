@@ -22,9 +22,9 @@ $ npm install --save miller-columns-select
 
 ## Screenshots
 
-![Basic Component](https://raw.githubusercontent.com/mintsweet/miller-columns-select/master/screenshots/basic-component.png)
+![Basic Component](https://raw.githubusercontent.com/mints-components/miller-columns/release-v1/screenshots/basic-component.png)
 
-![Async Component](https://raw.githubusercontent.com/mintsweet/miller-columns-select/master/screenshots/async-component.png)
+![Async Component](https://raw.githubusercontent.com/mints-components/miller-columns/release-v1/screenshots/async-component.png)
 
 ## Usage
 
@@ -80,6 +80,7 @@ export const Example = () => {
 | Prop                | Type                                        | Default     | Description                                            |
 | ------------------- | ------------------------------------------- | ----------- | ------------------------------------------------------ |
 | items\*             | `McsItem<T>[]`                              |             | item used to display in columns                        |
+| mode                | `single` or `multiple`                      | `multiple`  | Single select or multiple select                       |
 | getCanExpand        | `(id: McsID) => boolean`                    |             | distinguish whether item can be expanded               |
 | getHasMore          | `(id: McsID\|null) => boolean`              | () => false | determine whether the column has more data             |
 | getHasError         | `(id: McsID\|null) => boolean`              | () => false | determine whether the column show list or retry button |

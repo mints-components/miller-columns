@@ -1,3 +1,9 @@
+## 1.4.0
+
+`2024-03-22`
+
+- Support new mode single select. [#22](https://github.com/mints-components/miller-columns/pull/22)
+
 ## 1.3.2
 
 `2024-03-07`
