@@ -19,8 +19,10 @@ export const Label = styled.label`
     &::after {
       content: ' ';
       position: absolute;
-      top: 2px;
-      left: 2px;
+      top: 50%;
+      left: 50%;
+      margin-top: -4px;
+      margin-left: -4px;
       width: 8px;
       height: 8px;
       border-radius: 50%;
