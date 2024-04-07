@@ -1,3 +1,9 @@
+## 1.4.1
+
+`2024-04-07`
+
+- Fixed radio style error. [#23](https://github.com/mints-components/miller-columns/pull/23)
+
 ## 1.4.0
 
 `2024-03-22`
