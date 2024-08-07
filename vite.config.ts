@@ -10,11 +10,10 @@ export default defineConfig({
   plugins: [react()],
 
   build: {
-    sourcemap: true,
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
-      name: 'miller-columns-select',
-      fileName: (format) => `miller-columns-select.${format}.js`,
+      name: 'miller-columns',
+      fileName: 'miller-columns',
     },
     rollupOptions: {
       external: [

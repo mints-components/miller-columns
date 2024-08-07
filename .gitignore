@@ -1,3 +1,4 @@
+# Yarn
 .yarn/*
 !.yarn/patches
 !.yarn/plugins
@@ -22,8 +23,8 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
-*.local
 types
+*.local
 
 # Editor directories and files
 .vscode/*

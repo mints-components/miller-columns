@@ -1,37 +1,43 @@
 {
-  "name": "miller-columns-select",
-  "version": "1.3.0",
+  "name": "@mints/miller-columns",
+  "version": "2.0.0",
   "keywords": [
-    "miller-columns-select",
     "miller-columns",
-    "react",
-    "component"
+    "mints-components",
+    "mui"
   ],
-  "description": "Miller Columns Select for React",
+  "description": "Miller Columns for Mints Components",
   "license": "MIT",
   "packageManager": "yarn@3.6.1",
+  "type": "module",
   "files": [
     "dist",
     "types"
   ],
   "types": "types",
-  "main": "./dist/miller-columns-select.umd.js",
-  "module": "./dist/miller-columns-select.es.js",
+  "main": "./dist/miller-columns.umd.cjs",
+  "module": "./dist/miller-columns.js",
   "exports": {
     ".": {
-      "import": "./dist/miller-columns-select.es.js",
-      "require": "./dist/miller-columns-select.umd.js"
+      "import": {
+        "types": "./types/index.d.ts",
+        "default": "./dist/my-component.js"
+      },
+      "require": {
+        "types": "./types/index.d.ts",
+        "default": "./dist/my-component.umd.cjs"
+      }
     }
   },
   "scripts": {
     "clean": "rm -rf dist && rm -rf types",
-    "build": "yarn clean && tsc && vite build",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build",
+    "build": "yarn clean && tsc -p tsconfig.build.json && vite build",
     "lint": "eslint . --fix",
     "prettier": "prettier . --write",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
     "prepublish": "yarn build",
-    "publish": "yarn npm publish",
+    "publish": "yarn npm publish --access public",
     "postinstall": "husky install",
     "prepack": "pinst --disable",
     "postpack": "pinst --enable"
@@ -46,39 +52,37 @@
     ]
   },
   "dependencies": {
-    "classnames": "^2.3.2",
-    "react-infinite-scroll-component": "^6.1.0",
-    "styled-components": "^5.3.6"
-  },
-  "peerDependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
+  "peerDependencies": {
+    "react": "^18.2.0"
+  },
   "devDependencies": {
+    "@chromatic-com/storybook": "^1",
     "@mints/eslint-config": "^1.0.0-beta.1",
-    "@storybook/addon-essentials": "^7.3.2",
-    "@storybook/addon-interactions": "^7.3.2",
-    "@storybook/addon-links": "^7.3.2",
-    "@storybook/addon-onboarding": "^1.0.8",
-    "@storybook/blocks": "^7.3.2",
-    "@storybook/react": "^7.3.2",
-    "@storybook/react-vite": "^7.3.2",
-    "@storybook/testing-library": "^0.2.0",
-    "@types/node": "^18.11.9",
-    "@types/react": "^18.0.24",
-    "@types/react-dom": "^18.0.8",
-    "@types/styled-components": "^5.1.26",
-    "@vitejs/plugin-react": "^2.2.0",
-    "eslint": "^8.27.0",
-    "eslint-plugin-storybook": "^0.6.13",
+    "@storybook/addon-essentials": "^8.1.11",
+    "@storybook/addon-interactions": "^8.1.11",
+    "@storybook/addon-links": "^8.1.11",
+    "@storybook/addon-onboarding": "^8.1.11",
+    "@storybook/blocks": "^8.1.11",
+    "@storybook/react": "^8.1.11",
+    "@storybook/react-vite": "^8.1.11",
+    "@storybook/test": "^8.1.11",
+    "@types/node": "^20.4.6",
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "@vitejs/plugin-react": "^4.0.3",
+    "eslint": "^8.45.0",
+    "eslint-plugin-storybook": "^0.8.0",
     "husky": "^8.0.0",
-    "lint-staged": "^13.1.0",
+    "lint-staged": "^14.0.1",
     "pinst": "^3.0.0",
-    "prettier": "^2.7.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "storybook": "^7.3.2",
-    "typescript": "^4.6.4",
-    "vite": "^3.2.3"
+    "prettier": "^3.3.2",
+    "storybook": "^8.1.11",
+    "typescript": "^5.0.2",
+    "vite": "^4.4.5"
   }
 }
