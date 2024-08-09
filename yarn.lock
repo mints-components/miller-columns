@@ -3527,6 +3527,7 @@ __metadata:
     eslint-plugin-storybook: ^0.8.0
     husky: ^8.0.0
     lint-staged: ^14.0.1
+    lodash: ^4.17.21
     pinst: ^3.0.0
     prettier: ^3.3.2
     react: ^18.2.0
