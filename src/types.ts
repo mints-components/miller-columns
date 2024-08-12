@@ -1,5 +1,5 @@
 export type ItemType<T> = {
-  parentId: string | number;
+  parentId: string | number | null;
   id: string | number;
   title: string;
 } & T;
