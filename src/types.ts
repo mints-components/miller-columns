@@ -1,4 +1,4 @@
-type ItemType<T> = {
+export type ItemType<T> = {
   parentId: string | number;
   id: string | number;
   title: string;
