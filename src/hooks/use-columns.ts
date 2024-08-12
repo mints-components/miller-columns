@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 
 import type { ItemType } from '../types';
 
-export const useColumns = <T>(items: ItemType<T>[]) => {
+export const useColumns = (items: ItemType[]) => {
   return useMemo(
     () => [
       {

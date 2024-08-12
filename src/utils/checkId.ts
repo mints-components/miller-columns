@@ -1,10 +1,10 @@
 import { uniqWith } from 'lodash';
 
-import type { IMillerColumns } from '../types';
+import type { DataType } from '../types';
 
-export const checkId = <T>(items: IMillerColumns<T>['items']) => {
+export const checkId = <T>(data: DataType<T>[]) => {
   return (
-    uniqWith(items, (a, b) => a.parentId === b.parentId && a.id === b.id)
-      .length === items.length
+    uniqWith(data, (a, b) => a.parentId === b.parentId && a.id === b.id)
+      .length === data.length
   );
 };

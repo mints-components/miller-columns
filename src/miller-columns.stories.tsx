@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { MillerColumns } from './miller-columns';
-import { items } from './mock/default';
+import { defaultData } from './mock/default';
 
 const meta: Meta<typeof MillerColumns> = {
   title: 'MillerColumns',
@@ -13,6 +13,6 @@ type Story = StoryObj<typeof MillerColumns>;
 
 export const Default: Story = {
   args: {
-    items,
+    data: defaultData,
   },
 };

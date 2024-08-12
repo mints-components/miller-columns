@@ -1,4 +1,4 @@
-export const items = [
+export const defaultData = [
   {
     parentId: null,
     id: 1,

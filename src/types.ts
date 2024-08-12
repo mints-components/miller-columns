@@ -1,9 +1,7 @@
-export type ItemType<T> = {
+export type ItemType = {
   parentId: string | number | null;
   id: string | number;
   title: string;
-} & T;
+};
 
-export interface IMillerColumns<T> {
-  items: ItemType<T>[];
-}
+export type DataType<T> = ItemType & T;
