@@ -1,7 +1,7 @@
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import type { DataType } from './types';
-import { checkId } from './utils';
+import { checkduplicateId } from './utils';
 import { useData2Items, useColumns } from './hooks';
 
 import { Container, Loader, End } from './styled';
@@ -11,8 +11,8 @@ export interface IMillerColumns<T> {
 }
 
 export const MillerColumns = <T,>({ data }: IMillerColumns<T>) => {
-  if (!checkId(data)) {
-    throw new Error('Items must have unique id and parentId');
+  if (!checkduplicateId(data)) {
+    throw new Error('Data must have unique id');
   }
 
   const items = useData2Items(data);

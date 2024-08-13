@@ -1,1 +1,1 @@
-export * from './checkId';
+export * from './check-duplicate-id';
