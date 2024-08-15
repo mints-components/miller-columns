@@ -5,6 +5,21 @@ export const defaultData = [
     title: 'ITEM-1',
   },
   {
+    parentId: 1,
+    id: '1-1',
+    title: 'ITEM-1-1',
+  },
+  {
+    parentId: 1,
+    id: '1-2',
+    title: 'ITEM-1-2',
+  },
+  {
+    parentId: '1-1',
+    id: '1-1-1',
+    title: 'ITEM-1-1-1',
+  },
+  {
     parentId: null,
     id: 2,
     title: 'ITEM-2',

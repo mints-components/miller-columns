@@ -17,7 +17,7 @@ export const MillerColumns = <T,>({ data }: IMillerColumns<T>) => {
 
   const items = useData2Items(data);
 
-  const columns = useColumns(items);
+  const { columns, onExpand } = useColumns(items);
 
   return (
     <Container>
@@ -32,7 +32,7 @@ export const MillerColumns = <T,>({ data }: IMillerColumns<T>) => {
             next={() => {}}
           >
             {items.map((it) => (
-              <div>{it.title}</div>
+              <div onClick={() => onExpand(it.id)}>{it.title}</div>
             ))}
           </InfiniteScroll>
         );
