@@ -16,8 +16,6 @@ const request = async (
   id?: string | number,
   params?: any,
 ): Promise<RequestResType> => {
-  console.log(id, params);
-
   let data: DataType[] = defaultData;
   let hasMore = false;
 
