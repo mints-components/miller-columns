@@ -21,7 +21,7 @@ export const data1 = [
     parentId: 1,
     id: '1-4',
     title: 'ITEM-1-4',
-    canExpand: false,
+    canExpand: true,
   },
   {
     parentId: 1,
