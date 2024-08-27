@@ -23,7 +23,8 @@ export const MillerColumns = ({
       parentId: null,
       id: getId(rootId),
       items: [],
-      canExpand: false,
+      canExpand: true,
+      expanded: true,
       hasMore: true,
       params: {},
     },
@@ -41,6 +42,7 @@ export const MillerColumns = ({
           id: getId(rootId),
           items: data.filter((it) => !it.parentId),
           canExpand: false,
+          expanded: true,
           hasMore,
           params,
         }),
@@ -59,6 +61,7 @@ export const MillerColumns = ({
         id: item.id,
         items: [...item.items, ...data],
         canExpand: item.canExpand,
+        expanded: true,
         hasMore,
         params,
       }),
@@ -73,6 +76,10 @@ export const MillerColumns = ({
 
     onExpand(id);
 
+    if (item.expanded) {
+      return;
+    }
+
     const { data, hasMore, params } = await request(id, item.params);
 
     dispatch({
@@ -81,7 +88,8 @@ export const MillerColumns = ({
         parentId: item.parentId,
         id,
         items: [...item.items, ...data],
-        canExpand: false,
+        canExpand: item.canExpand,
+        expanded: true,
         hasMore,
         params,
       }),
@@ -90,11 +98,12 @@ export const MillerColumns = ({
 
   return (
     <S.Container>
-      {columns.map(({ targetId, items, hasMore }) => (
+      {columns.map(({ targetId, id, items, hasMore }) => (
         <Column
           key={targetId}
           height={columnHeight}
           targetId={targetId}
+          id={id}
           items={items}
           activeId={activeId}
           hasMore={hasMore}

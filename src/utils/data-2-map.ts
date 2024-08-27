@@ -11,6 +11,7 @@ export const data2Map = (
         id: item.id,
         items: data.filter((it) => it.parentId === item.id),
         canExpand: item.canExpand,
+        expanded: false,
         hasMore: true,
       };
       return acc;

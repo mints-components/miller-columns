@@ -6,6 +6,13 @@ export type RequestResType = {
   params?: any;
 };
 
+export type ColumnType = {
+  targetId: string;
+  id?: IDType;
+  items: DataType[];
+  hasMore: boolean;
+};
+
 export type DataType = {
   parentId: IDType | null;
   id: IDType;
@@ -18,6 +25,7 @@ export type DataMapValueType = {
   id: IDType;
   items: DataType[];
   canExpand: boolean;
+  expanded: boolean;
   hasMore: boolean;
   params?: any;
 };

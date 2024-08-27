@@ -7,6 +7,7 @@ import * as S from './styled';
 interface Props {
   height?: number;
   targetId: string;
+  id?: IDType;
   items: DataType[];
   activeId?: IDType;
   hasMore: boolean;
@@ -17,6 +18,7 @@ interface Props {
 export const Column = ({
   height,
   targetId,
+  id,
   items,
   activeId,
   hasMore,
@@ -31,7 +33,7 @@ export const Column = ({
         loader={<S.Loader>Loading...</S.Loader>}
         endMessage={<S.End>The end...</S.End>}
         hasMore={hasMore}
-        next={() => onScroll(activeId)}
+        next={() => onScroll(id)}
       >
         {items.map((it) => (
           <S.Item
