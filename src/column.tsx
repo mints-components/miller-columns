@@ -1,4 +1,5 @@
 import InfiniteScroll from 'react-infinite-scroll-component';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 import type { ItemType } from './types';
 import * as S from './styled';
@@ -6,11 +7,25 @@ import * as S from './styled';
 interface Props {
   targetId: string;
   items: ItemType[];
+  activeId: string | number | null;
   hasMore: boolean;
   onExpand: (id: string | number) => void;
 }
 
-export const Column = ({ targetId, items, hasMore, onExpand }: Props) => {
+export const Column = ({
+  targetId,
+  items,
+  activeId,
+  hasMore,
+  onExpand,
+}: Props) => {
+  const handleExpand = (item: ItemType) => {
+    if (!item.children || !item.children.length) {
+      return;
+    }
+    onExpand(item.id);
+  };
+
   return (
     <S.Column>
       <InfiniteScroll
@@ -22,7 +37,19 @@ export const Column = ({ targetId, items, hasMore, onExpand }: Props) => {
         next={() => {}}
       >
         {items.map((it) => (
-          <div onClick={() => onExpand(it.id)}>{it.title}</div>
+          <S.Item
+            $actived={activeId === it.id}
+            onClick={() => handleExpand(it)}
+          >
+            <S.ItemTitle>{it.title}</S.ItemTitle>
+            {it.children && it.children.length ? (
+              <ArrowForwardIosIcon
+                sx={{
+                  fontSize: 16,
+                }}
+              />
+            ) : null}
+          </S.Item>
         ))}
       </InfiniteScroll>
     </S.Column>

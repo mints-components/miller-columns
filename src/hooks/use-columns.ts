@@ -52,7 +52,8 @@ export const useColumns = (items: ItemType[]) => {
   return useMemo(() => {
     return {
       columns,
+      activeId,
       onExpand: setActiveId,
     };
-  }, [columns]);
+  }, [columns, activeId]);
 };

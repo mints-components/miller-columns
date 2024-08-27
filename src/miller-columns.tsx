@@ -15,7 +15,7 @@ export const MillerColumns = <T,>({ data }: IMillerColumns<T>) => {
 
   const items = useData2Items(data);
 
-  const { columns, onExpand } = useColumns(items);
+  const { columns, activeId, onExpand } = useColumns(items);
 
   return (
     <S.Container>
@@ -23,6 +23,7 @@ export const MillerColumns = <T,>({ data }: IMillerColumns<T>) => {
         <Column
           targetId={targetId}
           items={items}
+          activeId={activeId}
           hasMore={hasMore}
           onExpand={onExpand}
         />

@@ -15,4 +15,11 @@ export const Default: Story = {
   args: {
     data: defaultData,
   },
+  render: () => {
+    return (
+      <div style={{ width: 600 }}>
+        <MillerColumns data={defaultData} />
+      </div>
+    );
+  },
 };
