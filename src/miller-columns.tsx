@@ -1,10 +1,8 @@
-import InfiniteScroll from 'react-infinite-scroll-component';
-
 import type { DataType } from './types';
 import { checkduplicateId } from './utils';
 import { useData2Items, useColumns } from './hooks';
-
-import { Container, Loader, End } from './styled';
+import { Column } from './column';
+import * as S from './styled';
 
 export interface IMillerColumns<T> {
   data: DataType<T>[];
@@ -20,23 +18,15 @@ export const MillerColumns = <T,>({ data }: IMillerColumns<T>) => {
   const { columns, onExpand } = useColumns(items);
 
   return (
-    <Container>
-      {columns.map(({ targetId, items, hasMore }) => {
-        return (
-          <InfiniteScroll
-            scrollableTarget={targetId}
-            dataLength={items.length}
-            loader={<Loader>Loading...</Loader>}
-            endMessage={<End>The end...</End>}
-            hasMore={hasMore}
-            next={() => {}}
-          >
-            {items.map((it) => (
-              <div onClick={() => onExpand(it.id)}>{it.title}</div>
-            ))}
-          </InfiniteScroll>
-        );
-      })}
-    </Container>
+    <S.Container>
+      {columns.map(({ targetId, items, hasMore }) => (
+        <Column
+          targetId={targetId}
+          items={items}
+          hasMore={hasMore}
+          onExpand={onExpand}
+        />
+      ))}
+    </S.Container>
   );
 };
