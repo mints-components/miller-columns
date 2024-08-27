@@ -1,48 +1,46 @@
 import InfiniteScroll from 'react-infinite-scroll-component';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
-import type { ItemType } from './types';
+import type { DataType, IDType } from './types';
 import * as S from './styled';
 
 interface Props {
+  height?: number;
   targetId: string;
-  items: ItemType[];
-  activeId: string | number | null;
+  items: DataType[];
+  activeId?: IDType;
   hasMore: boolean;
-  onExpand: (id: string | number) => void;
+  onScroll: (id?: IDType) => void;
+  onExpand: (id: IDType) => void;
 }
 
 export const Column = ({
+  height,
   targetId,
   items,
   activeId,
   hasMore,
+  onScroll,
   onExpand,
 }: Props) => {
-  const handleExpand = (item: ItemType) => {
-    if (!item.children || !item.children.length) {
-      return;
-    }
-    onExpand(item.id);
-  };
-
   return (
-    <S.Column>
+    <S.Column $height={height} id={targetId}>
       <InfiniteScroll
         scrollableTarget={targetId}
         dataLength={items.length}
         loader={<S.Loader>Loading...</S.Loader>}
         endMessage={<S.End>The end...</S.End>}
         hasMore={hasMore}
-        next={() => {}}
+        next={() => onScroll(activeId)}
       >
         {items.map((it) => (
           <S.Item
+            key={it.id}
             $actived={activeId === it.id}
-            onClick={() => handleExpand(it)}
+            onClick={() => onExpand(it.id)}
           >
             <S.ItemTitle>{it.title}</S.ItemTitle>
-            {it.children && it.children.length ? (
+            {it.canExpand ? (
               <ArrowForwardIosIcon
                 sx={{
                   fontSize: 16,

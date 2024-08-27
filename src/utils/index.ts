@@ -1,1 +1,2 @@
-export * from './check-duplicate-id';
+export * from './data-2-map';
+export * from './get-id';

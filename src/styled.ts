@@ -9,16 +9,17 @@ export const Container = styled.div`
   display: flex;
 `;
 
-export const Column = styled.div`
+export const Column = styled.div<{ $height?: number }>`
   flex: 0 0 25%;
+  height: ${({ $height }) => $height}px;
+  overflow-y: auto;
 `;
 
 export const Item = styled.div<{ $actived: boolean }>`
   display: flex;
   align-items: center;
+  background-color: ${({ $actived }) => ($actived ? '#f7f7f7' : 'transparent')};
   cursor: pointer;
-
-  ${({ $actived }) => $actived && `background-color: #f7f7f7;`}
 `;
 
 export const ItemTitle = styled.span``;

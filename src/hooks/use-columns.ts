@@ -1,43 +1,45 @@
 import { useState, useMemo } from 'react';
 
-import type { ItemType } from '../types';
+import type { DataMapType, IDType, DataMapValueType, DataType } from '../types';
+import { getId } from '../utils';
 
-export const useColumns = (items: ItemType[]) => {
-  const [activeId, setActiveId] = useState<string | number | null>(null);
+export const useColumns = (state: DataMapType) => {
+  const [activeId, setActiveId] = useState<IDType>();
 
   const columns = useMemo(() => {
+    const rootItem = state[getId()];
+
     const rootColumn = {
       targetId: 'miller-columns-root',
-      items: items.filter((it) => !it.parentId),
-      hasMore: false,
+      items: rootItem.items,
+      hasMore: rootItem.hasMore,
     };
 
     if (!activeId) {
       return [rootColumn];
     }
 
-    const activeItem = items.find((it) => it.id === activeId);
+    const activeItem = state[activeId];
 
     if (!activeItem) {
       return [rootColumn];
     }
 
-    const collect = (item: ItemType) => {
+    const collect = (item: DataMapValueType) => {
       let result: {
         targetId: string;
-        items: ItemType[];
+        items: DataType[];
         hasMore: boolean;
       }[] = [];
 
       result.unshift({
         targetId: `miller-columns-${item.id}`,
-        items: items.filter((it) => it.parentId === item.id),
-        hasMore: false,
+        items: item.items,
+        hasMore: item.hasMore,
       });
 
-      const parentItem = items.find((it) => it.id === item.parentId);
-
-      if (parentItem) {
+      if (item.parentId) {
+        const parentItem = state[item.parentId];
         result.unshift(...collect(parentItem));
       } else {
         result.unshift(rootColumn);
@@ -47,7 +49,7 @@ export const useColumns = (items: ItemType[]) => {
     };
 
     return collect(activeItem);
-  }, [items, activeId]);
+  }, [state, activeId]);
 
   return useMemo(() => {
     return {
