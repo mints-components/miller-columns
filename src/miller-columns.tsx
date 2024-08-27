@@ -1,4 +1,4 @@
-import { useReducer, useEffect } from 'react';
+import { useState, useReducer, useEffect } from 'react';
 
 import { reducer } from './reducer';
 import type { IDType, RequestResType, DataMapType } from './types';
@@ -11,13 +11,20 @@ export interface IMillerColumns {
   request: (id?: IDType, params?: any) => Promise<RequestResType>;
   rootId?: number | string;
   columnHeight?: number;
+  selectable?: boolean;
+  selectedIds?: IDType[];
+  onSelectedIds?: (ids: IDType[]) => void;
 }
 
 export const MillerColumns = ({
   request,
   rootId,
   columnHeight,
+  selectable = false,
+  ...props
 }: IMillerColumns) => {
+  const [selectedIds, setSelectedIds] = useState<IDType[]>([]);
+
   const [state, dispatch] = useReducer(reducer, {
     [`${getId(rootId)}`]: {
       parentId: null,
@@ -49,6 +56,10 @@ export const MillerColumns = ({
       });
     })();
   }, [request, rootId]);
+
+  useEffect(() => {
+    setSelectedIds(props.selectedIds || []);
+  }, [props.selectedIds]);
 
   const handleScroll = async (id?: IDType) => {
     const item = state[getId(id)];
@@ -96,10 +107,29 @@ export const MillerColumns = ({
     });
   };
 
+  const handleSelectedIds = (id: IDType) => {
+    const index = selectedIds.indexOf(id);
+    let newSelectedIds = [];
+    if (index > -1) {
+      newSelectedIds = selectedIds.filter((it) => it !== id);
+    } else {
+      newSelectedIds = [...selectedIds, id];
+    }
+
+    if (props.onSelectedIds) {
+      props.onSelectedIds(newSelectedIds);
+    } else {
+      setSelectedIds(newSelectedIds);
+    }
+  };
+
   return (
     <S.Container>
       {columns.map(({ targetId, id, items, hasMore }) => (
         <Column
+          selectable={selectable}
+          selectedIds={selectedIds}
+          onSelectedIds={handleSelectedIds}
           key={targetId}
           height={columnHeight}
           targetId={targetId}

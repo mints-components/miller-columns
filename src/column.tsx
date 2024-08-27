@@ -2,9 +2,13 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 import type { DataType, IDType } from './types';
+import { Checkbox, CheckboxPlaceholder } from './components';
 import * as S from './styled';
 
 interface Props {
+  selectable: boolean;
+  selectedIds: IDType[];
+  onSelectedIds: (id: IDType) => void;
   height?: number;
   targetId: string;
   id?: IDType;
@@ -16,6 +20,9 @@ interface Props {
 }
 
 export const Column = ({
+  selectable,
+  selectedIds,
+  onSelectedIds,
   height,
   targetId,
   id,
@@ -41,6 +48,15 @@ export const Column = ({
             $actived={activeId === it.id}
             onClick={() => onExpand(it.id)}
           >
+            {selectable && !it.canExpand ? (
+              <Checkbox
+                checked={selectedIds.includes(it.id)}
+                onChange={() => onSelectedIds(it.id)}
+                inputProps={{ 'aria-label': 'controlled' }}
+              />
+            ) : (
+              <CheckboxPlaceholder />
+            )}
             <S.ItemTitle>{it.title}</S.ItemTitle>
             {it.canExpand ? (
               <ArrowForwardIosIcon
