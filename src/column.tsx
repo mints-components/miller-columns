@@ -7,6 +7,7 @@ import * as S from './styled';
 
 interface Props {
   selectable: boolean;
+  disabledIds: IDType[];
   selectedIds: IDType[];
   onSelectedIds: (id: IDType) => void;
   height?: number;
@@ -21,6 +22,7 @@ interface Props {
 
 export const Column = ({
   selectable,
+  disabledIds,
   selectedIds,
   onSelectedIds,
   height,
@@ -50,6 +52,7 @@ export const Column = ({
           >
             {selectable && !it.canExpand ? (
               <Checkbox
+                disabled={disabledIds.includes(it.id)}
                 checked={selectedIds.includes(it.id)}
                 onChange={() => onSelectedIds(it.id)}
                 inputProps={{ 'aria-label': 'controlled' }}

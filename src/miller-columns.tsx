@@ -12,6 +12,7 @@ export interface IMillerColumns {
   rootId?: number | string;
   columnHeight?: number;
   selectable?: boolean;
+  disabledIds?: IDType[];
   selectedIds?: IDType[];
   onSelectedIds?: (ids: IDType[]) => void;
 }
@@ -21,6 +22,7 @@ export const MillerColumns = ({
   rootId,
   columnHeight,
   selectable = false,
+  disabledIds = [],
   ...props
 }: IMillerColumns) => {
   const [selectedIds, setSelectedIds] = useState<IDType[]>([]);
@@ -128,6 +130,7 @@ export const MillerColumns = ({
       {columns.map(({ targetId, id, items, hasMore }) => (
         <Column
           selectable={selectable}
+          disabledIds={disabledIds}
           selectedIds={selectedIds}
           onSelectedIds={handleSelectedIds}
           key={targetId}
