@@ -1,10 +1,10 @@
 import { useState, useReducer, useEffect } from 'react';
 
-import { reducer } from './reducer';
 import type { IDType, RequestResType, DataMapType } from './types';
-import { getId, data2Map } from './utils';
+import { Column, Item } from './components';
 import { useColumns } from './hooks';
-import { Column } from './column';
+import { getId, data2Map } from './utils';
+import { reducer } from './reducer';
 import * as S from './styled';
 
 export interface IMillerColumns {
@@ -129,19 +129,25 @@ export const MillerColumns = ({
     <S.Container>
       {columns.map(({ targetId, id, items, hasMore }) => (
         <Column
-          selectable={selectable}
-          disabledIds={disabledIds}
-          selectedIds={selectedIds}
-          onSelectedIds={handleSelectedIds}
           key={targetId}
           height={columnHeight}
           targetId={targetId}
           id={id}
           items={items}
-          activeId={activeId}
           hasMore={hasMore}
+          renderItem={(item) => (
+            <Item
+              key={item.id}
+              item={item}
+              activeId={activeId}
+              selectable={selectable}
+              disabledIds={disabledIds}
+              selectedIds={selectedIds}
+              onSelectedIds={handleSelectedIds}
+              onExpand={handleExpand}
+            />
+          )}
           onScroll={handleScroll}
-          onExpand={handleExpand}
         />
       ))}
     </S.Container>
