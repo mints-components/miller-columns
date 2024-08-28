@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { useState } from 'react';
 
 import type { RequestResType, DataType } from './types';
 import { MillerColumns } from './miller-columns';
@@ -56,6 +57,26 @@ export const Default: Story = {
     return (
       <div style={{ width: 600 }}>
         <MillerColumns request={request} columnHeight={130} />
+      </div>
+    );
+  },
+};
+
+export const Selectable: Story = {
+  args: {},
+  render: () => {
+    const [selectedIds, setSelectedIds] = useState<(string | number)[]>([]);
+
+    return (
+      <div style={{ width: 600 }}>
+        <p>selected ids: {selectedIds.join(',')}</p>
+        <MillerColumns
+          request={request}
+          columnHeight={130}
+          selectable
+          selectedIds={selectedIds}
+          onSelectedIds={setSelectedIds}
+        />
       </div>
     );
   },
