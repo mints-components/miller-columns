@@ -81,3 +81,28 @@ export const Selectable: Story = {
     );
   },
 };
+
+export const CustomRender: Story = {
+  args: {},
+  render: () => {
+    return (
+      <div style={{ width: 600 }}>
+        <MillerColumns
+          request={request}
+          columnHeight={130}
+          renderTitle={(id) => {
+            return id ? null : (
+              <span style={{ color: 'red' }}>This is a custom title</span>
+            );
+          }}
+          renderEnd={(id) => {
+            return <span style={{ color: 'blue' }}>End...</span>;
+          }}
+          renderLoading={(id) => {
+            return <span style={{ color: 'green' }}>Loading...</span>;
+          }}
+        />
+      </div>
+    );
+  },
+};

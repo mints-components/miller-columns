@@ -1,6 +1,6 @@
 import { useState, useReducer, useEffect } from 'react';
 
-import type { IDType, RequestResType, DataMapType } from './types';
+import type { IDType, RequestResType, ColumnType, DataMapType } from './types';
 import { Column, Item } from './components';
 import { useColumns } from './hooks';
 import { getId, data2Map } from './utils';
@@ -9,8 +9,11 @@ import * as S from './styled';
 
 export interface IMillerColumns {
   request: (id?: IDType, params?: any) => Promise<RequestResType>;
-  rootId?: number | string;
+  rootId?: IDType;
   columnHeight?: number;
+  renderTitle?: (id?: IDType) => React.ReactNode;
+  renderEnd?: (id?: IDType) => React.ReactNode;
+  renderLoading?: (id?: IDType) => React.ReactNode;
   selectable?: boolean;
   disabledIds?: IDType[];
   selectedIds?: IDType[];
@@ -23,6 +26,9 @@ export const MillerColumns = ({
   columnHeight,
   selectable = false,
   disabledIds = [],
+  renderTitle,
+  renderEnd,
+  renderLoading,
   ...props
 }: IMillerColumns) => {
   const [selectedIds, setSelectedIds] = useState<IDType[]>([]);
@@ -135,6 +141,9 @@ export const MillerColumns = ({
           id={id}
           items={items}
           hasMore={hasMore}
+          renderTitle={renderTitle}
+          renderEnd={renderEnd}
+          renderLoading={renderLoading}
           renderItem={(item) => (
             <Item
               key={item.id}

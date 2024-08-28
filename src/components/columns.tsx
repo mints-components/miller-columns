@@ -1,6 +1,6 @@
 import InfiniteScroll from 'react-infinite-scroll-component';
 
-import type { DataType, IDType } from '../types';
+import type { IDType, DataType } from '../types';
 import * as S from '../styled';
 
 interface Props {
@@ -10,6 +10,9 @@ interface Props {
   items: DataType[];
   hasMore: boolean;
   renderItem: (item: DataType) => JSX.Element;
+  renderTitle?: (id?: IDType) => React.ReactNode;
+  renderEnd?: (id?: IDType) => React.ReactNode;
+  renderLoading?: (id?: IDType) => React.ReactNode;
   onScroll: (id?: IDType) => void;
 }
 
@@ -20,15 +23,23 @@ export const Column = ({
   items,
   hasMore,
   renderItem,
+  renderTitle,
+  renderEnd,
+  renderLoading,
   onScroll,
 }: Props) => {
+  const title = renderTitle?.(id) ?? null;
+  const end = renderEnd?.(id) ?? null;
+  const loader = renderLoading?.(id) ?? null;
+
   return (
     <S.Column $height={height} id={targetId}>
+      {title && <S.Title>{title}</S.Title>}
       <InfiniteScroll
         scrollableTarget={targetId}
         dataLength={items.length}
-        loader={<S.Loader>Loading...</S.Loader>}
-        endMessage={<S.End>The end...</S.End>}
+        loader={<S.Loader>{loader}</S.Loader>}
+        endMessage={<S.End>{end}</S.End>}
         hasMore={hasMore}
         next={() => onScroll(id)}
       >

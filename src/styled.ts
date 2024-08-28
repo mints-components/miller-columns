@@ -24,6 +24,8 @@ export const Item = styled.div<{ $actived: boolean }>`
 
 export const ItemTitle = styled.span``;
 
+export const Title = styled.div``;
+
 export const Loader = styled.div``;
 
 export const End = styled.div``;
