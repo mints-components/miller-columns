@@ -29,22 +29,21 @@ export const Item = ({
 }: Props) => {
   return (
     <S.Item $actived={activeId === item.id} onClick={() => onExpand(item.id)}>
-      {selectable && !item.canExpand && mode === 'multiple' ? (
-        <Checkbox
-          disabled={disabledIds.includes(item.id)}
-          checked={selectedIds.includes(item.id)}
-          onChange={() => onSelectedIds(item.id)}
-          inputProps={{ 'aria-label': 'controlled' }}
-        />
-      ) : (
-        <CheckboxPlaceholder />
-      )}
-      {selectable && !item.canExpand && mode === 'single' ? (
-        <Radio
-          disabled={disabledIds.includes(item.id)}
-          checked={selectedIds[0] === item.id}
-          onChange={() => onSelectedIds(item.id)}
-        />
+      {selectable && !item.canExpand ? (
+        mode === 'single' ? (
+          <Radio
+            disabled={disabledIds.includes(item.id)}
+            checked={selectedIds[0] === item.id}
+            onChange={() => onSelectedIds(item.id)}
+          />
+        ) : (
+          <Checkbox
+            disabled={disabledIds.includes(item.id)}
+            checked={selectedIds.includes(item.id)}
+            onChange={() => onSelectedIds(item.id)}
+            inputProps={{ 'aria-label': 'controlled' }}
+          />
+        )
       ) : (
         <CheckboxPlaceholder />
       )}
