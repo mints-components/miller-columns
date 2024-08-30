@@ -54,11 +54,30 @@ const CheckedIcon = styled(Icon)({
   },
 });
 
+const IndeterminateIcon = styled(Icon)({
+  backgroundColor: '#137cbd',
+  backgroundImage:
+    'linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))',
+  '&::before': {
+    display: 'block',
+    width: 16,
+    height: 16,
+    backgroundImage:
+      "url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cline" +
+      " x1='4' y1='8' x2='12' y2='8' stroke='%23fff' stroke-width='2' /%3E%3C/svg%3E\")",
+    content: '""',
+  },
+  'input:hover ~ &': {
+    backgroundColor: '#106ba3',
+  },
+});
+
 export const Checkbox = (props: CheckboxProps) => {
   return (
     <MUIChekbox
       sx={{ '&:hover': { bgcolor: 'transparent' }, padding: 0 }}
       color="default"
+      indeterminateIcon={<IndeterminateIcon />}
       checkedIcon={<CheckedIcon />}
       icon={<Icon />}
       {...props}

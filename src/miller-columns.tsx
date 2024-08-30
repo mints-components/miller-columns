@@ -139,6 +139,15 @@ export const MillerColumns = ({
     }
   };
 
+  const handleSelectedAll = (ids: IDType[]) => {
+    const newSelectedIds = selectedIds.length === ids.length ? [] : ids;
+    if (props.onSelectedIds) {
+      props.onSelectedIds(newSelectedIds);
+    } else {
+      setSelectedIds(newSelectedIds);
+    }
+  };
+
   return (
     <S.Container>
       {columns.map(({ targetId, id, items, hasMore }) => (
@@ -149,6 +158,10 @@ export const MillerColumns = ({
           id={id}
           items={items}
           hasMore={hasMore}
+          selectedAll={
+            columns.length === 1 && !items.some((it) => it.canExpand)
+          }
+          selectedIds={selectedIds}
           renderTitle={renderTitle}
           renderEnd={renderEnd}
           renderLoading={renderLoading}
@@ -166,6 +179,7 @@ export const MillerColumns = ({
             />
           )}
           onScroll={handleScroll}
+          onSelectedAll={handleSelectedAll}
         />
       ))}
     </S.Container>

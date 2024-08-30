@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
 
-import type { RequestResType, DataType } from './types';
+import type { IDType, RequestResType, DataType } from './types';
 import { MillerColumns } from './miller-columns';
 import { defaultData, data1, data2, data11, data14 } from './mock';
 
@@ -13,10 +13,7 @@ const meta: Meta<typeof MillerColumns> = {
 export default meta;
 type Story = StoryObj<typeof MillerColumns>;
 
-const request = async (
-  id?: string | number,
-  params?: any,
-): Promise<RequestResType> => {
+const request = async (id?: IDType, params?: any): Promise<RequestResType> => {
   let data: DataType[] = defaultData;
   let hasMore = false;
 
@@ -72,6 +69,40 @@ export const Selectable: Story = {
         <p>selected ids: {selectedIds.join(',')}</p>
         <MillerColumns
           request={request}
+          columnHeight={130}
+          selectable
+          selectedIds={selectedIds}
+          onSelectedIds={setSelectedIds}
+        />
+      </div>
+    );
+  },
+};
+
+export const SelectableWithAll: Story = {
+  args: {},
+  render: () => {
+    const [selectedIds, setSelectedIds] = useState<(string | number)[]>([]);
+
+    const customRequest = async (): Promise<RequestResType> => {
+      return new Promise((r) => {
+        setTimeout(() => {
+          r({
+            data: data14.map((it) => ({
+              ...it,
+              parentId: null,
+            })),
+            hasMore: false,
+          });
+        }, 3000);
+      });
+    };
+
+    return (
+      <div style={{ width: 600 }}>
+        <p>selected ids: {selectedIds.join(',')}</p>
+        <MillerColumns
+          request={customRequest}
           columnHeight={130}
           selectable
           selectedIds={selectedIds}

@@ -15,7 +15,7 @@ export const Column = styled.div<{ $height?: number }>`
   overflow-y: auto;
 `;
 
-export const Item = styled.div<{ $actived: boolean }>`
+export const Item = styled.div<{ $actived?: boolean }>`
   display: flex;
   align-items: center;
   background-color: ${({ $actived }) => ($actived ? '#f7f7f7' : 'transparent')};
