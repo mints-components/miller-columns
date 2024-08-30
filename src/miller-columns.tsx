@@ -14,6 +14,7 @@ export interface IMillerColumns {
   renderTitle?: (id?: IDType) => React.ReactNode;
   renderEnd?: (id?: IDType) => React.ReactNode;
   renderLoading?: (id?: IDType) => React.ReactNode;
+  renderError?: (errMsg: string) => React.ReactNode;
   selectable?: boolean;
   mode?: 'single' | 'multiple';
   disabledIds?: IDType[];
@@ -31,6 +32,7 @@ export const MillerColumns = ({
   renderTitle,
   renderEnd,
   renderLoading,
+  renderError,
   ...props
 }: IMillerColumns) => {
   const [selectedIds, setSelectedIds] = useState<IDType[]>([]);
@@ -43,7 +45,6 @@ export const MillerColumns = ({
       canExpand: true,
       expanded: true,
       hasMore: true,
-      params: {},
     },
   } as DataMapType);
 
@@ -51,7 +52,7 @@ export const MillerColumns = ({
 
   useEffect(() => {
     (async () => {
-      const { data, hasMore, params } = await request(rootId);
+      const { data, hasMore, error, params } = await request(rootId);
       dispatch({
         type: 'ADD',
         payload: data2Map(data, {
@@ -61,6 +62,7 @@ export const MillerColumns = ({
           canExpand: false,
           expanded: true,
           hasMore,
+          error,
           params,
         }),
       });
@@ -74,7 +76,7 @@ export const MillerColumns = ({
   const handleScroll = async (id?: IDType) => {
     const item = state[getId(id)];
 
-    const { data, hasMore, params } = await request(id, item.params);
+    const { data, hasMore, error, params } = await request(id, item.params);
     dispatch({
       type: 'ADD',
       payload: data2Map(data, {
@@ -84,6 +86,7 @@ export const MillerColumns = ({
         canExpand: item.canExpand,
         expanded: true,
         hasMore,
+        error,
         params,
       }),
     });
@@ -101,7 +104,7 @@ export const MillerColumns = ({
       return;
     }
 
-    const { data, hasMore, params } = await request(id, item.params);
+    const { data, hasMore, error, params } = await request(id, item.params);
 
     dispatch({
       type: 'ADD',
@@ -112,6 +115,7 @@ export const MillerColumns = ({
         canExpand: item.canExpand,
         expanded: true,
         hasMore,
+        error,
         params,
       }),
     });
@@ -150,7 +154,7 @@ export const MillerColumns = ({
 
   return (
     <S.Container>
-      {columns.map(({ targetId, id, items, hasMore }) => (
+      {columns.map(({ targetId, id, items, hasMore, error }) => (
         <Column
           key={targetId}
           height={columnHeight}
@@ -158,6 +162,7 @@ export const MillerColumns = ({
           id={id}
           items={items}
           hasMore={hasMore}
+          error={error}
           selectedAll={
             columns.length === 1 && !items.some((it) => it.canExpand)
           }
@@ -165,6 +170,7 @@ export const MillerColumns = ({
           renderTitle={renderTitle}
           renderEnd={renderEnd}
           renderLoading={renderLoading}
+          renderError={renderError}
           renderItem={(item) => (
             <Item
               key={item.id}

@@ -159,3 +159,38 @@ export const CustomRender: Story = {
     );
   },
 };
+
+export const RequestError: Story = {
+  args: {},
+  render: () => {
+    const customRequest = async (): Promise<RequestResType> => {
+      return new Promise((r) => {
+        let data: DataType[] = [];
+        let hasMore = false;
+        let error = null;
+
+        try {
+          throw new Error('Request Error');
+        } catch (e: any) {
+          error = {
+            message: e.message,
+          };
+        }
+
+        setTimeout(() => {
+          r({
+            data,
+            hasMore,
+            error,
+          });
+        }, 3000);
+      });
+    };
+
+    return (
+      <div style={{ width: 600 }}>
+        <MillerColumns request={customRequest} columnHeight={130} />
+      </div>
+    );
+  },
+};

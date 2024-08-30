@@ -18,6 +18,7 @@ export const useColumns = (state: DataMapType) => {
       targetId: 'miller-columns-root',
       items: rootItem.items,
       hasMore: rootItem.hasMore,
+      error: rootItem.error,
     };
 
     if (!activeId) {
@@ -38,6 +39,7 @@ export const useColumns = (state: DataMapType) => {
         id: item.id,
         items: item.items,
         hasMore: item.hasMore,
+        error: rootItem.error,
       });
 
       if (item.parentId) {

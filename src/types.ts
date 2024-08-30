@@ -3,6 +3,9 @@ export type IDType = string | number;
 export type RequestResType = {
   data: DataType[];
   hasMore: boolean;
+  error?: {
+    message: string;
+  };
   params?: any;
 };
 
@@ -11,6 +14,9 @@ export type ColumnType = {
   id?: IDType;
   items: DataType[];
   hasMore: boolean;
+  error?: {
+    message: string;
+  };
 };
 
 export type DataType = {
@@ -27,6 +33,9 @@ export type DataMapValueType = {
   canExpand: boolean;
   expanded: boolean;
   hasMore: boolean;
+  error?: {
+    message: string;
+  };
   params?: any;
 };
 

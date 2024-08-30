@@ -12,12 +12,16 @@ interface Props {
   id?: IDType;
   items: DataType[];
   hasMore: boolean;
+  error?: {
+    message: string;
+  };
   selectedAll: boolean;
   selectedIds: IDType[];
   renderItem: (item: DataType) => React.ReactNode;
   renderTitle?: (id?: IDType) => React.ReactNode;
   renderEnd?: (id?: IDType) => React.ReactNode;
   renderLoading?: (id?: IDType) => React.ReactNode;
+  renderError?: (errMsg: string) => React.ReactNode;
   onScroll: (id?: IDType) => void;
   onSelectedAll: (ids: IDType[]) => void;
 }
@@ -28,15 +32,19 @@ export const Column = ({
   id,
   items,
   hasMore,
+  error,
   selectedAll,
   selectedIds,
   renderItem,
   renderTitle,
   renderEnd,
+  renderError,
   renderLoading,
   onScroll,
   onSelectedAll,
 }: Props) => {
+  console.log(error);
+
   const title = renderTitle?.(id) ?? null;
   const end = renderEnd?.(id) ?? null;
   const loader = renderLoading?.(id) ?? 'Loading...';
@@ -49,6 +57,11 @@ export const Column = ({
       !checked && items.some((item) => selectedIds.includes(item.id));
     return [checked, indeterminate];
   }, [items, selectedIds]);
+
+  if (error && error.message) {
+    const message = renderError?.(error.message) ?? error.message;
+    return <S.Column>{message}</S.Column>;
+  }
 
   return (
     <S.Column $height={height} id={targetId}>
