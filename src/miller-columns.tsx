@@ -1,6 +1,6 @@
 import { useState, useReducer, useEffect } from 'react';
 
-import type { IDType, RequestResType, ColumnType, DataMapType } from './types';
+import type { IDType, RequestResType, DataMapType } from './types';
 import { Column, Item } from './components';
 import { useColumns } from './hooks';
 import { getId, data2Map } from './utils';
@@ -15,6 +15,7 @@ export interface IMillerColumns {
   renderEnd?: (id?: IDType) => React.ReactNode;
   renderLoading?: (id?: IDType) => React.ReactNode;
   selectable?: boolean;
+  mode?: 'single' | 'multiple';
   disabledIds?: IDType[];
   selectedIds?: IDType[];
   onSelectedIds?: (ids: IDType[]) => void;
@@ -25,6 +26,7 @@ export const MillerColumns = ({
   rootId,
   columnHeight,
   selectable = false,
+  mode = 'multiple',
   disabledIds = [],
   renderTitle,
   renderEnd,
@@ -116,12 +118,18 @@ export const MillerColumns = ({
   };
 
   const handleSelectedIds = (id: IDType) => {
-    const index = selectedIds.indexOf(id);
-    let newSelectedIds = [];
-    if (index > -1) {
-      newSelectedIds = selectedIds.filter((it) => it !== id);
-    } else {
-      newSelectedIds = [...selectedIds, id];
+    let newSelectedIds: IDType[] = [];
+
+    if (mode === 'single') {
+      newSelectedIds = [id];
+    } else if (mode === 'multiple') {
+      const index = selectedIds.indexOf(id);
+
+      if (index > -1) {
+        newSelectedIds = selectedIds.filter((it) => it !== id);
+      } else {
+        newSelectedIds = [...selectedIds, id];
+      }
     }
 
     if (props.onSelectedIds) {
@@ -150,6 +158,7 @@ export const MillerColumns = ({
               item={item}
               activeId={activeId}
               selectable={selectable}
+              mode={mode}
               disabledIds={disabledIds}
               selectedIds={selectedIds}
               onSelectedIds={handleSelectedIds}

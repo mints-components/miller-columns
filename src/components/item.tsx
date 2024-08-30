@@ -4,11 +4,13 @@ import { IDType, DataType } from '../types';
 import * as S from '../styled';
 
 import { Checkbox, CheckboxPlaceholder } from './checkbox';
+import { Radio } from './radio';
 
 interface Props {
   item: DataType;
   activeId?: IDType;
   selectable: boolean;
+  mode: 'single' | 'multiple';
   disabledIds: IDType[];
   selectedIds: IDType[];
   onSelectedIds: (id: IDType) => void;
@@ -19,6 +21,7 @@ export const Item = ({
   activeId,
   item,
   selectable,
+  mode,
   disabledIds,
   selectedIds,
   onSelectedIds,
@@ -26,12 +29,21 @@ export const Item = ({
 }: Props) => {
   return (
     <S.Item $actived={activeId === item.id} onClick={() => onExpand(item.id)}>
-      {selectable && !item.canExpand ? (
+      {selectable && !item.canExpand && mode === 'multiple' ? (
         <Checkbox
           disabled={disabledIds.includes(item.id)}
           checked={selectedIds.includes(item.id)}
           onChange={() => onSelectedIds(item.id)}
           inputProps={{ 'aria-label': 'controlled' }}
+        />
+      ) : (
+        <CheckboxPlaceholder />
+      )}
+      {selectable && !item.canExpand && mode === 'single' ? (
+        <Radio
+          disabled={disabledIds.includes(item.id)}
+          checked={selectedIds[0] === item.id}
+          onChange={() => onSelectedIds(item.id)}
         />
       ) : (
         <CheckboxPlaceholder />

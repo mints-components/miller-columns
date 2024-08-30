@@ -82,6 +82,28 @@ export const Selectable: Story = {
   },
 };
 
+export const SingleSelectable: Story = {
+  args: {},
+  render: () => {
+    const [selectedIds, setSelectedIds] = useState<(string | number)[]>([]);
+
+    return (
+      <div style={{ width: 600 }}>
+        <p>selected id: {selectedIds.join(',')}</p>
+        <MillerColumns
+          request={request}
+          columnHeight={130}
+          selectable
+          mode="single"
+          disabledIds={[4]}
+          selectedIds={selectedIds}
+          onSelectedIds={setSelectedIds}
+        />
+      </div>
+    );
+  },
+};
+
 export const CustomRender: Story = {
   args: {},
   render: () => {
