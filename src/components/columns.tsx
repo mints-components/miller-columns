@@ -30,7 +30,7 @@ export const Column = ({
 }: Props) => {
   const title = renderTitle?.(id) ?? null;
   const end = renderEnd?.(id) ?? null;
-  const loader = renderLoading?.(id) ?? null;
+  const loader = renderLoading?.(id) ?? 'Loading...';
 
   return (
     <S.Column $height={height} id={targetId}>

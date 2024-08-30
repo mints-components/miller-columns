@@ -95,11 +95,11 @@ export const CustomRender: Story = {
               <span style={{ color: 'red' }}>This is a custom title</span>
             );
           }}
-          renderEnd={(id) => {
+          renderEnd={() => {
             return <span style={{ color: 'blue' }}>End...</span>;
           }}
-          renderLoading={(id) => {
-            return <span style={{ color: 'green' }}>Loading...</span>;
+          renderLoading={() => {
+            return <span style={{ color: 'green' }}>Custom Loading...</span>;
           }}
         />
       </div>
