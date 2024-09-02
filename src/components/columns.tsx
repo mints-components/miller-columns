@@ -43,8 +43,6 @@ export const Column = ({
   onScroll,
   onSelectedAll,
 }: Props) => {
-  console.log(error);
-
   const title = renderTitle?.(id) ?? null;
   const end = renderEnd?.(id) ?? null;
   const loader = renderLoading?.(id) ?? 'Loading...';
