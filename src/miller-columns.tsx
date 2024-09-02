@@ -10,6 +10,7 @@ import * as S from './styled';
 export interface IMillerColumns {
   request: (id?: IDType, params?: any) => Promise<RequestResType>;
   rootId?: IDType;
+  style?: React.CSSProperties;
   columnHeight?: number;
   renderTitle?: (id?: IDType) => React.ReactNode;
   renderEnd?: (id?: IDType) => React.ReactNode;
@@ -25,6 +26,7 @@ export interface IMillerColumns {
 export const MillerColumns = ({
   request,
   rootId,
+  style,
   columnHeight,
   selectable = false,
   mode = 'multiple',
@@ -153,7 +155,7 @@ export const MillerColumns = ({
   };
 
   return (
-    <S.Container>
+    <S.Container style={style}>
       {columns.map(({ targetId, id, items, hasMore, error }) => (
         <Column
           key={targetId}
