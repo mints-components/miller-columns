@@ -7,6 +7,7 @@ import '@fontsource/roboto/700.css';
 
 export const Container = styled.div`
   display: flex;
+  font-family: Roboto, sans-serif;
 `;
 
 export const Column = styled.div<{ $height?: number }>`
@@ -22,7 +23,9 @@ export const Item = styled.div<{ $actived?: boolean }>`
   cursor: pointer;
 `;
 
-export const ItemTitle = styled.span``;
+export const ItemTitle = styled.span`
+  margin: 0 4px;
+`;
 
 export const Title = styled.div``;
 
