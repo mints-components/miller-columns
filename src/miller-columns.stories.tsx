@@ -135,6 +135,24 @@ export const SingleSelectable: Story = {
   },
 };
 
+export const CustomTheme: Story = {
+  args: {},
+  render: () => {
+    return (
+      <div style={{ width: 600 }}>
+        <MillerColumns
+          request={request}
+          columnHeight={130}
+          selectable
+          theme={{
+            colorPrimary: '#ff0000',
+          }}
+        />
+      </div>
+    );
+  },
+};
+
 export const CustomRender: Story = {
   args: {},
   render: () => {

@@ -1,6 +1,8 @@
 import { styled } from '@mui/material/styles';
 import MUIChekbox, { CheckboxProps } from '@mui/material/Checkbox';
 
+import { useTheme } from '../context';
+
 const Icon = styled('span')(({ theme }) => ({
   borderRadius: 3,
   width: 16,
@@ -35,8 +37,8 @@ const Icon = styled('span')(({ theme }) => ({
   }),
 }));
 
-const CheckedIcon = styled(Icon)({
-  backgroundColor: '#292b3f',
+const CheckedIcon = styled(Icon)(({ $colorPrimary = '#292b3f' }) => ({
+  backgroundColor: $colorPrimary,
   backgroundImage:
     'linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))',
   '&::before': {
@@ -50,12 +52,12 @@ const CheckedIcon = styled(Icon)({
     content: '""',
   },
   'input:hover ~ &': {
-    backgroundColor: '#6d6e7c',
+    backgroundColor: `${$colorPrimary}b0`,
   },
-});
+}));
 
-const IndeterminateIcon = styled(Icon)({
-  backgroundColor: '#292b3f',
+const IndeterminateIcon = styled(Icon)(({ $colorPrimary }) => ({
+  backgroundColor: $colorPrimary,
   backgroundImage:
     'linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))',
   '&::before': {
@@ -68,17 +70,19 @@ const IndeterminateIcon = styled(Icon)({
     content: '""',
   },
   'input:hover ~ &': {
-    backgroundColor: '#6d6e7c',
+    backgroundColor: `${$colorPrimary}b0`,
   },
-});
+}));
 
 export const Checkbox = (props: CheckboxProps) => {
+  const { colorPrimary } = useTheme();
+
   return (
     <MUIChekbox
       sx={{ '&:hover': { bgcolor: 'transparent' }, padding: 0 }}
       color="default"
-      indeterminateIcon={<IndeterminateIcon />}
-      checkedIcon={<CheckedIcon />}
+      indeterminateIcon={<IndeterminateIcon $colorPrimary={colorPrimary} />}
+      checkedIcon={<CheckedIcon $colorPrimary={colorPrimary} />}
       icon={<Icon />}
       {...props}
     />

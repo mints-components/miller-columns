@@ -1,6 +1,8 @@
 import { styled } from '@mui/material/styles';
 import MUIRadio, { RadioProps } from '@mui/material/Radio';
 
+import { useTheme } from '../context';
+
 const Icon = styled('span')(({ theme }) => ({
   borderRadius: '50%',
   width: 16,
@@ -35,8 +37,8 @@ const Icon = styled('span')(({ theme }) => ({
   }),
 }));
 
-const CheckedIcon = styled(Icon)({
-  backgroundColor: '#292b3f',
+const CheckedIcon = styled(Icon)(({ $colorPrimary }) => ({
+  backgroundColor: $colorPrimary,
   backgroundImage:
     'linear-gradient(180deg,hsla(0,0%,100%,.1),hsla(0,0%,100%,0))',
   '&::before': {
@@ -47,16 +49,18 @@ const CheckedIcon = styled(Icon)({
     content: '""',
   },
   'input:hover ~ &': {
-    backgroundColor: '#6d6e7c',
+    backgroundColor: `${$colorPrimary}b0`,
   },
-});
+}));
 
 export const Radio = (props: RadioProps) => {
+  const { colorPrimary } = useTheme();
+
   return (
     <MUIRadio
       sx={{ padding: 0 }}
       color="default"
-      checkedIcon={<CheckedIcon />}
+      checkedIcon={<CheckedIcon $colorPrimary={colorPrimary} />}
       icon={<Icon />}
       {...props}
     />

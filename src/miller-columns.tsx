@@ -1,6 +1,7 @@
 import { useState, useReducer, useEffect } from 'react';
 
 import type { IDType, RequestResType, DataMapType } from './types';
+import { Context, initialTheme } from './context';
 import { Column, Item } from './components';
 import { useColumns } from './hooks';
 import { getId, data2Map } from './utils';
@@ -11,6 +12,9 @@ export interface IMillerColumns {
   request: (id?: IDType, params?: any) => Promise<RequestResType>;
   rootId?: IDType;
   style?: React.CSSProperties;
+  theme?: {
+    colorPrimary?: string;
+  };
   columnHeight?: number;
   renderTitle?: (id?: IDType) => React.ReactNode;
   renderEnd?: (id?: IDType) => React.ReactNode;
@@ -27,6 +31,7 @@ export const MillerColumns = ({
   request,
   rootId,
   style,
+  theme,
   columnHeight,
   selectable = false,
   mode = 'multiple',
@@ -155,41 +160,43 @@ export const MillerColumns = ({
   };
 
   return (
-    <S.Container style={style}>
-      {columns.map(({ targetId, id, items, hasMore, error }) => (
-        <Column
-          key={targetId}
-          height={columnHeight}
-          targetId={targetId}
-          id={id}
-          items={items}
-          hasMore={hasMore}
-          error={error}
-          selectedAll={
-            columns.length === 1 && !items.some((it) => it.canExpand)
-          }
-          selectedIds={selectedIds}
-          renderTitle={renderTitle}
-          renderEnd={renderEnd}
-          renderLoading={renderLoading}
-          renderError={renderError}
-          renderItem={(item) => (
-            <Item
-              key={item.id}
-              item={item}
-              activeId={activeId}
-              selectable={selectable}
-              mode={mode}
-              disabledIds={disabledIds}
-              selectedIds={selectedIds}
-              onSelectedIds={handleSelectedIds}
-              onExpand={handleExpand}
-            />
-          )}
-          onScroll={handleScroll}
-          onSelectedAll={handleSelectedAll}
-        />
-      ))}
-    </S.Container>
+    <Context.Provider value={{ theme: { ...initialTheme, ...(theme ?? {}) } }}>
+      <S.Container style={style}>
+        {columns.map(({ targetId, id, items, hasMore, error }) => (
+          <Column
+            key={targetId}
+            height={columnHeight}
+            targetId={targetId}
+            id={id}
+            items={items}
+            hasMore={hasMore}
+            error={error}
+            selectedAll={
+              columns.length === 1 && !items.some((it) => it.canExpand)
+            }
+            selectedIds={selectedIds}
+            renderTitle={renderTitle}
+            renderEnd={renderEnd}
+            renderLoading={renderLoading}
+            renderError={renderError}
+            renderItem={(item) => (
+              <Item
+                key={item.id}
+                item={item}
+                activeId={activeId}
+                selectable={selectable}
+                mode={mode}
+                disabledIds={disabledIds}
+                selectedIds={selectedIds}
+                onSelectedIds={handleSelectedIds}
+                onExpand={handleExpand}
+              />
+            )}
+            onScroll={handleScroll}
+            onSelectedAll={handleSelectedAll}
+          />
+        ))}
+      </S.Container>
+    </Context.Provider>
   );
 };
