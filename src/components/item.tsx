@@ -26,7 +26,15 @@ export const Item = ({
   onExpand,
 }: Props) => {
   return (
-    <S.Item $actived={activeId === item.id} onClick={() => onExpand(item.id)}>
+    <S.Item
+      $actived={activeId === item.id}
+      onClick={() => {
+        onExpand(item.id);
+        if (!disabledIds.includes(item.id)) {
+          onSelectedIds(item.id);
+        }
+      }}
+    >
       <S.ItemInner>
         {selectable && !item.canExpand ? (
           mode === 'single' ? (
@@ -40,7 +48,6 @@ export const Item = ({
               disabled={disabledIds.includes(item.id)}
               checked={selectedIds.includes(item.id)}
               onChange={() => onSelectedIds(item.id)}
-              inputProps={{ 'aria-label': 'controlled' }}
             />
           )
         ) : (
