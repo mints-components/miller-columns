@@ -178,7 +178,10 @@ export const MillerColumns = ({
             hasMore={hasMore}
             error={error}
             selectedAll={
-              columns.length === 1 && !items.some((it) => it.canExpand)
+              selectable &&
+              columns.length === 1 &&
+              !!items.length &&
+              !items.some((it) => it.canExpand)
             }
             selectedIds={selectedIds}
             renderTitle={renderTitle}

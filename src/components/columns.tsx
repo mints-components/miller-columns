@@ -84,12 +84,14 @@ export const Column = ({
       {title && <S.Title>{title}</S.Title>}
       {selectedAll && !hasMore && (
         <S.Item>
-          <Checkbox
-            checked={checked}
-            indeterminate={indeterminate}
-            onChange={() => onSelectedAll(items.map((it) => it.id))}
-          />
-          <S.ItemTitle>All</S.ItemTitle>
+          <S.ItemInner>
+            <Checkbox
+              checked={checked}
+              indeterminate={indeterminate}
+              onChange={() => onSelectedAll(items.map((it) => it.id))}
+            />
+            <S.ItemTitle>All</S.ItemTitle>
+          </S.ItemInner>
         </S.Item>
       )}
       <InfiniteScroll
