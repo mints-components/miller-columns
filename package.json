@@ -27,6 +27,10 @@
         "types": "./types/index.d.ts",
         "default": "./dist/miller-columns.umd.cjs"
       }
+    },
+    "./dist/style.css": {
+      "import": "./dist/style.css",
+      "require": "./dist/style.css"
     }
   },
   "scripts": {
