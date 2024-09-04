@@ -15,7 +15,6 @@ export const useColumns = (state: DataMapType) => {
     const rootItem = state[getId()];
 
     const rootColumn: ColumnType = {
-      targetId: 'miller-columns-root',
       items: rootItem.items,
       hasMore: rootItem.hasMore,
       error: rootItem.error,
@@ -35,7 +34,6 @@ export const useColumns = (state: DataMapType) => {
       let result: ColumnType[] = [];
 
       result.unshift({
-        targetId: `miller-columns-${item.id}`,
         id: item.id,
         items: item.items,
         hasMore: item.hasMore,

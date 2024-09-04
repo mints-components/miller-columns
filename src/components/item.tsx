@@ -18,8 +18,8 @@ interface Props {
 }
 
 export const Item = ({
-  activeId,
   item,
+  activeId,
   selectable,
   mode,
   disabledIds,

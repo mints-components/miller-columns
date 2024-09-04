@@ -10,7 +10,6 @@ export type RequestResType = {
 };
 
 export type ColumnType = {
-  targetId: string;
   id?: IDType;
   items: DataType[];
   hasMore: boolean;

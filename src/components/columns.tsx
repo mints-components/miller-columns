@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 import type { IDType, DataType } from '../types';
+import { getId } from '../utils';
 import * as S from '../styled';
 
 import { Checkbox } from './checkbox';
@@ -9,7 +10,6 @@ import { Checkbox } from './checkbox';
 interface Props {
   count: number;
   height?: number;
-  targetId: string;
   id?: IDType;
   items: DataType[];
   hasMore: boolean;
@@ -30,7 +30,6 @@ interface Props {
 export const Column = ({
   count,
   height,
-  targetId,
   id,
   items,
   hasMore,
@@ -48,6 +47,8 @@ export const Column = ({
   const title = renderTitle?.(id) ?? null;
   const end = renderEnd?.(id) ?? null;
   const loader = renderLoading?.(id) ?? 'Loading...';
+
+  const targetId = useMemo(() => `@mints/miller-columns-${getId(id)}`, [id]);
 
   const [checked, indeterminate] = useMemo(() => {
     const checked = items

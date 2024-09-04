@@ -164,12 +164,11 @@ export const MillerColumns = ({
   return (
     <Context.Provider value={{ theme: { ...initialTheme, ...(theme ?? {}) } }}>
       <S.Container style={style}>
-        {columns.map(({ targetId, id, items, hasMore, error }) => (
+        {columns.map(({ id, items, hasMore, error }) => (
           <Column
-            key={targetId}
+            key={getId(id)}
             count={columnCount}
             height={columnHeight}
-            targetId={targetId}
             id={id}
             items={items}
             hasMore={hasMore}
