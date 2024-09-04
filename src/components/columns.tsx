@@ -7,6 +7,7 @@ import * as S from '../styled';
 import { Checkbox } from './checkbox';
 
 interface Props {
+  count: number;
   height?: number;
   targetId: string;
   id?: IDType;
@@ -27,6 +28,7 @@ interface Props {
 }
 
 export const Column = ({
+  count,
   height,
   targetId,
   id,
@@ -58,11 +60,11 @@ export const Column = ({
 
   if (error && error.message) {
     const message = renderError?.(error.message) ?? error.message;
-    return <S.Column>{message}</S.Column>;
+    return <S.Column $count={count}>{message}</S.Column>;
   }
 
   return (
-    <S.Column $height={height} id={targetId}>
+    <S.Column $count={count} $height={height} id={targetId}>
       {title && <S.Title>{title}</S.Title>}
       {selectedAll && !hasMore && (
         <S.Item>

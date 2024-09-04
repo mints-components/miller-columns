@@ -10,8 +10,9 @@ export const Container = styled.div`
   font-family: Roboto, sans-serif;
 `;
 
-export const Column = styled.div<{ $height?: number }>`
-  flex: 0 0 25%;
+export const Column = styled.div<{ $count: number; $height?: number }>`
+  flex: 0 0 ${({ $count }) => 100 / $count}%;
+  width: ${({ $count }) => 100 / $count}%;
   height: ${({ $height }) => $height}px;
   overflow-y: auto;
 `;

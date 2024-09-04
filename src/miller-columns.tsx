@@ -15,6 +15,7 @@ export interface IMillerColumns {
   theme?: {
     colorPrimary?: string;
   };
+  columnCount?: number;
   columnHeight?: number;
   renderTitle?: (id?: IDType) => React.ReactNode;
   renderEnd?: (id?: IDType) => React.ReactNode;
@@ -32,6 +33,7 @@ export const MillerColumns = ({
   rootId,
   style,
   theme,
+  columnCount = 4,
   columnHeight,
   selectable = false,
   mode = 'multiple',
@@ -165,6 +167,7 @@ export const MillerColumns = ({
         {columns.map(({ targetId, id, items, hasMore, error }) => (
           <Column
             key={targetId}
+            count={columnCount}
             height={columnHeight}
             targetId={targetId}
             id={id}
