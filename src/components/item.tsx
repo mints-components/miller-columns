@@ -1,5 +1,3 @@
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-
 import { IDType, DataType } from '../types';
 import * as S from '../styled';
 
@@ -29,32 +27,28 @@ export const Item = ({
 }: Props) => {
   return (
     <S.Item $actived={activeId === item.id} onClick={() => onExpand(item.id)}>
-      {selectable && !item.canExpand ? (
-        mode === 'single' ? (
-          <Radio
-            disabled={disabledIds.includes(item.id)}
-            checked={selectedIds[0] === item.id}
-            onChange={() => onSelectedIds(item.id)}
-          />
+      <S.ItemInner>
+        {selectable && !item.canExpand ? (
+          mode === 'single' ? (
+            <Radio
+              disabled={disabledIds.includes(item.id)}
+              checked={selectedIds[0] === item.id}
+              onChange={() => onSelectedIds(item.id)}
+            />
+          ) : (
+            <Checkbox
+              disabled={disabledIds.includes(item.id)}
+              checked={selectedIds.includes(item.id)}
+              onChange={() => onSelectedIds(item.id)}
+              inputProps={{ 'aria-label': 'controlled' }}
+            />
+          )
         ) : (
-          <Checkbox
-            disabled={disabledIds.includes(item.id)}
-            checked={selectedIds.includes(item.id)}
-            onChange={() => onSelectedIds(item.id)}
-            inputProps={{ 'aria-label': 'controlled' }}
-          />
-        )
-      ) : (
-        <CheckboxPlaceholder />
-      )}
-      <S.ItemTitle>{item.title}</S.ItemTitle>
-      {item.canExpand ? (
-        <ArrowForwardIosIcon
-          sx={{
-            fontSize: 16,
-          }}
-        />
-      ) : null}
+          <CheckboxPlaceholder />
+        )}
+        <S.ItemTitle>{item.title}</S.ItemTitle>
+      </S.ItemInner>
+      {item.canExpand ? <S.ItemIndicators /> : null}
     </S.Item>
   );
 };

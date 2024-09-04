@@ -3508,7 +3508,6 @@ __metadata:
     "@chromatic-com/storybook": ^1.8.0
     "@fontsource/roboto": ^5.0.14
     "@mints/eslint-config": ^1.0.0-beta.1
-    "@mui/icons-material": ^5.16.7
     "@mui/material": ^5.16.7
     "@mui/styled-engine-sc": ^6.0.0-alpha.18
     "@storybook/addon-essentials": ^8.2.9
@@ -3541,7 +3540,6 @@ __metadata:
     vite: ^4.4.5
   peerDependencies:
     "@fontsource/roboto": ^5.0.14
-    "@mui/icons-material": ^5.16.7
     "@mui/material": ^5.16.7
     "@mui/styled-engine-sc": ^6.0.0-alpha.18
     lodash: ^4.17.21
@@ -3556,22 +3554,6 @@ __metadata:
   version: 5.16.7
   resolution: "@mui/core-downloads-tracker@npm:5.16.7"
   checksum: b65c48ba2bf6bba6435ba9f2d6c33db0c8a85b3ff7599136a9682b72205bec76470ab5ed5e6e625d5bd012ed9bcbc641ed677548be80d217c9fb5d0435567062
-  languageName: node
-  linkType: hard
-
-"@mui/icons-material@npm:^5.16.7":
-  version: 5.16.7
-  resolution: "@mui/icons-material@npm:5.16.7"
-  dependencies:
-    "@babel/runtime": ^7.23.9
-  peerDependencies:
-    "@mui/material": ^5.0.0
-    "@types/react": ^17.0.0 || ^18.0.0
-    react: ^17.0.0 || ^18.0.0
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
-  checksum: a875f2837897d79a83173d80461e06ab090b64d08913d26433cf2cbeb8e7c7456468632a7aa495d722718f09111a8043255777d73b4dfbe9e0f863a170fc7190
   languageName: node
   linkType: hard
 

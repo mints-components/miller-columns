@@ -71,6 +71,7 @@ export const Selectable: Story = {
           request={request}
           columnHeight={130}
           selectable
+          disabledIds={[4]}
           selectedIds={selectedIds}
           onSelectedIds={setSelectedIds}
         />
