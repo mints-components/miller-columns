@@ -3489,15 +3489,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@mints/eslint-config@npm:^1.0.0-beta.1":
-  version: 1.0.0-beta.1
-  resolution: "@mints/eslint-config@npm:1.0.0-beta.1"
+"@mints/eslint-config@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "@mints/eslint-config@npm:1.0.2"
   dependencies:
     eslint-config-prettier: ^8.9.0
     eslint-config-react-app: ^7.0.1
     eslint-plugin-prettier: ^5.0.0
     prettier: ^3.0.0
-  checksum: d34e0be19505ad10bb69cb717059726f19dab76e245a7cca699d9cd451f203c96a4e3e6028637c15718557543b74ea9f8b41a877b2cc5d929748cc602b1bc055
+  checksum: 6df1565046c257fe0944d08c72a0ce8905a4302525c61837e3ea9ed7050ae1d12577f66c6aa96a355f859969035f391c69a4e8a6fe162b07eb86714de80c15a9
   languageName: node
   linkType: hard
 
@@ -3507,7 +3507,7 @@ __metadata:
   dependencies:
     "@chromatic-com/storybook": ^1.8.0
     "@fontsource/roboto": ^5.0.14
-    "@mints/eslint-config": ^1.0.0-beta.1
+    "@mints/eslint-config": ^1.0.2
     "@mui/material": ^5.16.7
     "@mui/styled-engine-sc": ^6.0.0-alpha.18
     "@storybook/addon-essentials": ^8.2.9
