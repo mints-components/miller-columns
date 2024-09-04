@@ -3540,7 +3540,15 @@ __metadata:
     typescript: ^5.0.2
     vite: ^4.4.5
   peerDependencies:
+    "@fontsource/roboto": ^5.0.14
+    "@mui/icons-material": ^5.16.7
+    "@mui/material": ^5.16.7
+    "@mui/styled-engine-sc": ^6.0.0-alpha.18
+    lodash: ^4.17.21
     react: ^18.2.0
+    react-dom: ^18.2.0
+    react-infinite-scroll-component: ^6.1.0
+    styled-components: ^6.1.12
   languageName: unknown
   linkType: soft
 

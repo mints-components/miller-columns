@@ -21,11 +21,11 @@
     ".": {
       "import": {
         "types": "./types/index.d.ts",
-        "default": "./dist/my-component.js"
+        "default": "./dist/miller-columns.js"
       },
       "require": {
         "types": "./types/index.d.ts",
-        "default": "./dist/my-component.umd.cjs"
+        "default": "./dist/miller-columns.umd.cjs"
       }
     }
   },
@@ -66,7 +66,15 @@
     "@mui/styled-engine": "npm:@mui/styled-engine-sc@^6.0.0-alpha.18"
   },
   "peerDependencies": {
-    "react": "^18.2.0"
+    "@fontsource/roboto": "^5.0.14",
+    "@mui/icons-material": "^5.16.7",
+    "@mui/material": "^5.16.7",
+    "@mui/styled-engine-sc": "^6.0.0-alpha.18",
+    "lodash": "^4.17.21",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-infinite-scroll-component": "^6.1.0",
+    "styled-components": "^6.1.12"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^1.8.0",
