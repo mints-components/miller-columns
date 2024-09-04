@@ -76,7 +76,7 @@ export const MillerColumns = ({
         }),
       });
     })();
-  }, [request, rootId]);
+  }, [rootId]);
 
   useEffect(() => {
     setSelectedIds(props.selectedIds || []);
