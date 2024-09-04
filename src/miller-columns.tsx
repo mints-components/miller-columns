@@ -60,7 +60,7 @@ export const MillerColumns = ({
     },
   } as DataMapType);
 
-  const { columns, activeId, onExpand } = useColumns(state);
+  const { columns, activeId, onExpand } = useColumns(state, rootId);
 
   useEffect(() => {
     (async () => {

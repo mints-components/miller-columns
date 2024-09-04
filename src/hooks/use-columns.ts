@@ -8,11 +8,11 @@ import type {
 } from '../types';
 import { getId } from '../utils';
 
-export const useColumns = (state: DataMapType) => {
+export const useColumns = (state: DataMapType, rootId?: IDType) => {
   const [activeId, setActiveId] = useState<IDType>();
 
   const columns = useMemo(() => {
-    const rootItem = state[getId()];
+    const rootItem = state[getId(rootId)];
 
     const rootColumn: ColumnType = {
       items: rootItem.items,
