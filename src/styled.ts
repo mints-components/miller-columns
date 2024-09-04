@@ -10,11 +10,24 @@ export const Container = styled.div`
   font-family: Roboto, sans-serif;
 `;
 
-export const Column = styled.div<{ $count: number; $height?: number }>`
+export const Column = styled.div<{
+  $bordered: boolean;
+  $borderColor: string;
+  $count: number;
+  $height?: number;
+}>`
   flex: 0 0 ${({ $count }) => 100 / $count}%;
   width: ${({ $count }) => 100 / $count}%;
   height: ${({ $height }) => $height}px;
+  border: 1px solid transparent;
+
+  ${({ $bordered, $borderColor }) =>
+    $bordered && `border-color: ${$borderColor};`}
   overflow-y: auto;
+
+  & + & {
+    border-left: none;
+  }
 `;
 
 export const Item = styled.div<{ $actived?: boolean }>`

@@ -136,6 +136,22 @@ export const SingleSelectable: Story = {
   },
 };
 
+export const Bordered: Story = {
+  args: {},
+  render: () => {
+    return (
+      <div style={{ width: 600 }}>
+        <MillerColumns
+          request={request}
+          columnHeight={130}
+          bordered
+          theme={{ borderColor: '#ff0000' }}
+        />
+      </div>
+    );
+  },
+};
+
 export const CustomTheme: Story = {
   args: {},
   render: () => {

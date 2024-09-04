@@ -12,8 +12,10 @@ export interface IMillerColumns {
   request: (id?: IDType, params?: any) => Promise<RequestResType>;
   rootId?: IDType;
   style?: React.CSSProperties;
+  bordered?: boolean;
   theme?: {
     colorPrimary?: string;
+    borderColor?: string;
   };
   columnCount?: number;
   columnHeight?: number;
@@ -32,6 +34,7 @@ export const MillerColumns = ({
   request,
   rootId,
   style,
+  bordered = false,
   theme,
   columnCount,
   columnHeight,
@@ -167,6 +170,7 @@ export const MillerColumns = ({
         {columns.map(({ id, items, hasMore, error }) => (
           <Column
             key={getId(id)}
+            bordered={bordered}
             count={columnCount ?? columns.length}
             height={columnHeight}
             id={id}

@@ -3,11 +3,13 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 
 import type { IDType, DataType } from '../types';
 import { getId } from '../utils';
+import { useTheme } from '../context';
 import * as S from '../styled';
 
 import { Checkbox } from './checkbox';
 
 interface Props {
+  bordered: boolean;
   count: number;
   height?: number;
   id?: IDType;
@@ -28,6 +30,7 @@ interface Props {
 }
 
 export const Column = ({
+  bordered,
   count,
   height,
   id,
@@ -44,6 +47,8 @@ export const Column = ({
   onScroll,
   onSelectedAll,
 }: Props) => {
+  const { borderColor } = useTheme();
+
   const title = renderTitle?.(id) ?? null;
   const end = renderEnd?.(id) ?? null;
   const loader = renderLoading?.(id) ?? 'Loading...';
@@ -61,11 +66,21 @@ export const Column = ({
 
   if (error && error.message) {
     const message = renderError?.(error.message) ?? error.message;
-    return <S.Column $count={count}>{message}</S.Column>;
+    return (
+      <S.Column $bordered={bordered} $borderColor={borderColor} $count={count}>
+        {message}
+      </S.Column>
+    );
   }
 
   return (
-    <S.Column $count={count} $height={height} id={targetId}>
+    <S.Column
+      $bordered={bordered}
+      $borderColor={borderColor}
+      $count={count}
+      $height={height}
+      id={targetId}
+    >
       {title && <S.Title>{title}</S.Title>}
       {selectedAll && !hasMore && (
         <S.Item>
