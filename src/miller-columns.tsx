@@ -33,7 +33,7 @@ export const MillerColumns = ({
   rootId,
   style,
   theme,
-  columnCount = 4,
+  columnCount,
   columnHeight,
   selectable = false,
   mode = 'multiple',
@@ -167,7 +167,7 @@ export const MillerColumns = ({
         {columns.map(({ id, items, hasMore, error }) => (
           <Column
             key={getId(id)}
-            count={columnCount}
+            count={columnCount ?? columns.length}
             height={columnHeight}
             id={id}
             items={items}
