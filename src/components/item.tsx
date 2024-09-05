@@ -41,13 +41,11 @@ export const Item = ({
             <Radio
               disabled={disabledIds.includes(item.id)}
               checked={selectedIds[0] === item.id}
-              onChange={() => onSelectedIds(item.id)}
             />
           ) : (
             <Checkbox
               disabled={disabledIds.includes(item.id)}
               checked={selectedIds.includes(item.id)}
-              onChange={() => onSelectedIds(item.id)}
             />
           )
         ) : (
