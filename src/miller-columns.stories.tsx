@@ -59,6 +59,35 @@ export const Default: Story = {
   },
 };
 
+export const DefaultWithRootId: Story = {
+  args: {},
+  render: () => {
+    const customRequest = async (): Promise<RequestResType> => {
+      return new Promise((r) => {
+        setTimeout(() => {
+          r({
+            data: data14.map((it) => ({
+              ...it,
+              parentId: null,
+            })),
+            hasMore: false,
+          });
+        }, 3000);
+      });
+    };
+
+    return (
+      <div style={{ width: 600 }}>
+        <MillerColumns
+          request={customRequest}
+          rootId={'1-4'}
+          columnHeight={130}
+        />
+      </div>
+    );
+  },
+};
+
 export const Selectable: Story = {
   args: {},
   render: () => {
