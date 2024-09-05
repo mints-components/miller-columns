@@ -134,6 +134,12 @@ export const MillerColumns = ({
   };
 
   const handleSelectedIds = (id: IDType) => {
+    const item = state[id];
+
+    if (item.canExpand) {
+      return;
+    }
+
     let newSelectedIds: IDType[] = [];
 
     if (mode === 'single') {
