@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useMemo } from 'react';
 
 import type {
   DataMapType,
@@ -8,10 +8,12 @@ import type {
 } from '../types';
 import { getId } from '../utils';
 
-export const useColumns = (state: DataMapType, rootId?: IDType) => {
-  const [activeId, setActiveId] = useState<IDType>();
-
-  const columns = useMemo(() => {
+export const useColumns = (
+  state: DataMapType,
+  rootId?: IDType,
+  activeId?: IDType,
+) => {
+  return useMemo(() => {
     const rootItem = state[getId(rootId)];
 
     const rootColumn: ColumnType = {
@@ -51,13 +53,5 @@ export const useColumns = (state: DataMapType, rootId?: IDType) => {
     };
 
     return collect(activeItem);
-  }, [state, activeId]);
-
-  return useMemo(() => {
-    return {
-      columns,
-      activeId,
-      onExpand: setActiveId,
-    };
-  }, [columns, activeId]);
+  }, [state, rootId, activeId]);
 };

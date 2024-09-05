@@ -47,6 +47,7 @@ export const MillerColumns = ({
   renderError,
   ...props
 }: IMillerColumns) => {
+  const [activeId, setActiveId] = useState<IDType>();
   const [selectedIds, setSelectedIds] = useState<IDType[]>([]);
 
   const [state, dispatch] = useReducer(reducer, {
@@ -60,7 +61,7 @@ export const MillerColumns = ({
     },
   } as DataMapType);
 
-  const { columns, activeId, onExpand } = useColumns(state, rootId);
+  const columns = useColumns(state, rootId, activeId);
 
   useEffect(() => {
     dispatch({
@@ -76,6 +77,7 @@ export const MillerColumns = ({
         },
       },
     });
+    setActiveId(undefined);
 
     (async () => {
       const { data, hasMore, error, params } = await request(rootId);
@@ -124,7 +126,7 @@ export const MillerColumns = ({
       return;
     }
 
-    onExpand(id);
+    setActiveId(id);
 
     if (item.expanded) {
       return;
