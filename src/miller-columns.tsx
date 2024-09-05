@@ -63,6 +63,20 @@ export const MillerColumns = ({
   const { columns, activeId, onExpand } = useColumns(state, rootId);
 
   useEffect(() => {
+    dispatch({
+      type: 'RESET',
+      payload: {
+        [`${getId(rootId)}`]: {
+          parentId: null,
+          id: getId(rootId),
+          items: [],
+          canExpand: true,
+          expanded: true,
+          hasMore: true,
+        },
+      },
+    });
+
     (async () => {
       const { data, hasMore, error, params } = await request(rootId);
       dispatch({
@@ -79,7 +93,7 @@ export const MillerColumns = ({
         }),
       });
     })();
-  }, [rootId]);
+  }, [request, rootId]);
 
   useEffect(() => {
     setSelectedIds(props.selectedIds || []);
