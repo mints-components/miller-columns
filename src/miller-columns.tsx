@@ -23,6 +23,7 @@ export interface IMillerColumns {
   renderEnd?: (id?: IDType) => React.ReactNode;
   renderLoading?: (id?: IDType) => React.ReactNode;
   renderError?: (errMsg: string) => React.ReactNode;
+  renderNoData?: (id?: IDType) => React.ReactNode;
   selectable?: boolean;
   mode?: 'single' | 'multiple';
   disabledIds?: IDType[];
@@ -45,6 +46,7 @@ export const MillerColumns = ({
   renderEnd,
   renderLoading,
   renderError,
+  renderNoData,
   ...props
 }: IMillerColumns) => {
   const [activeId, setActiveId] = useState<IDType>();
@@ -210,6 +212,7 @@ export const MillerColumns = ({
             renderEnd={renderEnd}
             renderLoading={renderLoading}
             renderError={renderError}
+            renderNoData={renderNoData}
             renderItem={(item) => (
               <Item
                 key={item.id}

@@ -25,6 +25,7 @@ interface Props {
   renderEnd?: (id?: IDType) => React.ReactNode;
   renderLoading?: (id?: IDType) => React.ReactNode;
   renderError?: (errMsg: string) => React.ReactNode;
+  renderNoData?: (id?: IDType) => React.ReactNode;
   onScroll: (id?: IDType) => void;
   onSelectedAll: (ids: IDType[]) => void;
 }
@@ -44,6 +45,7 @@ export const Column = ({
   renderEnd,
   renderError,
   renderLoading,
+  renderNoData,
   onScroll,
   onSelectedAll,
 }: Props) => {
@@ -52,6 +54,7 @@ export const Column = ({
   const title = renderTitle?.(id) ?? null;
   const end = renderEnd?.(id) ?? null;
   const loader = renderLoading?.(id) ?? 'Loading...';
+  const noData = renderNoData?.(id) ?? 'There is no data.';
 
   const targetId = useMemo(() => `@mints/miller-columns-${getId(id)}`, [id]);
 
@@ -67,8 +70,26 @@ export const Column = ({
   if (error && error.message) {
     const message = renderError?.(error.message) ?? error.message;
     return (
-      <S.Column $bordered={bordered} $borderColor={borderColor} $count={count}>
+      <S.Column
+        $bordered={bordered}
+        $borderColor={borderColor}
+        $count={count}
+        $height={height}
+      >
         {message}
+      </S.Column>
+    );
+  }
+
+  if (items.length === 0 && !hasMore) {
+    return (
+      <S.Column
+        $bordered={bordered}
+        $borderColor={borderColor}
+        $count={count}
+        $height={height}
+      >
+        {noData}
       </S.Column>
     );
   }
