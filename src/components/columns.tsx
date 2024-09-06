@@ -104,13 +104,9 @@ export const Column = ({
     >
       {title && <S.Title>{title}</S.Title>}
       {selectedAll && !hasMore && (
-        <S.Item>
+        <S.Item onClick={() => onSelectedAll(items.map((it) => it.id))}>
           <S.ItemInner>
-            <Checkbox
-              checked={checked}
-              indeterminate={indeterminate}
-              onChange={() => onSelectedAll(items.map((it) => it.id))}
-            />
+            <Checkbox checked={checked} indeterminate={indeterminate} />
             <S.ItemTitle>All</S.ItemTitle>
           </S.ItemInner>
         </S.Item>
