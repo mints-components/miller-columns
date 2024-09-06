@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
+  width: 100%;
+  overflow-x: auto;
   font-family: Roboto, sans-serif;
 `;
 
@@ -18,6 +20,7 @@ export const Column = styled.div<{
 
   ${({ $bordered, $borderColor }) =>
     $bordered && `border-color: ${$borderColor};`}
+  box-sizing: border-box;
   overflow-y: auto;
 
   & + & {
