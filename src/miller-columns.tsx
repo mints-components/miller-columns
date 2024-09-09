@@ -1,11 +1,11 @@
 import { useState, useReducer, useEffect } from 'react';
 
-import type { IDType, RequestResType, DataMapType } from './types';
+import type { IDType, RequestResType } from './types';
 import { Context, initialTheme } from './context';
 import { Column, Item } from './components';
 import { useColumns } from './hooks';
-import { getId, data2Map } from './utils';
-import { reducer } from './reducer';
+import { getId } from './utils';
+import { reducer, initialState } from './reducer';
 import * as S from './styled';
 
 export interface IMillerColumns {
@@ -28,7 +28,7 @@ export interface IMillerColumns {
   mode?: 'single' | 'multiple';
   disabledIds?: IDType[];
   selectedIds?: IDType[];
-  onSelectedIds?: (ids: IDType[]) => void;
+  onSelectedIds?: (ids: IDType[], data?: any[]) => void;
 }
 
 export const MillerColumns = ({
@@ -52,50 +52,19 @@ export const MillerColumns = ({
   const [activeId, setActiveId] = useState<IDType>();
   const [selectedIds, setSelectedIds] = useState<IDType[]>([]);
 
-  const [state, dispatch] = useReducer(reducer, {
-    [`${getId(rootId)}`]: {
-      parentId: null,
-      id: getId(rootId),
-      items: [],
-      canExpand: true,
-      expanded: true,
-      hasMore: true,
-    },
-  } as DataMapType);
+  const [{ dataMap, dataFlatList }, dispatch] = useReducer(
+    reducer,
+    initialState,
+  );
 
-  const columns = useColumns(state, rootId, activeId);
+  const columns = useColumns(dataMap, activeId);
 
   useEffect(() => {
-    dispatch({
-      type: 'RESET',
-      payload: {
-        [`${getId(rootId)}`]: {
-          parentId: null,
-          id: getId(rootId),
-          items: [],
-          canExpand: true,
-          expanded: true,
-          hasMore: true,
-        },
-      },
-    });
-    setActiveId(undefined);
+    dispatch({ type: 'RESET' });
 
     (async () => {
-      const { data, hasMore, error, params } = await request(rootId);
-      dispatch({
-        type: 'ADD',
-        payload: data2Map(data, {
-          parentId: null,
-          id: getId(rootId),
-          items: data.filter((it) => !it.parentId),
-          canExpand: false,
-          expanded: true,
-          hasMore,
-          error,
-          params,
-        }),
-      });
+      const payload = await request(rootId);
+      dispatch({ type: 'APPEND', payload });
     })();
   }, [request, rootId]);
 
@@ -104,26 +73,13 @@ export const MillerColumns = ({
   }, [props.selectedIds]);
 
   const handleScroll = async (id?: IDType) => {
-    const item = state[getId(id)];
-
-    const { data, hasMore, error, params } = await request(id, item.params);
-    dispatch({
-      type: 'ADD',
-      payload: data2Map(data, {
-        parentId: item.parentId,
-        id: item.id,
-        items: [...item.items, ...data],
-        canExpand: item.canExpand,
-        expanded: true,
-        hasMore,
-        error,
-        params,
-      }),
-    });
+    const item = dataMap[getId(id)];
+    const payload = await request(id, item.params);
+    dispatch({ type: 'APPEND', payload: { ...payload, id } });
   };
 
   const handleExpand = async (id: IDType) => {
-    const item = state[id];
+    const item = dataMap[id];
     if (!item.canExpand) {
       return;
     }
@@ -134,25 +90,12 @@ export const MillerColumns = ({
       return;
     }
 
-    const { data, hasMore, error, params } = await request(id, item.params);
-
-    dispatch({
-      type: 'ADD',
-      payload: data2Map(data, {
-        parentId: item.parentId,
-        id,
-        items: [...item.items, ...data],
-        canExpand: item.canExpand,
-        expanded: true,
-        hasMore,
-        error,
-        params,
-      }),
-    });
+    const payload = await request(id, item.params);
+    dispatch({ type: 'APPEND', payload: { ...payload, id } });
   };
 
   const handleSelectedIds = (id: IDType) => {
-    const item = state[id];
+    const item = dataMap[id];
 
     if (item.canExpand) {
       return;
@@ -173,7 +116,7 @@ export const MillerColumns = ({
     }
 
     if (props.onSelectedIds) {
-      props.onSelectedIds(newSelectedIds);
+      props.onSelectedIds(newSelectedIds, dataFlatList);
     } else {
       setSelectedIds(newSelectedIds);
     }

@@ -8,13 +8,9 @@ import type {
 } from '../types';
 import { getId } from '../utils';
 
-export const useColumns = (
-  state: DataMapType,
-  rootId?: IDType,
-  activeId?: IDType,
-) => {
+export const useColumns = (dataMap: DataMapType, activeId?: IDType) => {
   return useMemo(() => {
-    const rootItem = state[getId(rootId)];
+    const rootItem = dataMap[getId()];
 
     const rootColumn: ColumnType = {
       items: rootItem.items,
@@ -26,7 +22,7 @@ export const useColumns = (
       return [rootColumn];
     }
 
-    const activeItem = state[activeId];
+    const activeItem = dataMap[activeId];
 
     if (!activeItem) {
       return [rootColumn];
@@ -43,7 +39,7 @@ export const useColumns = (
       });
 
       if (item.parentId) {
-        const parentItem = state[item.parentId];
+        const parentItem = dataMap[item.parentId];
         result.unshift(...collect(parentItem));
       } else {
         result.unshift(rootColumn);
@@ -53,5 +49,5 @@ export const useColumns = (
     };
 
     return collect(activeItem);
-  }, [state, rootId, activeId]);
+  }, [dataMap, activeId]);
 };

@@ -7,6 +7,7 @@ export type RequestResType = {
     message: string;
   };
   params?: any;
+  originData?: any[];
 };
 
 export type ColumnType = {
@@ -22,12 +23,12 @@ export type DataType = {
   parentId: IDType | null;
   id: IDType;
   title: string;
-  canExpand: boolean;
+  canExpand?: boolean;
 };
 
 export type DataMapValueType = {
   parentId: IDType | null;
-  id: IDType;
+  id?: IDType;
   items: DataType[];
   canExpand: boolean;
   expanded: boolean;
