@@ -1,3 +1,21 @@
+## 1.4.1
+
+`2024-04-07`
+
+- Fixed radio style error. [#23](https://github.com/mints-components/miller-columns/pull/23)
+
+## 1.4.0
+
+`2024-03-22`
+
+- Support new mode single select. [#22](https://github.com/mints-components/miller-columns/pull/22)
+
+## 1.3.2
+
+`2024-03-07`
+
+- Fixed check child loaded conditional judgment error. [external issue](https://github.com/apache/incubator-devlake/issues/6211)
+
 ## 1.3.0
 
 `2023-08-30`
