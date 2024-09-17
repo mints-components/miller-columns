@@ -7,7 +7,10 @@
     "mui"
   ],
   "description": "Miller Columns for Mints Components",
-  "repository": "git@github.com:mints-components/miller-columns.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mints-components/miller-columns.git"
+  },
   "license": "MIT",
   "packageManager": "yarn@4.5.0",
   "type": "module",
