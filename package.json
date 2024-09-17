@@ -8,7 +8,7 @@
   ],
   "description": "Miller Columns for Mints Components",
   "license": "MIT",
-  "packageManager": "yarn@3.6.1",
+  "packageManager": "yarn@4.5.0",
   "type": "module",
   "files": [
     "dist",
