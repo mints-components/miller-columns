@@ -2,9 +2,11 @@
   "name": "@mints/miller-columns",
   "version": "2.0.0",
   "keywords": [
+    "react",
+    "react-component",
+    "mui",
     "miller-columns",
-    "mints-components",
-    "mui"
+    "mints-components"
   ],
   "description": "Miller Columns for Mints Components",
   "repository": {
