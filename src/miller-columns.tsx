@@ -52,10 +52,7 @@ export const MillerColumns = ({
   const [activeId, setActiveId] = useState<IDType>();
   const [selectedIds, setSelectedIds] = useState<IDType[]>([]);
 
-  const [{ dataMap, dataFlatList }, dispatch] = useReducer(
-    reducer,
-    initialState,
-  );
+  const [dataMap, dispatch] = useReducer(reducer, initialState);
 
   const columns = useColumns(dataMap, activeId);
 
@@ -116,7 +113,8 @@ export const MillerColumns = ({
     }
 
     if (props.onSelectedIds) {
-      props.onSelectedIds(newSelectedIds, dataFlatList);
+      const selectedItems = newSelectedIds.map((it) => dataMap[it].original);
+      props.onSelectedIds(newSelectedIds, selectedItems);
     } else {
       setSelectedIds(newSelectedIds);
     }
@@ -125,7 +123,8 @@ export const MillerColumns = ({
   const handleSelectedAll = (ids: IDType[]) => {
     const newSelectedIds = selectedIds.length === ids.length ? [] : ids;
     if (props.onSelectedIds) {
-      props.onSelectedIds(newSelectedIds);
+      const selectedItems = newSelectedIds.map((it) => dataMap[it].original);
+      props.onSelectedIds(newSelectedIds, selectedItems);
     } else {
       setSelectedIds(newSelectedIds);
     }

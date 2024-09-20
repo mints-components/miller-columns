@@ -12,6 +12,7 @@ export const data2Map = (
       canExpand: item.canExpand ?? false,
       expanded: false,
       hasMore: true,
+      original: item.original,
     };
     return acc;
   }, initialDataMap);

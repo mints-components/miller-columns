@@ -7,7 +7,6 @@ export type RequestResType = {
     message: string;
   };
   params?: any;
-  originData?: any[];
 };
 
 export type ColumnType = {
@@ -24,6 +23,7 @@ export type DataType = {
   id: IDType;
   title: string;
   canExpand?: boolean;
+  original?: any;
 };
 
 export type DataMapValueType = {
@@ -37,6 +37,7 @@ export type DataMapValueType = {
     message: string;
   };
   params?: any;
+  original?: any;
 };
 
 export type DataMapType = Record<IDType, DataMapValueType>;

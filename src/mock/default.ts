@@ -10,6 +10,9 @@ export const defaultData = [
     id: 2,
     title: 'ITEM-2',
     canExpand: false,
+    original: {
+      data: 'orginal data',
+    },
   },
   {
     parentId: null,
