@@ -61,7 +61,7 @@ export const MillerColumns = ({
 
   useEffect(() => {
     dispatch({ type: 'RESET' });
-
+    setActiveId(undefined);
     (async () => {
       const payload = await request(rootId);
       dispatch({ type: 'APPEND', payload });
