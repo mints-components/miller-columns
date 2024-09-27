@@ -28,8 +28,6 @@ export function reducer(
   const id = getId(payload?.id);
 
   switch (type) {
-    case 'INITIAL':
-      return initialState;
     case 'RESET':
       return {
         ...state,

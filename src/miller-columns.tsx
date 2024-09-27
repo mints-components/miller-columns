@@ -79,7 +79,6 @@ export const MillerColumns = ({
     })();
 
     return () => {
-      dispatch({ type: 'INITIAL' });
       setActiveId(undefined);
       isMounted = false;
     };
