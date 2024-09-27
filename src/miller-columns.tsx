@@ -11,6 +11,7 @@ import * as S from './styled';
 export interface IMillerColumns {
   request?: (id?: IDType, params?: any) => Promise<RequestResType>;
   rootId?: IDType;
+  loading?: boolean;
   items?: DataType[];
   style?: React.CSSProperties;
   bordered?: boolean;
@@ -35,6 +36,7 @@ export interface IMillerColumns {
 export const MillerColumns = ({
   request,
   rootId,
+  loading = true,
   items,
   style,
   bordered = false,
@@ -63,8 +65,8 @@ export const MillerColumns = ({
 
     (async () => {
       let payload = {
-        data: items ?? [],
-        hasMore: true,
+        data: loading ? [] : items ?? [],
+        hasMore: loading,
       };
 
       if (request) {
@@ -81,7 +83,7 @@ export const MillerColumns = ({
       setActiveId(undefined);
       isMounted = false;
     };
-  }, [rootId, items]);
+  }, [rootId, items, loading]);
 
   useEffect(() => {
     setSelectedIds(props.selectedIds || []);

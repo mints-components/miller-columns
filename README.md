@@ -51,6 +51,7 @@ export const TestComponent = () => {
 | ------------- | -------------------------------------------------------- | ---------- | ------------------------------------ |
 | request       | `(id?: IDType, params?: any) => Promise<RequestResType>` |            | Asynchronous method for getting data |
 | rootId        | `IDType`                                                 |            | Parameters of the first request      |
+| loading       | `boolean`                                                | true       | Cooperate with `items` control       |
 | items         | `DataType[]`                                             |            | item used to display in columns      |
 | style         | `React.CSSProperties`                                    |            |                                      |
 | bordered      | `boolean`                                                | false      |                                      |
