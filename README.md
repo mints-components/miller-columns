@@ -49,8 +49,9 @@ export const TestComponent = () => {
 
 | Prop          | Type                                                     | Default    | Description                          |
 | ------------- | -------------------------------------------------------- | ---------- | ------------------------------------ |
-| request\*     | `(id?: IDType, params?: any) => Promise<RequestResType>` |            | Asynchronous method for getting data |
+| request       | `(id?: IDType, params?: any) => Promise<RequestResType>` |            | Asynchronous method for getting data |
 | rootId        | `IDType`                                                 |            | Parameters of the first request      |
+| items         | `DataType[]`                                             |            | item used to display in columns      |
 | style         | `React.CSSProperties`                                    |            |                                      |
 | bordered      | `boolean`                                                | false      |                                      |
 | theme         | `{ colorPrimary?: string; borderColor?: string; }`       |            |                                      |

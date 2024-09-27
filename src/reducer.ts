@@ -24,26 +24,35 @@ export function reducer(
     data: [],
     hasMore: true,
   };
+
   const id = getId(payload?.id);
-  const item = state[id];
 
   switch (type) {
-    case 'RESET':
+    case 'INITIAL':
       return initialState;
+    case 'RESET':
+      return {
+        ...state,
+        ...data2Map(data, {
+          [id]: {
+            ...state[id],
+            items: data,
+            hasMore,
+            error,
+            params,
+          },
+        }),
+      };
     case 'APPEND':
       return {
         ...state,
         ...data2Map(data, {
           [id]: {
-            parentId: item.parentId,
-            id,
-            items: [...item.items, ...data],
-            canExpand: item.canExpand ?? false,
-            expanded: true,
+            ...state[id],
+            items: [...state[id].items, ...data],
             hasMore,
             error,
             params,
-            original: item.original,
           },
         }),
       };

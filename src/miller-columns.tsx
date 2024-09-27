@@ -1,6 +1,6 @@
 import { useState, useReducer, useEffect } from 'react';
 
-import type { IDType, RequestResType } from './types';
+import type { IDType, RequestResType, DataType } from './types';
 import { Context, initialTheme } from './context';
 import { Column, Item } from './components';
 import { useColumns } from './hooks';
@@ -9,8 +9,9 @@ import { reducer, initialState } from './reducer';
 import * as S from './styled';
 
 export interface IMillerColumns {
-  request: (id?: IDType, params?: any) => Promise<RequestResType>;
+  request?: (id?: IDType, params?: any) => Promise<RequestResType>;
   rootId?: IDType;
+  items?: DataType[];
   style?: React.CSSProperties;
   bordered?: boolean;
   theme?: {
@@ -34,6 +35,7 @@ export interface IMillerColumns {
 export const MillerColumns = ({
   request,
   rootId,
+  items,
   style,
   bordered = false,
   theme,
@@ -57,38 +59,55 @@ export const MillerColumns = ({
   const columns = useColumns(dataMap, activeId);
 
   useEffect(() => {
-    dispatch({ type: 'RESET' });
-    setActiveId(undefined);
+    let isMounted = true;
+
     (async () => {
-      const payload = await request(rootId);
-      dispatch({ type: 'APPEND', payload });
+      let payload = {
+        data: items ?? [],
+        hasMore: true,
+      };
+
+      if (request) {
+        payload = await request?.(rootId);
+      }
+
+      if (isMounted) {
+        dispatch({ type: 'RESET', payload });
+      }
     })();
-  }, [request, rootId]);
+
+    return () => {
+      dispatch({ type: 'INITIAL' });
+      setActiveId(undefined);
+      isMounted = false;
+    };
+  }, [rootId, items]);
 
   useEffect(() => {
     setSelectedIds(props.selectedIds || []);
   }, [props.selectedIds]);
 
   const handleScroll = async (id?: IDType) => {
-    const item = dataMap[getId(id)];
-    const payload = await request(id, item.params);
-    dispatch({ type: 'APPEND', payload: { ...payload, id } });
+    if (request) {
+      const item = dataMap[getId(id)];
+      const payload = await request(id, item.params);
+      dispatch({ type: 'APPEND', payload: { ...payload, id } });
+    }
   };
 
   const handleExpand = async (id: IDType) => {
     const item = dataMap[id];
+
     if (!item.canExpand) {
       return;
     }
 
     setActiveId(id);
 
-    if (item.expanded) {
-      return;
+    if (!item.expanded && request) {
+      const payload = await request(id, item.params);
+      dispatch({ type: 'APPEND', payload: { ...payload, id } });
     }
-
-    const payload = await request(id, item.params);
-    dispatch({ type: 'APPEND', payload: { ...payload, id } });
   };
 
   const handleSelectedIds = (id: IDType) => {
