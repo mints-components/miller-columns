@@ -65,7 +65,9 @@ export const MillerColumns = ({
 
     (async () => {
       let payload = {
-        data: loading ? [] : items ?? [],
+        data: loading
+          ? []
+          : (items ?? []).filter((it) => it.parentId === (rootId ?? null)),
         hasMore: loading,
       };
 
@@ -89,11 +91,18 @@ export const MillerColumns = ({
   }, [props.selectedIds]);
 
   const handleScroll = async (id?: IDType) => {
+    const item = dataMap[getId(id)];
+
+    let payload = {
+      data: (items ?? []).filter((it) => it.parentId === id),
+      hasMore: false,
+    };
+
     if (request) {
-      const item = dataMap[getId(id)];
-      const payload = await request(id, item.params);
-      dispatch({ type: 'APPEND', payload: { ...payload, id } });
+      payload = await request(id, item.params);
     }
+
+    dispatch({ type: 'APPEND', payload: { ...payload, id } });
   };
 
   const handleExpand = async (id: IDType) => {
@@ -105,10 +114,20 @@ export const MillerColumns = ({
 
     setActiveId(id);
 
-    if (!item.expanded && request) {
-      const payload = await request(id, item.params);
-      dispatch({ type: 'APPEND', payload: { ...payload, id } });
+    if (item.expanded) {
+      return;
     }
+
+    let payload = {
+      data: (items ?? []).filter((it) => it.parentId === id),
+      hasMore: false,
+    };
+
+    if (request) {
+      payload = await request(id, item.params);
+    }
+
+    dispatch({ type: 'APPEND', payload: { ...payload, id } });
   };
 
   const handleSelectedIds = (id: IDType) => {
