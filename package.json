@@ -20,24 +20,18 @@
     "dist",
     "types"
   ],
-  "types": "types",
+  "types": "./types/miller-columns.d.ts",
   "main": "./dist/miller-columns.umd.cjs",
   "module": "./dist/miller-columns.js",
   "exports": {
     ".": {
-      "import": {
-        "types": "./types/index.d.ts",
-        "default": "./dist/miller-columns.js"
-      },
-      "require": {
-        "types": "./types/index.d.ts",
-        "default": "./dist/miller-columns.umd.cjs"
-      }
+      "import": "./dist/miller-columns.js",
+      "require": "./dist/miller-columns.umd.cjs"
     }
   },
   "scripts": {
     "clean": "rm -rf dist && rm -rf types",
-    "build": "yarn clean && tsc -p tsconfig.build.json && vite build",
+    "build": "yarn clean && tsc && vite build",
     "lint": "eslint . --fix",
     "prettier": "prettier . --write",
     "storybook": "storybook dev -p 6006",
@@ -105,6 +99,7 @@
     "prettier": "^3.3.2",
     "storybook": "^8.2.9",
     "typescript": "^5.0.2",
-    "vite": "^4.4.5"
+    "vite": "^4.4.5",
+    "vite-plugin-dts": "^4.2.3"
   }
 }
